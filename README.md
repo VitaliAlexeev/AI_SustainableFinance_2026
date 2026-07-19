@@ -1,1 +1,1 @@
-# AI_sustainableFinance_2026
+# AI_SustainableFinance_2026
