@@ -1,0 +1,22 @@
+Open datasets used by AI-integrated Sustainable Finance labs:
+
+    Climate TRACE   asset-level emissions with coordinates and owner
+    World Bank      sovereign ESG panel (database 75) + country metadata
+    SEC EDGAR       ticker -> CIK resolution and business addresses
+    Nominatim       geocoding and reverse geocoding, cached to disk
+
+Output layout
+-------------
+    data/
+      raw/                       exactly as downloaded (add to .gitignore if big)
+      processed/                 small, tidy, safe to commit
+      MANIFEST.json              URLs, timestamps, row counts, SHA-256 digests
+
+Licences (check before redistributing)
+--------------------------------------
+    Climate TRACE   CC BY 4.0, attribution required
+    World Bank      CC BY 4.0 for most indicators
+    SEC EDGAR       US public domain; declared User-Agent and rate limit apply
+    Nominatim       ODbL. Heavy or bulk use needs your own instance.
+
+Author: Vitali Alexeev, UTS Business School
