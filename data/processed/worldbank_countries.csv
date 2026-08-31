@@ -1,0 +1,261 @@
+iso3,country,region,income_level,lending_type,capital_city,lat,lon,aggregate
+ABW,Aruba,LCN,HIC,LNX,Oranjestad,12.5167,-70.0167,False
+AFG,Afghanistan,MEA,LIC,IDX,Kabul,34.5228,69.1761,False
+AGO,Angola,SSF,LMC,IBD,Luanda,-8.81155,13.242,False
+ALB,Albania,ECS,UMC,IBD,Tirane,41.3317,19.8172,False
+AND,Andorra,ECS,HIC,LNX,Andorra la Vella,42.5075,1.5218,False
+ARB,Arab World,,,,,,,True
+ARE,United Arab Emirates,MEA,HIC,LNX,Abu Dhabi,24.4764,54.3705,False
+ARG,Argentina,LCN,UMC,IBD,Buenos Aires,-34.6118,-58.4173,False
+ARM,Armenia,ECS,UMC,IBD,Yerevan,40.1596,44.509,False
+ASM,American Samoa,EAS,HIC,LNX,Pago Pago,-14.2846,-170.691,False
+ATG,Antigua and Barbuda,LCN,HIC,IBD,Saint John's,17.1175,-61.8456,False
+AUS,Australia,EAS,HIC,LNX,Canberra,-35.282,149.129,False
+AUT,Austria,ECS,HIC,LNX,Vienna,48.2201,16.3798,False
+AZE,Azerbaijan,ECS,UMC,IBD,Baku,40.3834,49.8932,False
+BDI,Burundi,SSF,LIC,IDX,Bujumbura,-3.3784,29.3639,False
+BEL,Belgium,ECS,HIC,LNX,Brussels,50.8371,4.36761,False
+BEN,Benin,SSF,LMC,IDX,Porto-Novo,6.4779,2.6323,False
+BFA,Burkina Faso,SSF,LIC,IDX,Ouagadougou,12.3605,-1.53395,False
+BGD,Bangladesh,SAS,LMC,IDX,Dhaka,23.7055,90.4113,False
+BGR,Bulgaria,ECS,HIC,IBD,Sofia,42.7105,23.3238,False
+BHR,Bahrain,MEA,HIC,LNX,Manama,26.1921,50.5354,False
+BHS,"Bahamas, The",LCN,HIC,LNX,Nassau,25.0661,-77.339,False
+BIH,Bosnia and Herzegovina,ECS,UMC,IBD,Sarajevo,43.8607,18.4214,False
+BLR,Belarus,ECS,UMC,IBD,Minsk,53.9678,27.5766,False
+BLZ,Belize,LCN,UMC,IDB,Belmopan,17.2534,-88.7713,False
+BMU,Bermuda,NAC,HIC,LNX,Hamilton,32.3293,-64.706,False
+BOL,Bolivia,LCN,LMC,IBD,La Paz,-13.9908,-66.1936,False
+BRA,Brazil,LCN,UMC,IBD,Brasilia,-15.7801,-47.9292,False
+BRB,Barbados,LCN,HIC,IBD,Bridgetown,13.0935,-59.6105,False
+BRN,Brunei Darussalam,EAS,HIC,LNX,Bandar Seri Begawan,4.94199,114.946,False
+BTN,Bhutan,SAS,LMC,IDX,Thimphu,27.5768,89.6177,False
+BWA,Botswana,SSF,UMC,IBD,Gaborone,-24.6544,25.9201,False
+CAF,Central African Republic,SSF,LIC,IDX,Bangui,5.63056,21.6407,False
+CAN,Canada,NAC,HIC,LNX,Ottawa,45.4215,-75.6919,False
+CEB,Central Europe and the Baltics,,,,,,,True
+CHE,Switzerland,ECS,HIC,LNX,Bern,46.948,7.44821,False
+CHI,Channel Islands,ECS,HIC,LNX,,,,False
+CHL,Chile,LCN,HIC,IBD,Santiago,-33.475,-70.6475,False
+CHN,China,EAS,UMC,IBD,Beijing,40.0495,116.286,False
+CIV,Cote d'Ivoire,SSF,LMC,IDB,Yamoussoukro,5.332,-4.0305,False
+CMR,Cameroon,SSF,LMC,IDB,Yaounde,3.8721,11.5174,False
+COD,"Congo, Dem. Rep.",SSF,LIC,IDX,Kinshasa,-4.325,15.3222,False
+COG,"Congo, Rep.",SSF,LMC,IDB,Brazzaville,-4.2767,15.2662,False
+COL,Colombia,LCN,UMC,IBD,Bogota,4.60987,-74.082,False
+COM,Comoros,SSF,LMC,IDX,Moroni,-11.6986,43.2418,False
+CPV,Cabo Verde,SSF,UMC,IDB,Praia,14.9218,-23.5087,False
+CRI,Costa Rica,LCN,HIC,IBD,San Jose,9.63701,-84.0089,False
+CSS,Caribbean small states,,,,,,,True
+CUB,Cuba,LCN,UMC,LNX,Havana,23.1333,-82.3667,False
+CUW,Curacao,LCN,HIC,LNX,Willemstad,,,False
+CYM,Cayman Islands,LCN,HIC,LNX,George Town,19.3022,-81.3857,False
+CYP,Cyprus,ECS,HIC,LNX,Nicosia,35.1676,33.3736,False
+CZE,Czechia,ECS,HIC,LNX,Prague,50.0878,14.4205,False
+DEU,Germany,ECS,HIC,LNX,Berlin,52.5235,13.4115,False
+DJI,Djibouti,MEA,LMC,IDX,Djibouti,11.5806,43.1425,False
+DMA,Dominica,LCN,UMC,IDB,Roseau,15.2976,-61.39,False
+DNK,Denmark,ECS,HIC,LNX,Copenhagen,55.6763,12.5681,False
+DOM,Dominican Republic,LCN,UMC,IBD,Santo Domingo,18.479,-69.8908,False
+DZA,Algeria,MEA,UMC,IBD,Algiers,36.7397,3.05097,False
+EAP,East Asia & Pacific (excluding high income),,,,,,,True
+EAR,Early-demographic dividend,,,,,,,True
+EAS,East Asia & Pacific,,,,,,,True
+ECA,Europe & Central Asia (excluding high income),,,,,,,True
+ECS,Europe & Central Asia,,,,,,,True
+ECU,Ecuador,LCN,UMC,IBD,Quito,-0.229498,-78.5243,False
+EGY,"Egypt, Arab Rep.",MEA,LMC,IBD,Cairo,30.0982,31.2461,False
+EMU,Euro area,,,,,,,True
+ERI,Eritrea,SSF,LIC,IDX,Asmara,15.3315,38.9183,False
+ESP,Spain,ECS,HIC,LNX,Madrid,40.4167,-3.70327,False
+EST,Estonia,ECS,HIC,LNX,Tallinn,59.4392,24.7586,False
+ETH,Ethiopia,SSF,LIC,IDX,Addis Ababa,9.02274,38.7468,False
+EUU,European Union,,,,,,,True
+FCS,Fragile and conflict affected situations,,,,,,,
+FIN,Finland,ECS,HIC,LNX,Helsinki,60.1608,24.9525,False
+FJI,Fiji,EAS,UMC,IDB,Suva,-18.1149,178.399,False
+FRA,France,ECS,HIC,LNX,Paris,48.8566,2.35097,False
+FRO,Faroe Islands,ECS,HIC,LNX,Torshavn,61.8926,-6.91181,False
+FSM,"Micronesia, Fed. Sts.",EAS,UMC,IDX,Palikir,6.91771,158.185,False
+GAB,Gabon,SSF,UMC,IBD,Libreville,0.38832,9.45162,False
+GBR,United Kingdom,ECS,HIC,LNX,London,51.5002,-0.126236,False
+GEO,Georgia,ECS,UMC,IBD,Tbilisi,41.71,44.793,False
+GHA,Ghana,SSF,LMC,IDX,Accra,5.57045,-0.20795,False
+GIB,Gibraltar,ECS,HIC,LNX,,,,False
+GIN,Guinea,SSF,LMC,IDX,Conakry,9.51667,-13.7,False
+GMB,"Gambia, The",SSF,LIC,IDX,Banjul,13.4495,-16.5885,False
+GNB,Guinea-Bissau,SSF,LIC,IDX,Bissau,11.8037,-15.1804,False
+GNQ,Equatorial Guinea,SSF,UMC,IBD,Malabo,3.7523,8.7741,False
+GRC,Greece,ECS,HIC,LNX,Athens,37.9792,23.7166,False
+GRD,Grenada,LCN,UMC,IDB,Saint George's,12.0653,-61.7449,False
+GRL,Greenland,ECS,HIC,LNX,Nuuk,64.1836,-51.7214,False
+GTM,Guatemala,LCN,UMC,IBD,Guatemala City,14.6248,-90.5328,False
+GUM,Guam,EAS,HIC,LNX,Agana,13.4443,144.794,False
+GUY,Guyana,LCN,HIC,IDX,Georgetown,6.80461,-58.1548,False
+HIC,High income,,,,,,,True
+HND,Honduras,LCN,LMC,IDX,Tegucigalpa,15.1333,-87.4667,False
+HPC,Heavily indebted poor countries (HIPC),,,,,,,True
+HRV,Croatia,ECS,HIC,IBD,Zagreb,45.8069,15.9614,False
+HTI,Haiti,LCN,LMC,IDX,Port-au-Prince,18.5392,-72.3288,False
+HUN,Hungary,ECS,HIC,LNX,Budapest,47.4984,19.0408,False
+IBD,IBRD only,,,,,,,True
+IBT,IDA & IBRD total,,,,,,,True
+IDA,IDA total,,,,,,,True
+IDB,IDA blend,,,,,,,True
+IDN,Indonesia,EAS,UMC,IBD,Jakarta,-6.19752,106.83,False
+IDX,IDA only,,,,,,,True
+IMN,Isle of Man,ECS,HIC,LNX,Douglas,54.1509,-4.47928,False
+IND,India,SAS,LMC,IBD,New Delhi,28.6353,77.225,False
+IRL,Ireland,ECS,HIC,LNX,Dublin,53.3441,-6.26749,False
+IRN,"Iran, Islamic Rep.",MEA,UMC,IBD,Tehran,35.6878,51.4447,False
+IRQ,Iraq,MEA,UMC,IBD,Baghdad,33.3302,44.394,False
+ISL,Iceland,ECS,HIC,LNX,Reykjavik,64.1353,-21.8952,False
+ISR,Israel,MEA,HIC,LNX,,31.7717,35.2035,False
+ITA,Italy,ECS,HIC,LNX,Rome,41.8955,12.4823,False
+JAM,Jamaica,LCN,UMC,IBD,Kingston,17.9927,-76.792,False
+JOR,Jordan,MEA,UMC,IBD,Amman,31.9497,35.9263,False
+JPN,Japan,EAS,HIC,LNX,Tokyo,35.67,139.77,False
+KAZ,Kazakhstan,ECS,UMC,IBD,Astana,51.1879,71.4382,False
+KEN,Kenya,SSF,LMC,IDB,Nairobi,-1.27975,36.8126,False
+KGZ,Kyrgyz Republic,ECS,LMC,IDX,Bishkek,42.8851,74.6057,False
+KHM,Cambodia,EAS,LMC,IDX,Phnom Penh,11.5556,104.874,False
+KIR,Kiribati,EAS,LMC,IDX,Tarawa,1.32905,172.979,False
+KNA,St. Kitts and Nevis,LCN,HIC,IBD,Basseterre,17.3,-62.7309,False
+KOR,"Korea, Rep.",EAS,HIC,LNX,Seoul,37.5323,126.957,False
+KWT,Kuwait,MEA,HIC,LNX,Kuwait City,29.3721,47.9824,False
+LAC,Latin America & Caribbean (excluding high income),,,,,,,True
+LAO,Lao PDR,EAS,LMC,IDX,Vientiane,18.5826,102.177,False
+LBN,Lebanon,MEA,LMC,IBD,Beirut,33.8872,35.5134,False
+LBR,Liberia,SSF,LIC,IDX,Monrovia,6.30039,-10.7957,False
+LBY,Libya,MEA,UMC,IBD,Tripoli,32.8578,13.1072,False
+LCA,St. Lucia,LCN,UMC,IDB,Castries,14.0,-60.9832,False
+LCN,Latin America & Caribbean,,,,,,,True
+LDC,Least developed countries: UN classification,,,,,,,True
+LIC,Low income,,,,,,,True
+LIE,Liechtenstein,ECS,HIC,LNX,Vaduz,47.1411,9.52148,False
+LKA,Sri Lanka,SAS,UMC,IDX,Colombo,6.92148,79.8528,False
+LMC,Lower middle income,,,,,,,True
+LMY,Low & middle income,,,,,,,True
+LSO,Lesotho,SSF,LMC,IDX,Maseru,-29.5208,27.7167,False
+LTE,Late-demographic dividend,,,,,,,True
+LTU,Lithuania,ECS,HIC,LNX,Vilnius,54.6896,25.2799,False
+LUX,Luxembourg,ECS,HIC,LNX,Luxembourg,49.61,6.1296,False
+LVA,Latvia,ECS,HIC,LNX,Riga,56.9465,24.1048,False
+MAF,St. Martin (French part),LCN,HIC,LNX,Marigot,,,False
+MAR,Morocco,MEA,LMC,IBD,Rabat,33.9905,-6.8704,False
+MCO,Monaco,ECS,HIC,LNX,Monaco,43.7325,7.41891,False
+MDA,Moldova,ECS,UMC,IBD,Chisinau,47.0167,28.8497,False
+MDG,Madagascar,SSF,LIC,IDX,Antananarivo,-20.4667,45.7167,False
+MDV,Maldives,SAS,UMC,IDX,Male,4.1742,73.5109,False
+MEA,"Middle East, North Africa, Afghanistan & Pakistan",,,,,,,True
+MEX,Mexico,LCN,UMC,IBD,Mexico City,19.427,-99.1276,False
+MHL,Marshall Islands,EAS,UMC,IDX,Majuro,7.11046,171.135,False
+MIC,Middle income,,,,,,,True
+MKD,North Macedonia,ECS,UMC,IBD,Skopje,42.0024,21.4361,False
+MLI,Mali,SSF,LIC,IDX,Bamako,13.5667,-7.50034,False
+MLT,Malta,MEA,HIC,LNX,Valletta,35.9042,14.5189,False
+MMR,Myanmar,EAS,LMC,IDX,Naypyidaw,21.914,95.9562,False
+MNA,"Middle East, North Africa, Afghanistan & Pakistan (excluding high income)",,,,,,,True
+MNE,Montenegro,ECS,UMC,IBD,Podgorica,42.4602,19.2595,False
+MNG,Mongolia,EAS,UMC,IBD,Ulaanbaatar,47.9129,106.937,False
+MNP,Northern Mariana Islands,EAS,HIC,LNX,Saipan,15.1935,145.765,False
+MOZ,Mozambique,SSF,LIC,IDX,Maputo,-25.9664,32.5713,False
+MRT,Mauritania,SSF,LMC,IDX,Nouakchott,18.2367,-15.9824,False
+MUS,Mauritius,SSF,UMC,IBD,Port Louis,-20.1605,57.4977,False
+MWI,Malawi,SSF,LIC,IDX,Lilongwe,-13.9899,33.7703,False
+MYS,Malaysia,EAS,UMC,IBD,Kuala Lumpur,3.12433,101.684,False
+NAC,North America,,,,,,,True
+NAM,Namibia,SSF,LMC,IBD,Windhoek,-22.5648,17.0931,False
+NCL,New Caledonia,EAS,HIC,LNX,Noum'ea,-22.2677,166.464,False
+NER,Niger,SSF,LIC,IDX,Niamey,13.514,2.1073,False
+NGA,Nigeria,SSF,LMC,IDB,Abuja,9.05804,7.48906,False
+NIC,Nicaragua,LCN,LMC,IDX,Managua,12.1475,-86.2734,False
+NLD,Netherlands,ECS,HIC,LNX,Amsterdam,52.3738,4.89095,False
+NOR,Norway,ECS,HIC,LNX,Oslo,59.9138,10.7387,False
+NPL,Nepal,SAS,LMC,IDX,Kathmandu,27.6939,85.3157,False
+NRU,Nauru,EAS,HIC,IBD,Yaren District,-0.5477,166.920867,False
+NZL,New Zealand,EAS,HIC,LNX,Wellington,-41.2865,174.776,False
+OED,OECD members,,,,,,,True
+OMN,Oman,MEA,HIC,LNX,Muscat,23.6105,58.5874,False
+OSS,Other small states,,,,,,,True
+PAK,Pakistan,MEA,LMC,IDB,Islamabad,30.5167,72.8,False
+PAN,Panama,LCN,HIC,IBD,Panama City,8.99427,-79.5188,False
+PER,Peru,LCN,UMC,IBD,Lima,-12.0931,-77.0465,False
+PHL,Philippines,EAS,UMC,IBD,Manila,14.5515,121.035,False
+PLW,Palau,EAS,HIC,IBD,Koror,7.34194,134.479,False
+PNG,Papua New Guinea,EAS,LMC,IDB,Port Moresby,-9.47357,147.194,False
+POL,Poland,ECS,HIC,IBD,Warsaw,52.26,21.02,False
+PRE,Pre-demographic dividend,,,,,,,True
+PRI,Puerto Rico,LCN,HIC,LNX,San Juan,18.23,-66.0,False
+PRK,"Korea, Dem. People's Rep.",EAS,LIC,LNX,Pyongyang,39.0319,125.754,False
+PRT,Portugal,ECS,HIC,LNX,Lisbon,38.7072,-9.13552,False
+PRY,Paraguay,LCN,UMC,IBD,Asuncion,-25.3005,-57.6362,False
+PSS,Pacific island small states,,,,,,,True
+PST,Post-demographic dividend,,,,,,,True
+PYF,French Polynesia,EAS,HIC,LNX,Papeete,-17.535,-149.57,False
+QAT,Qatar,MEA,HIC,LNX,Doha,25.2948,51.5082,False
+ROU,Romania,ECS,HIC,IBD,Bucharest,44.4479,26.0979,False
+RUS,Russian Federation,ECS,HIC,IBD,Moscow,55.7558,37.6176,False
+RWA,Rwanda,SSF,LIC,IDX,Kigali,-1.95325,30.0587,False
+SAS,South Asia,,,,,,,True
+SAU,Saudi Arabia,MEA,HIC,LNX,Riyadh,24.6748,46.6977,False
+SDN,Sudan,SSF,LIC,IDX,Khartoum,15.5932,32.5363,False
+SEN,Senegal,SSF,LMC,IDX,Dakar,14.7247,-17.4734,False
+SGP,Singapore,EAS,HIC,LNX,Singapore,1.28941,103.85,False
+SLB,Solomon Islands,EAS,LMC,IDX,Honiara,-9.42676,159.949,False
+SLE,Sierra Leone,SSF,LIC,IDX,Freetown,8.4821,-13.2134,False
+SLV,El Salvador,LCN,UMC,IBD,San Salvador,13.7034,-89.2073,False
+SMR,San Marino,ECS,HIC,LNX,San Marino,43.9322,12.4486,False
+SOM,Somalia,SSF,LIC,IDX,Mogadishu,2.07515,45.3254,False
+SRB,Serbia,ECS,UMC,IBD,Belgrade,44.8024,20.4656,False
+SSA,Sub-Saharan Africa (excluding high income),,,,,,,True
+SSD,South Sudan,SSF,LIC,IDX,Juba,4.85,31.6,False
+SSF,Sub-Saharan Africa,,,,,,,True
+SST,Small states,,,,,,,True
+STP,Sao Tome and Principe,SSF,LMC,IDX,Sao Tome,0.20618,6.6071,False
+SUR,Suriname,LCN,UMC,IDB,Paramaribo,5.8232,-55.1679,False
+SVK,Slovak Republic,ECS,HIC,LNX,Bratislava,48.1484,17.1073,False
+SVN,Slovenia,ECS,HIC,LNX,Ljubljana,46.0546,14.5044,False
+SWE,Sweden,ECS,HIC,LNX,Stockholm,59.3327,18.0645,False
+SWZ,Eswatini,SSF,LMC,IDB,Mbabane,-26.5225,31.4659,False
+SXM,Sint Maarten (Dutch part),LCN,HIC,LNX,Philipsburg,,,False
+SYC,Seychelles,SSF,HIC,IBD,Victoria,-4.6309,55.4466,False
+SYR,Syrian Arab Republic,MEA,LIC,IDX,Damascus,33.5146,36.3119,False
+TCA,Turks and Caicos Islands,LCN,HIC,LNX,Grand Turk,21.4602778,-71.141389,False
+TCD,Chad,SSF,LIC,IDX,N'Djamena,12.1048,15.0445,False
+TEA,East Asia & Pacific (IDA & IBRD),,,,,,,True
+TEC,Europe & Central Asia (IDA & IBRD),,,,,,,True
+TGO,Togo,SSF,LMC,IDX,Lome,6.1228,1.2255,False
+THA,Thailand,EAS,UMC,IBD,Bangkok,13.7308,100.521,False
+TJK,Tajikistan,ECS,LMC,IDX,Dushanbe,38.5878,68.7864,False
+TKM,Turkmenistan,ECS,UMC,IBD,Ashgabat,37.9509,58.3794,False
+TLA,Latin America & Caribbean (IDA & IBRD),,,,,,,True
+TLS,Timor-Leste,EAS,LMC,IDB,Dili,-8.56667,125.567,False
+TMN,"Middle East, North Africa, Afghanistan & Pakistan (IDA & IBRD)",,,,,,,True
+TON,Tonga,EAS,UMC,IDX,Nuku'alofa,-21.136,-175.216,False
+TSA,South Asia (IDA & IBRD),,,,,,,True
+TSS,Sub-Saharan Africa (IDA & IBRD),,,,,,,True
+TTO,Trinidad and Tobago,LCN,HIC,IBD,Port-of-Spain,10.6596,-61.4789,False
+TUN,Tunisia,MEA,LMC,IBD,Tunis,36.7899,10.21,False
+TUR,Turkiye,ECS,UMC,IBD,Ankara,39.7153,32.3606,False
+TUV,Tuvalu,EAS,UMC,IDX,Funafuti,-8.6314877,179.089567,False
+TZA,Tanzania,SSF,LMC,IDX,Dodoma,-6.17486,35.7382,False
+UGA,Uganda,SSF,LIC,IDX,Kampala,0.314269,32.5729,False
+UKR,Ukraine,ECS,UMC,IBD,Kiev,50.4536,30.5038,False
+UMC,Upper middle income,,,,,,,True
+URY,Uruguay,LCN,HIC,IBD,Montevideo,-34.8941,-56.0675,False
+USA,United States,NAC,HIC,LNX,Washington D.C.,38.8895,-77.032,False
+UZB,Uzbekistan,ECS,LMC,IDB,Tashkent,41.3052,69.269,False
+VCT,St. Vincent and the Grenadines,LCN,UMC,IDB,Kingstown,13.2035,-61.2653,False
+VEN,"Venezuela, RB",LCN,LMC,IBD,Caracas,9.08165,-69.8371,False
+VGB,British Virgin Islands,LCN,HIC,LNX,Road Town,18.431389,-64.623056,False
+VIR,Virgin Islands (U.S.),LCN,HIC,LNX,Charlotte Amalie,18.3358,-64.8963,False
+VNM,Viet Nam,EAS,UMC,IBD,Hanoi,21.0069,105.825,False
+VUT,Vanuatu,EAS,LMC,IDX,Port-Vila,-17.7404,168.321,False
+WLD,World,,,,,,,True
+WSM,Samoa,EAS,UMC,IDX,Apia,-13.8314,-171.752,False
+XKX,Kosovo,ECS,UMC,IDX,Pristina,42.565,20.926,False
+YEM,"Yemen, Rep.",MEA,LIC,IDX,Sana'a,15.352,44.2075,False
+ZAF,South Africa,SSF,UMC,IBD,Pretoria,-25.746,28.1871,False
+ZMB,Zambia,SSF,LMC,IDX,Lusaka,-15.3982,28.2937,False
+ZWE,Zimbabwe,SSF,LMC,IDB,Harare,-17.8312,31.0672,False

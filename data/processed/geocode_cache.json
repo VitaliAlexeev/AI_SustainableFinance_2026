@@ -1,0 +1,1588 @@
+{
+ "fwd:'hdfc bank house', senapati bapat road, lower parel (west), mumbai india, mumbai": null,
+ "fwd:1 churchill place, canary wharf, london, x0, e14 5hp": null,
+ "fwd:1 customer drive, bentonville, ar, 72716": {
+  "class": "information",
+  "display_name": "Walmart Welcome Center, 1, Customer Drive, Bentonville, Benton County, Arkansas, 72716, United States",
+  "importance": 5.82780193789123e-05,
+  "lat": 36.3643435,
+  "lon": -94.1947297,
+  "query": "1 CUSTOMER DRIVE, BENTONVILLE, AR, 72716",
+  "type": "office"
+ },
+ "fwd:1 ecolab place, saint paul, mn, 55102": {
+  "class": "office",
+  "display_name": "Ecolab Inc., 1, Ecolab Place, Downtown, Saint Paul, Ramsey County, Minnesota, 55102, United States",
+  "importance": 6.915770199125685e-05,
+  "lat": 44.946633,
+  "lon": -93.0977622,
+  "query": "1 ECOLAB PLACE, SAINT PAUL, MN, 55102",
+  "type": "company"
+ },
+ "fwd:1 first canadian place, toronto, a6, m5x 1a1": null,
+ "fwd:1 francis crick avenue, cambridge biomedical campus, cambridge, cb2 0aa": null,
+ "fwd:1 grand canal square, grand canal harbour, dublin, l2, d2": null,
+ "fwd:1 health drive, eden prairie, mn, 55344": null,
+ "fwd:1 meta way, menlo park, ca, 94025": {
+  "class": "building",
+  "display_name": "Meta MPK 21, 1, Meta Way, Meta West Campus, Belle Haven, Menlo Park, San Mateo County, California, 94025, United States",
+  "importance": 6.041123064007046e-05,
+  "lat": 37.4810509,
+  "lon": -122.1590645,
+  "query": "1 META WAY, MENLO PARK, CA, 94025",
+  "type": "office"
+ },
+ "fwd:1 monster way, corona, ca, 92879": {
+  "class": "office",
+  "display_name": "Monster Energy Company, 1, Monster Way, Corona, Riverside County, California, 92879, United States",
+  "importance": 5.9744411383184824e-05,
+  "lat": 33.8866745,
+  "lon": -117.5132333,
+  "query": "1 MONSTER WAY, CORONA, CA, 92879",
+  "type": "company"
+ },
+ "fwd:1 neumann way, evendale, oh, 45215": {
+  "class": "amenity",
+  "display_name": "1, Aviation Way, Evendale, Hamilton County, Ohio, 45215, United States",
+  "importance": 4.8139925230747196e-05,
+  "lat": 39.2391796,
+  "lon": -84.4489878,
+  "query": "1 NEUMANN WAY, EVENDALE, OH, 45215",
+  "type": "parking"
+ },
+ "fwd:1 new orchard road, armonk, ny, 10504": {
+  "class": "place",
+  "display_name": "1, New Orchard Road, Armonk, Town of North Castle, Westchester County, New York, 10504, United States",
+  "importance": 5.033264667730247e-05,
+  "lat": 41.1134016,
+  "lon": -73.720356,
+  "query": "1 NEW ORCHARD ROAD, ARMONK, NY, 10504",
+  "type": "house"
+ },
+ "fwd:1 north waukegan road, north chicago, il, 60064": {
+  "class": "highway",
+  "display_name": "North Waukegan Road, North Chicago, Lake County, Illinois, 60064, United States",
+  "importance": 0.05339150606546117,
+  "lat": 42.3015593,
+  "lon": -87.8902499,
+  "query": "1 NORTH WAUKEGAN ROAD, NORTH CHICAGO, IL, 60064",
+  "type": "primary"
+ },
+ "fwd:1 sherwin way, cleveland, oh, 44113": {
+  "class": "highway",
+  "display_name": "Sherwin Way, Downtown Cleveland, Cleveland, Cuyahoga County, Ohio, 44113, United States",
+  "importance": 0.05340794308384829,
+  "lat": 41.4991705,
+  "lon": -81.6969355,
+  "query": "1 SHERWIN WAY, CLEVELAND, OH, 44113",
+  "type": "residential"
+ },
+ "fwd:1 st james's square, london, x0, sw1y 4pd": null,
+ "fwd:1 tesla road, austin, tx, 78725": {
+  "class": "building",
+  "display_name": "Tesla Gigafactory Texas Main Building, 1, Tesla Road, Austin, Travis County, Texas, 78725, United States",
+  "importance": 0.36902538090653614,
+  "lat": 30.2219321,
+  "lon": -97.6187733,
+  "query": "1 TESLA ROAD, AUSTIN, TX, 78725",
+  "type": "manufacture"
+ },
+ "fwd:1 toyota cho toyota city, aichi prefecture 471-8571, japan, m0, 00000": null,
+ "fwd:1-2, marunouchi 1-chome, chiyoda-ku, tokyo, m0, 100-0005": null,
+ "fwd:1-3 strand, london, x0, wc2n 5eh": null,
+ "fwd:1-5-5, otemachi, chiyoda-ku, tokyo, m0, 100-8176": null,
+ "fwd:1-7-1, konan, minato-ku, tokyo, 108-0075": {
+  "class": "boundary",
+  "display_name": "\u6e2f\u5357, \u6e2f\u533a, \u6771\u4eac\u90fd, 108-0075, \u65e5\u672c",
+  "importance": 0.40906086839840655,
+  "lat": 35.6301291,
+  "lon": 139.7507521,
+  "query": "1-7-1, KONAN, MINATO-KU, TOKYO, 108-0075",
+  "type": "administrative"
+ },
+ "fwd:100 abbott park road, abbott park, il, 60064-3500": {
+  "class": "amenity",
+  "display_name": "Abbott Labs, 100, Abbott Park Road, Lake County, Illinois, 60064, United States",
+  "importance": 0.5027363594524359,
+  "lat": 42.3010531,
+  "lon": -87.8955374,
+  "query": "100 ABBOTT PARK ROAD, ABBOTT PARK, IL, 60064-3500",
+  "type": "research_institute"
+ },
+ "fwd:1000 n. west street, suite 1200, wilmington, de, 19801": null,
+ "fwd:1000 wilson blvd, arlington, va, 22209": {
+  "class": "building",
+  "display_name": "1000, Wilson Boulevard, Rosslyn, Arlington, Arlington County, Virginia, 22209, United States",
+  "importance": 6.485313191419879e-05,
+  "lat": 38.8940736,
+  "lon": -77.0691107,
+  "query": "1000 WILSON BLVD, ARLINGTON, VA, 22209",
+  "type": "yes"
+ },
+ "fwd:1001 ridder park drive, san jose, ca, 95131": {
+  "class": "building",
+  "display_name": "1001, Ridder Park Drive, Wayne, San Jose, Santa Clara County, California, 95131, United States",
+  "importance": 7.274509803917018e-05,
+  "lat": 37.383246,
+  "lon": -121.9020706,
+  "query": "1001 RIDDER PARK DRIVE, SAN JOSE, CA, 95131",
+  "type": "yes"
+ },
+ "fwd:101 townsend st., san francisco, ca, 94107": {
+  "class": "office",
+  "display_name": "Cloudflare, 101, Townsend Street, South Beach, South of Market, San Francisco, California, 94107, United States",
+  "importance": 8.251392385743523e-05,
+  "lat": 37.7803446,
+  "lon": -122.390613,
+  "query": "101 TOWNSEND ST., SAN FRANCISCO, CA, 94107",
+  "type": "telecommunication"
+ },
+ "fwd:1020 kifer road, sunnyvale, ca, 94086": {
+  "class": "place",
+  "display_name": "1020, Kifer Road, Sunnyvale, Santa Clara County, California, 94086, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 37.3751422,
+  "lon": -122.0133548,
+  "query": "1020 KIFER ROAD, SUNNYVALE, CA, 94086",
+  "type": "house"
+ },
+ "fwd:1050 caribbean way, miami, fl, 33132": null,
+ "fwd:1095 avenue of the americas, new york, ny, 10036": {
+  "class": "building",
+  "display_name": "Salesforce Tower, 1095, 6th Avenue, Midtown, Manhattan Community Board 5, Manhattan, New York County, New York, 10110, United States",
+  "importance": 0.3719975382006177,
+  "lat": 40.7546492,
+  "lon": -73.9848112,
+  "query": "1095 AVENUE OF THE AMERICAS, NEW YORK, NY, 10036",
+  "type": "commercial"
+ },
+ "fwd:110 fulbourn road, cambridge, x0, cb1 9nj": null,
+ "fwd:110 north carpenter street, chicago, il, 60607": {
+  "class": "office",
+  "display_name": "McDonald\u2019s HQ, 110, North Carpenter Street, Fulton Market District, West Loop, Near West Side, Chicago, West Chicago Township, Cook County, Illinois, 60607, United States",
+  "importance": 8.51537346455637e-05,
+  "lat": 41.8837934,
+  "lon": -87.6538408,
+  "query": "110 NORTH CARPENTER STREET, CHICAGO, IL, 60607",
+  "type": "company"
+ },
+ "fwd:1100 louisiana 10th floor, houston, tx, 77002": null,
+ "fwd:1100 page mill rd, palo alto, ca, 94304-1047": {
+  "class": "highway",
+  "display_name": "Page Mill Road, Palo Alto, Santa Clara County, California, 94304, United States",
+  "importance": 0.053396056305790765,
+  "lat": 37.4104317,
+  "lon": -122.1524712,
+  "query": "1100 PAGE MILL RD, PALO ALTO, CA, 94304-1047",
+  "type": "primary"
+ },
+ "fwd:11011 sunset hills rd, reston, va, 20190": {
+  "class": "place",
+  "display_name": "11011, Sunset Hills Road, Pinecrest, Reston Station, Reston, Fairfax County, Virginia, 20190, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 38.9469296,
+  "lon": -77.3282692,
+  "query": "11011 SUNSET HILLS RD, RESTON, VA, 20190",
+  "type": "house"
+ },
+ "fwd:1111 bagby, sky lobby 2, houston, tx, 77002": null,
+ "fwd:1166 avenue of the americas, new york, ny, 10036": {
+  "class": "building",
+  "display_name": "1166 Avenue of the Americas, 1166, 6th Avenue, Midtown, Manhattan Community Board 5, Manhattan, New York County, New York, 10036, United States",
+  "importance": 0.4330260991602173,
+  "lat": 40.7568778,
+  "lon": -73.9820036,
+  "query": "1166 AVENUE OF THE AMERICAS, NEW YORK, NY, 10036",
+  "type": "commercial"
+ },
+ "fwd:120 broadway, 32nd floor, new york, ny, 10271": null,
+ "fwd:121 albright way, los gatos, ca, 95032": {
+  "class": "building",
+  "display_name": "Netflix - Building E, 121, Albright Way, Vasona Junction, Los Gatos, Santa Clara County, California, 95032, United States",
+  "importance": 5.86045624475016e-05,
+  "lat": 37.2569243,
+  "lon": -121.9639389,
+  "query": "121 ALBRIGHT WAY, LOS GATOS, CA, 95032",
+  "type": "yes"
+ },
+ "fwd:121 woodlands avenue 5, singapore, u0, 739009": null,
+ "fwd:1240 woodward avenue, detroit, mi, 48265": {
+  "class": "place",
+  "display_name": "1240, Woodward Avenue, Midtown, Detroit, Wayne County, Michigan, 48201, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 42.3332665,
+  "lon": -83.0479797,
+  "query": "1240 WOODWARD AVENUE, DETROIT, MI, 48265",
+  "type": "house"
+ },
+ "fwd:126 east lincoln avenue, p.o. box 2000, rahway, nj, 07065": null,
+ "fwd:12920 se 38th street, bellevue, wa, 98006": {
+  "class": "office",
+  "display_name": "T-Mobile Building 3, 12920, Southeast 38th Street, Sterling Heights Condominiums, Factoria, Bellevue, King County, Washington, 98006, United States",
+  "importance": 6.192492561222275e-05,
+  "lat": 47.5765917,
+  "lon": -122.167289,
+  "query": "12920 SE 38TH STREET, BELLEVUE, WA, 98006",
+  "type": "telecommunication"
+ },
+ "fwd:1310 point street, baltimore, md, 21231": {
+  "class": "place",
+  "display_name": "1310, Point Street, Fell's Point, Baltimore, Maryland, 21231, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 39.2804916,
+  "lon": -76.5976024,
+  "query": "1310 POINT STREET, BALTIMORE, MD, 21231",
+  "type": "house"
+ },
+ "fwd:135 constitution drive, menlo park, ca, 94025": {
+  "class": "office",
+  "display_name": "Snowflake MPK 135, 135, Constitution Drive, Henderson, Menlo Park, San Mateo County, California, 94025, United States",
+  "importance": 6.041123064007046e-05,
+  "lat": 37.4850492,
+  "lon": -122.1762094,
+  "query": "135 CONSTITUTION DRIVE, MENLO PARK, CA, 94025",
+  "type": "it"
+ },
+ "fwd:1400 douglas street, stop 0310, omaha, ne, 68179": null,
+ "fwd:1400 smith street, houston, tx, 77002": {
+  "class": "building",
+  "display_name": "1400 Smith Street, 1400, Smith Street, Downtown, Houston, Harris County, Texas, 77006, United States",
+  "importance": 0.33557113795112237,
+  "lat": 29.755578,
+  "lon": -95.3718129,
+  "query": "1400 SMITH STREET, HOUSTON, TX, 77002",
+  "type": "yes"
+ },
+ "fwd:145 king street east, suite 400, toronto, a6, m5c 2y7": null,
+ "fwd:15 georges quay, dublin 2, l2, d02 vr98": null,
+ "fwd:151 o'connor street, ground floor, ottawa, k2p2l8": null,
+ "fwd:155 harlem avenue, glenview, il, 60025": {
+  "class": "office",
+  "display_name": "Illinois Tool Works, 155, Harlem Avenue, Glenview, Niles Township, Cook County, Illinois, 60025, United States",
+  "importance": 0.3775654447696771,
+  "lat": 42.0578814,
+  "lon": -87.8040606,
+  "query": "155 HARLEM AVENUE, GLENVIEW, IL, 60025",
+  "type": "company"
+ },
+ "fwd:1585 broadway, new york, ny, 10036": {
+  "class": "building",
+  "display_name": "Morgan Stanley Building, 1585, Broadway, Times Square, Manhattan Community Board 5, Manhattan, New York County, New York, 10036, United States",
+  "importance": 0.44527380008827316,
+  "lat": 40.7599838,
+  "lon": -73.9855237,
+  "query": "1585 BROADWAY, NEW YORK, NY, 10036",
+  "type": "commercial"
+ },
+ "fwd:16/171 collins street, melbourne, victoria australia, 3000": null,
+ "fwd:1600 amphitheatre parkway, mountain view, ca, 94043": {
+  "class": "building",
+  "display_name": "Google Building 41, 1600, Amphitheatre Parkway, Mountain View, Santa Clara County, California, 94043, United States",
+  "importance": 6.277943083843774e-05,
+  "lat": 37.4224858,
+  "lon": -122.0855846,
+  "query": "1600 AMPHITHEATRE PARKWAY, MOUNTAIN VIEW, CA, 94043",
+  "type": "commercial"
+ },
+ "fwd:168 third avenue, waltham, ma, 02451": {
+  "class": "building",
+  "display_name": "Thermo Fisher Scientific, 168, Third Avenue, Waltham, Middlesex County, Massachusetts, 02451, United States",
+  "importance": 6.02983138780349e-05,
+  "lat": 42.3922706,
+  "lon": -71.2611867,
+  "query": "168 THIRD AVENUE, WALTHAM, MA, 02451",
+  "type": "yes"
+ },
+ "fwd:1680 capital one drive, mclean, va, 22102": {
+  "class": "building",
+  "display_name": "Capital One: Center 2, 1680, Capital One Drive, McLean, Fairfax County, Virginia, 22102, United States",
+  "importance": 6.485313191419879e-05,
+  "lat": 38.9242279,
+  "lon": -77.2134433,
+  "query": "1680 CAPITAL ONE DRIVE, MCLEAN, VA, 22102",
+  "type": "office"
+ },
+ "fwd:170 west tasman dr, san jose, ca, 95134-1706": {
+  "class": "building",
+  "display_name": "Cisco Systems Building D, 180;170, West Tasman Drive, San Jose, Santa Clara County, California, 95134, United States",
+  "importance": 6.557488364991253e-05,
+  "lat": 37.4083584,
+  "lon": -121.9540909,
+  "query": "170 WEST TASMAN DR, SAN JOSE, CA, 95134-1706",
+  "type": "office"
+ },
+ "fwd:170/175 lakeview drive, airside business park, swords,, co. dublin, l2, 00000": null,
+ "fwd:1725 3rd street, san francisco, ca, 94158": {
+  "class": "building",
+  "display_name": "Uber Headquarters Building 4, 1725, 3rd Street, Mission Bay, San Francisco, California, 94158, United States",
+  "importance": 8.251392385743523e-05,
+  "lat": 37.7673882,
+  "lon": -122.388581,
+  "query": "1725 3RD STREET, SAN FRANCISCO, CA, 94158",
+  "type": "office"
+ },
+ "fwd:1941 stryker way, portage, mi, 49002": {
+  "class": "building",
+  "display_name": "Stryker Instruments, 1941, Stryker Way, Portage, Kalamazoo County, Michigan, 49008, United States",
+  "importance": 5.710612649724601e-05,
+  "lat": 42.2243041,
+  "lon": -85.5652925,
+  "query": "1941 STRYKER WAY, PORTAGE, MI, 49002",
+  "type": "yes"
+ },
+ "fwd:19505 biscayne boulevard, suite 2350, aventura, fl, 33180": null,
+ "fwd:2 place jean millier, la defense 6, courbevoie, i0, 92400": null,
+ "fwd:2-6-4 otemachi, chiyoda-ku, tokyo, 100-0004": {
+  "class": "boundary",
+  "display_name": "\u5927\u624b\u753a, \u5343\u4ee3\u7530\u533a, \u6771\u4eac\u90fd, 100-0004, \u65e5\u672c",
+  "importance": 0.4789467094710231,
+  "lat": 35.6868132,
+  "lon": 139.76608,
+  "query": "2-6-4 OTEMACHI, CHIYODA-KU, TOKYO, 100-0004",
+  "type": "administrative"
+ },
+ "fwd:20 s. wacker dr., chicago, il, 60606": {
+  "class": "office",
+  "display_name": "Chicago Mercantile Exchange, 20, South Wacker Drive, Financial District, Loop, Chicago, South Chicago Township, Cook County, Illinois, 60606, United States",
+  "importance": 0.4338135699802763,
+  "lat": 41.8812366,
+  "lon": -87.6374072,
+  "query": "20 S. WACKER DR., CHICAGO, IL, 60606",
+  "type": "financial"
+ },
+ "fwd:200 425 - 1st street sw, calgary, a0, t2p 3l8": null,
+ "fwd:200 vesey street, 50th floor, new york, ny, 10285": null,
+ "fwd:200 west street, new york, ny, 10282": {
+  "class": "building",
+  "display_name": "Goldman Sachs Tower, 200, West Street, Battery Park City, Lower Manhattan, Manhattan, New York County, New York, 10282, United States",
+  "importance": 0.3699543402288119,
+  "lat": 40.7147237,
+  "lon": -74.0144315,
+  "query": "200 WEST STREET, NEW YORK, NY, 10282",
+  "type": "yes"
+ },
+ "fwd:2000 purchase street, purchase, ny, 10577": {
+  "class": "place",
+  "display_name": "2000, Purchase Street, Purchase, Town/Village of Harrison, Westchester County, New York, 10577, United States",
+  "importance": 5.493629358353578e-05,
+  "lat": 41.0253802,
+  "lon": -73.7131634,
+  "query": "2000 PURCHASE STREET, PURCHASE, NY, 10577",
+  "type": "house"
+ },
+ "fwd:201 isabella street, suite 200, pittsburgh, pa, 15212-5872": null,
+ "fwd:206 e. 9th street, suite 1400, austin, tx, 78701": null,
+ "fwd:208 s. akard st, dallas, tx, 75202": {
+  "class": "building",
+  "display_name": "Whitacre Tower, 208, South Akard Street, Downtown PID, Dallas, Dallas County, Texas, 75202, United States",
+  "importance": 0.36081278497828223,
+  "lat": 32.7796042,
+  "lon": -96.798763,
+  "query": "208 S. AKARD ST, DALLAS, TX, 75202",
+  "type": "commercial"
+ },
+ "fwd:220 virginia avenue, indianapolis, in, 46204": {
+  "class": "office",
+  "display_name": "220, Virginia Avenue, Fletcher Place, Indianapolis, Marion, Indiana, 46204, United States",
+  "importance": 7.400396734564762e-05,
+  "lat": 39.7631664,
+  "lon": -86.1508708,
+  "query": "220 VIRGINIA AVENUE, INDIANAPOLIS, IN, 46204",
+  "type": "company"
+ },
+ "fwd:2200 mission college blvd, rnb-4-151, santa clara, ca, 95054": null,
+ "fwd:2200 pennsylvania ave. n.w., suite 800w, washington, dc, 20037-1701": null,
+ "fwd:222 berkeley street, boston, ma, 02116": {
+  "class": "place",
+  "display_name": "222, Berkeley Street, Newbury Street, Back Bay, Boston, Suffolk County, Massachusetts, 02116, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 42.3514077,
+  "lon": -71.0730278,
+  "query": "222 BERKELEY STREET, BOSTON, MA, 02116",
+  "type": "house"
+ },
+ "fwd:2225 lawson lane, santa clara, ca, 95054": {
+  "class": "office",
+  "display_name": "ServiceNow, 2225, Lawson Lane, Santa Clara, Santa Clara County, California, 95054, United States",
+  "importance": 6.557488364991253e-05,
+  "lat": 37.3758244,
+  "lon": -121.9627088,
+  "query": "2225 LAWSON LANE, SANTA CLARA, CA, 95054",
+  "type": "it"
+ },
+ "fwd:225 west washington street, indianapolis, in, 46204-3438": {
+  "class": "amenity",
+  "display_name": "Cafe Patachou, 225, West Washington Street, Indianapolis, Marion County, Indiana, 46204, United States",
+  "importance": 7.400396734564762e-05,
+  "lat": 39.7669316,
+  "lon": -86.1619915,
+  "query": "225 WEST WASHINGTON STREET, INDIANAPOLIS, IN, 46204-3438",
+  "type": "restaurant"
+ },
+ "fwd:22777 springwoods village parkway, spring, tx, 77389": {
+  "class": "amenity",
+  "display_name": "Chick-fil-A, 22777, Springwoods Village Parkway, Springwood, Spring, Harris County, Texas, 77389, United States",
+  "importance": 5.6797894254932744e-05,
+  "lat": 30.1032424,
+  "lon": -95.4461518,
+  "query": "22777 SPRINGWOODS VILLAGE PARKWAY, SPRING, TX, 77389",
+  "type": "fast_food"
+ },
+ "fwd:230 park avenue south, new york, ny, 10003": {
+  "class": "building",
+  "display_name": "230, Park Avenue South, Union Square, Manhattan Community Board 5, Manhattan, New York County, New York, 10003, United States",
+  "importance": 9.175936522464359e-05,
+  "lat": 40.737711,
+  "lon": -73.9886942,
+  "query": "230 PARK AVENUE SOUTH, NEW YORK, NY, 10003",
+  "type": "commercial"
+ },
+ "fwd:2300 oracle way, austin, tx, 78741": {
+  "class": "place",
+  "display_name": "2300, Oracle Way, Lakeshore, Austin, Travis County, Texas, 78741, United States",
+  "importance": 7.494392309448413e-05,
+  "lat": 30.243505,
+  "lon": -97.721831,
+  "query": "2300 ORACLE WAY, AUSTIN, TX, 78741",
+  "type": "house"
+ },
+ "fwd:233 s patterson ave, springfield, mo, 65802": {
+  "class": "place",
+  "display_name": "233, South Patterson Avenue, Bingham, Springfield, Greene County, Missouri, 65802, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 37.2088686,
+  "lon": -93.248021,
+  "query": "233 S PATTERSON AVE, SPRINGFIELD, MO, 65802",
+  "type": "house"
+ },
+ "fwd:2331 citywest blvd., houston, tx, 77042": {
+  "class": "building",
+  "display_name": "Phillips 66 HQ, 2331, Citywest Boulevard, Westchase, Houston, Harris County, Texas, 77042, United States",
+  "importance": 7.782024872201141e-05,
+  "lat": 29.740843,
+  "lon": -95.5614946,
+  "query": "2331 CITYWEST BLVD., HOUSTON, TX, 77042",
+  "type": "office"
+ },
+ "fwd:240 greenwich street, new york, ny, 10286": {
+  "class": "place",
+  "display_name": "240, Greenwich Street, Tribeca, Lower Manhattan, Manhattan, New York County, New York, 10007, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 40.714195,
+  "lon": -74.011673,
+  "query": "240 GREENWICH STREET, NEW YORK, NY, 10286",
+  "type": "house"
+ },
+ "fwd:2485 augustine drive, santa clara, ca, 95054": {
+  "class": "office",
+  "display_name": "Advanced Micro Devices, 2485, Augustine Drive, Santa Clara, Santa Clara County, California, 95054, United States",
+  "importance": 0.60678957241416,
+  "lat": 37.3829605,
+  "lon": -121.9703774,
+  "query": "2485 AUGUSTINE DRIVE, SANTA CLARA, CA, 95054",
+  "type": "company"
+ },
+ "fwd:25 gresham street, london, x0, ec2v 7hn": null,
+ "fwd:26, chin 3rd rd., nanzih district, kaohsiung, 811": null,
+ "fwd:26/f tower one, times square, 1 matheson street, causeway bay, 00000": null,
+ "fwd:2655 seely avenue bldg 5, san jose, ca, 95134": null,
+ "fwd:270 park avenue, new york, ny, 10017": {
+  "class": "office",
+  "display_name": "270 Park Avenue, 270, Park Avenue, Midtown East, Manhattan Community Board 5, Manhattan, New York County, New York, 10017, United States",
+  "importance": 0.45005934006990783,
+  "lat": 40.7559787,
+  "lon": -73.9759701,
+  "query": "270 PARK AVENUE, NEW YORK, NY, 10017",
+  "type": "company"
+ },
+ "fwd:2700 coast avenue, mountain view, ca, 94043": {
+  "class": "highway",
+  "display_name": "2700 Coast Avenue, Bill Campbill Way, Mountain View, Santa Clara County, California, 94043, United States",
+  "importance": 2.8699931334355954e-05,
+  "lat": 37.4304208,
+  "lon": -122.0968582,
+  "query": "2700 COAST AVENUE, MOUNTAIN VIEW, CA, 94043",
+  "type": "bus_stop"
+ },
+ "fwd:2727 north loop west, houston, tx, 77008-1044": {
+  "class": "place",
+  "display_name": "2727, North Loop West, Houston, Harris County, Texas, 77092, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 29.8067209,
+  "lon": -95.4458767,
+  "query": "2727 NORTH LOOP WEST, HOUSTON, TX, 77008-1044",
+  "type": "house"
+ },
+ "fwd:2788 san tomas expressway, santa clara, ca, 95051": {
+  "class": "building",
+  "display_name": "NVIDIA Endeavor, 2788, San Tomas Expressway, Santa Clara, Santa Clara County, California, 95051, United States",
+  "importance": 6.557488364991253e-05,
+  "lat": 37.3705437,
+  "lon": -121.9670806,
+  "query": "2788 SAN TOMAS EXPRESSWAY, SANTA CLARA, CA, 95051",
+  "type": "yes"
+ },
+ "fwd:2980 fairview park drive, c/o northrop grumman corp, falls church, va, 22042": null,
+ "fwd:30 hudson yards, new york, ny, 10001": {
+  "class": "office",
+  "display_name": "30 Hudson Yards, 30, 10th Avenue, Chelsea District, Manhattan Community Board 4, Manhattan, New York County, New York, 10001, United States",
+  "importance": 0.44483426465222636,
+  "lat": 40.753983,
+  "lon": -74.0006028,
+  "query": "30 HUDSON YARDS, NEW YORK, NY, 10001",
+  "type": "yes"
+ },
+ "fwd:30 ivan allen jr. blvd., n.w., atlanta, ga, 30308": null,
+ "fwd:30 pembroke road, eaton house, dublin, l2, dublin 4": null,
+ "fwd:300 e. rio salado parkway, tempe, az, 85281": {
+  "class": "place",
+  "display_name": "300, East Rio Salado Parkway, Tempe, Maricopa County, Arizona, 85281, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 33.4301646,
+  "lon": -111.9347975,
+  "query": "300 E. RIO SALADO PARKWAY, TEMPE, AZ, 85281",
+  "type": "house"
+ },
+ "fwd:300 north commons blvd., mayfield village, oh, 44143": null,
+ "fwd:300 park ave, new york, ny, 10022": {
+  "class": "building",
+  "display_name": "Colgate-Palmolive Building, 300, Park Avenue, Midtown East, Manhattan Community Board 5, Manhattan, New York County, New York, 10022, United States",
+  "importance": 9.175936522464359e-05,
+  "lat": 40.7570541,
+  "lon": -73.9747565,
+  "query": "300 PARK AVE, NEW YORK, NY, 10022",
+  "type": "commercial"
+ },
+ "fwd:3000 schwab way, westlake, tx, 76262": {
+  "class": "highway",
+  "display_name": "Schwab Way, Westlake, Denton County, Texas, 76262, United States",
+  "importance": 0.05338901274128325,
+  "lat": 32.9949352,
+  "lon": -97.2171139,
+  "query": "3000 SCHWAB WAY, WESTLAKE, TX, 76262",
+  "type": "tertiary"
+ },
+ "fwd:3000 tannery way, santa clara, ca, 95054": {
+  "class": "building",
+  "display_name": "3000, Tannery Way, Santa Clara, Santa Clara County, California, 95089, United States",
+  "importance": 6.557488364991253e-05,
+  "lat": 37.3834303,
+  "lon": -121.9827445,
+  "query": "3000 TANNERY WAY, SANTA CLARA, CA, 95054",
+  "type": "commercial"
+ },
+ "fwd:303 2nd street, south tower, 8th floor, san francisco, ca, 94107": null,
+ "fwd:3050 bowers ave, santa clara, ca, 95054-3299": {
+  "class": "place",
+  "display_name": "3050, Bowers Avenue, Santa Clara, Santa Clara County, California, 95054, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 37.376829,
+  "lon": -121.97789,
+  "query": "3050 BOWERS AVE, SANTA CLARA, CA, 95054-3299",
+  "type": "house"
+ },
+ "fwd:33 boulevard prince henri, luxembourg": {
+  "class": "office",
+  "display_name": "The Office Suits, 33, Boulevard Prince Henri, Ville-Haute, Luxembourg, Canton Luxembourg, 1724, L\u00ebtzebuerg",
+  "importance": 7.156710154874522e-05,
+  "lat": 49.6097733,
+  "lon": 6.1248147,
+  "query": "33 BOULEVARD PRINCE HENRI, LUXEMBOURG",
+  "type": "coworking"
+ },
+ "fwd:333 lakeside dr, foster city, ca, 94404": {
+  "class": "place",
+  "display_name": "333, Lakeside Drive, Foster City, San Mateo County, California, 94404, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 37.568163,
+  "lon": -122.283238,
+  "query": "333 LAKESIDE DR, FOSTER CITY, CA, 94404",
+  "type": "house"
+ },
+ "fwd:333 market street, san francisco, ca, 94105": {
+  "class": "building",
+  "display_name": "333 Market, 333, Market Street, Transbay, Financial District, South of Market, San Francisco, California, 94105, United States",
+  "importance": 0.32316133360556143,
+  "lat": 37.7919383,
+  "lon": -122.3974036,
+  "query": "333 MARKET STREET, SAN FRANCISCO, CA, 94105",
+  "type": "office"
+ },
+ "fwd:3421 hillview avenue, palo alto, ca, 94304": {
+  "class": "highway",
+  "display_name": "3421 Hillview Avenue, Hillview Avenue, Palo Alto, Santa Clara County, California, 94304, United States",
+  "importance": 6.655451285568044e-05,
+  "lat": 37.3990267,
+  "lon": -122.1444156,
+  "query": "3421 HILLVIEW AVENUE, PALO ALTO, CA, 94304",
+  "type": "bus_stop"
+ },
+ "fwd:345 park ave, san jose, ca, 95110-2704": {
+  "class": "place",
+  "display_name": "345, Park Avenue, Buena Vista, San Jose, Santa Clara County, California, 95110, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 37.3294709,
+  "lon": -121.8947723,
+  "query": "345 PARK AVE, SAN JOSE, CA, 95110-2704",
+  "type": "house"
+ },
+ "fwd:345 park avenue, new york, ny, 10154": {
+  "class": "building",
+  "display_name": "345 Park Avenue, 345, Park Avenue, Midtown East, Manhattan Community Board 5, Manhattan, New York County, New York, 10154, United States",
+  "importance": 0.4114290048959136,
+  "lat": 40.7577559,
+  "lon": -73.9722731,
+  "query": "345 PARK AVENUE, NEW YORK, NY, 10154",
+  "type": "commercial"
+ },
+ "fwd:3555 farnam street, omaha, ne, 68131": {
+  "class": "building",
+  "display_name": "Kiewit Plaza, 3555, Farnam Street, Blackstone, Omaha, Douglas County, Nebraska, 68131, United States",
+  "importance": 7.01800564583355e-05,
+  "lat": 41.2574068,
+  "lon": -95.9653894,
+  "query": "3555 FARNAM STREET, OMAHA, NE, 68131",
+  "type": "office"
+ },
+ "fwd:358 hall ave, wallingford, ct, 06492": {
+  "class": "building",
+  "display_name": "Amphenol Corporation, 358, Hall Avenue, Wallingford, South Central Connecticut Planning Region, Connecticut, 06492, United States",
+  "importance": 5.726176852059232e-05,
+  "lat": 41.4603453,
+  "lon": -72.8330835,
+  "query": "358 HALL AVE, WALLINGFORD, CT, 06492",
+  "type": "commercial"
+ },
+ "fwd:383 madison avenue, floor 11, new york, ny, 10179": null,
+ "fwd:385 washington st, saint paul, mn, 55102": {
+  "class": "place",
+  "display_name": "385, Washington Street, Downtown, Saint Paul, Ramsey County, Minnesota, 55102, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 44.9456951,
+  "lon": -93.0973803,
+  "query": "385 WASHINGTON ST, SAINT PAUL, MN, 55102",
+  "type": "house"
+ },
+ "fwd:388 greenwich street, new york, ny, 10013": {
+  "class": "building",
+  "display_name": "388, Greenwich Street, Lower Manhattan, Manhattan, New York County, New York, 10013, United States",
+  "importance": 0.34223694096820295,
+  "lat": 40.7206458,
+  "lon": -74.0111721,
+  "query": "388 GREENWICH STREET, NEW YORK, NY, 10013",
+  "type": "office"
+ },
+ "fwd:3m center, bldg. 220-9e-02, st paul, mn, 55144-1000": null,
+ "fwd:4-5, marunouchi 1-chome, chiyoda-ku, tokyo, m0, 100-8330": null,
+ "fwd:40 temperance street, toronto, a6, m5h 0b4": null,
+ "fwd:400 4 avenue sw, calgary, t2p 0j4": {
+  "class": "highway",
+  "display_name": "4 Avenue SW, Downtown Commercial Core, Calgary, Alberta, T2P 0J7, Canada",
+  "importance": 0.05340748226138701,
+  "lat": 51.0495947,
+  "lon": -114.0714934,
+  "query": "400 4 AVENUE SW, CALGARY, T2P 0J4",
+  "type": "secondary"
+ },
+ "fwd:410 terry avenue north, seattle, wa, 98109": {
+  "class": "office",
+  "display_name": "Amazon.com Invictus, 410, Terry Avenue North, South Lake Union, Cascade, Belltown, Seattle, King County, Washington, 98109, United States",
+  "importance": 7.72983901731444e-05,
+  "lat": 47.622298,
+  "lon": -122.3365001,
+  "query": "410 TERRY AVENUE NORTH, SEATTLE, WA, 98109",
+  "type": "company"
+ },
+ "fwd:43-120 collins street, melbourne, victoria 3000, c3, australia": null,
+ "fwd:4340 e. cotton center blvd., suite 110, phoenix, az, 85040": null,
+ "fwd:4500 dorr street, toledo, oh, 43615": {
+  "class": "place",
+  "display_name": "4500, Dorr Street, Inverness Village, Reynolds Corners, Toledo, Lucas County, Ohio, 43607, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 41.6529667,
+  "lon": -83.6486488,
+  "query": "4500 DORR STREET, TOLEDO, OH, 43615",
+  "type": "house"
+ },
+ "fwd:46 avenue de la grande armee, paris, i0, 75017": null,
+ "fwd:4650 cushing blvd, fremont, ca, 94538": null,
+ "fwd:50 hudson yards, new york, ny, 10001": {
+  "class": "building",
+  "display_name": "50 Hudson Yards, 50, 10th Avenue, Chelsea District, Manhattan Community Board 4, Manhattan, New York County, New York, 10001, United States",
+  "importance": 9.175936522464359e-05,
+  "lat": 40.7545193,
+  "lon": -74.0001188,
+  "query": "50 HUDSON YARDS, NEW YORK, NY, 10001",
+  "type": "commercial"
+ },
+ "fwd:50 northern avenue, boston, ma, 02210": {
+  "class": "building",
+  "display_name": "Vertex, 50, Northern Avenue, Seaport, Boston, Suffolk County, Massachusetts, 02210, United States",
+  "importance": 8.102616922250732e-05,
+  "lat": 42.3535931,
+  "lon": -71.0461764,
+  "query": "50 NORTHERN AVENUE, BOSTON, MA, 02210",
+  "type": "commercial"
+ },
+ "fwd:500 jackson st, box 3005 mail code 93050, columbus, in, 47202-3005": null,
+ "fwd:500 south buena vista street, burbank, ca, 91521": {
+  "class": "place",
+  "display_name": "500, South Buena Vista Street, Burbank, Los Angeles County, California, 91521, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 34.1551262,
+  "lon": -118.3265025,
+  "query": "500 SOUTH BUENA VISTA STREET, BURBANK, CA, 91521",
+  "type": "house"
+ },
+ "fwd:500 w. monroe st., chicago, il, 60661": {
+  "class": "place",
+  "display_name": "500, West Monroe Street, West Loop Gate, West Loop, Near West Side, Chicago, West Chicago Township, Cook County, Illinois, 60661, United States",
+  "importance": 8.51537346455637e-05,
+  "lat": 41.8807756,
+  "lon": -87.6406322,
+  "query": "500 W. MONROE ST., CHICAGO, IL, 60661",
+  "type": "house"
+ },
+ "fwd:500 water street, 15th floor, jacksonville, fl, 32202": null,
+ "fwd:505 n. cleveland ave., westerville, oh, 43082": {
+  "class": "place",
+  "display_name": "505, North Cleveland Avenue, Westerville, Delaware County, Ohio, 43082, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 40.139365,
+  "lon": -82.9472421,
+  "query": "505 N. CLEVELAND AVE., WESTERVILLE, OH, 43082",
+  "type": "house"
+ },
+ "fwd:5130 hacienda drive, dublin, ca, 94568": {
+  "class": "place",
+  "display_name": "5130, Hacienda Drive, Dublin, Alameda County, California, 94568, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 37.7113719,
+  "lon": -121.8881625,
+  "query": "5130 HACIENDA DRIVE, DUBLIN, CA, 94568",
+  "type": "house"
+ },
+ "fwd:5205 n. o'connor boulevard, suite 100, irving, tx, 75039": null,
+ "fwd:525 south tryon street, charlotte, nc, 28202-1803": {
+  "class": "building",
+  "display_name": "Duke Energy Plaza, 525, South Tryon Street, Uptown, Charlotte, Mecklenburg County, North Carolina, 28202, United States",
+  "importance": 7.101625085827447e-05,
+  "lat": 35.2232869,
+  "lon": -80.8474645,
+  "query": "525 SOUTH TRYON STREET, CHARLOTTE, NC, 28202-1803",
+  "type": "office"
+ },
+ "fwd:539 south main street, findlay, oh, 45840-3229": {
+  "class": "place",
+  "display_name": "539, South Main Street, Marathon Petroleum Corporation, Findlay, Hancock County, Ohio, 45840, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 41.036497,
+  "lon": -83.6501626,
+  "query": "539 SOUTH MAIN STREET, FINDLAY, OH, 45840-3229",
+  "type": "house"
+ },
+ "fwd:5453 great america parkway, santa clara, ca, 95054": {
+  "class": "office",
+  "display_name": "Arista Networks, 5453, Great America Parkway, Santa Clara, Santa Clara County, California, 95054, United States",
+  "importance": 0.306026056337308,
+  "lat": 37.4120263,
+  "lon": -121.9759495,
+  "query": "5453 GREAT AMERICA PARKWAY, SANTA CLARA, CA, 95054",
+  "type": "company"
+ },
+ "fwd:55 glenlake parkway ne, atlanta, ga, 30328": {
+  "class": "office",
+  "display_name": "UPS Corporate Headquarters, 55, Glenlake Parkway Northeast, Atlanta, Fulton County, Georgia, 30328, United States",
+  "importance": 5.885175860222808e-05,
+  "lat": 33.9434971,
+  "lon": -84.3595029,
+  "query": "55 GLENLAKE PARKWAY NE, ATLANTA, GA, 30328",
+  "type": "company"
+ },
+ "fwd:55 water street, new york, ny, 10041": {
+  "class": "building",
+  "display_name": "55 Water Street, 55, Water Street, Financial District, Manhattan, New York County, New York, 10004, United States",
+  "importance": 0.39238421350124,
+  "lat": 40.7032255,
+  "lon": -74.0090671,
+  "query": "55 WATER STREET, NEW YORK, NY, 10041",
+  "type": "yes"
+ },
+ "fwd:5599 san felipe, 17th floor, houston, tx, 77056": null,
+ "fwd:5601 great oaks parkway, san jose, ca, 95119": {
+  "class": "place",
+  "display_name": "5601, Great Oaks Parkway, San Jose, Santa Clara County, California, 95119, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 37.25065,
+  "lon": -121.795226,
+  "query": "5601 GREAT OAKS PARKWAY, SAN JOSE, CA, 95119",
+  "type": "house"
+ },
+ "fwd:5660 new northside drive,, third floor, atlanta, ga, 30328": null,
+ "fwd:5775 morehouse dr, san diego, ca, 92121": {
+  "class": "building",
+  "display_name": "Qualcomm N, 5775, Morehouse Drive, Barnes Canyon, Sorrento Mesa, San Diego, San Diego County, California, 92121, United States",
+  "importance": 7.728007934686836e-05,
+  "lat": 32.8959414,
+  "lon": -117.1958195,
+  "query": "5775 MOREHOUSE DR, SAN DIEGO, CA, 92121",
+  "type": "commercial"
+ },
+ "fwd:58 charles street, cambridge, ma, 02141": {
+  "class": "building",
+  "display_name": "58;78, Charles Street, East Cambridge, Cambridge, Middlesex County, Massachusetts, 02141, United States",
+  "importance": 7.142824444948528e-05,
+  "lat": 42.3673664,
+  "lon": -71.0800055,
+  "query": "58 CHARLES STREET, CAMBRIDGE, MA, 02141",
+  "type": "office"
+ },
+ "fwd:6 carlton gardens, stirling square, london, x0, sw1y 5ad": null,
+ "fwd:6 st james's square, london, sw1y 4ad, x0, 00000": null,
+ "fwd:6-6, marunouchi 1-chome, chiyoda-ku, tokyo japan, m0, 100-8280": null,
+ "fwd:6035 parkland boulevard, cleveland, oh, 44124-4141": null,
+ "fwd:620 eighth avenue, 45th floor, new york, ny, 10018": null,
+ "fwd:650 w peachtree street nw, atlanta, ga, 30308": {
+  "class": "place",
+  "display_name": "650, West Peachtree Street Northwest, Old Fourth Ward, Atlanta, Fulton County, Georgia, 30308, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 33.772442,
+  "lon": -84.387448,
+  "query": "650 W PEACHTREE STREET NW, ATLANTA, GA, 30308",
+  "type": "house"
+ },
+ "fwd:6555 state highway 161, irving, tx, 75039": {
+  "class": "highway",
+  "display_name": "State Highway 161, Irving, Dallas County, Texas, 75063, United States",
+  "importance": 0.05339500038147551,
+  "lat": 32.9100395,
+  "lon": -96.944288,
+  "query": "6555 STATE HIGHWAY 161, IRVING, TX, 75039",
+  "type": "secondary"
+ },
+ "fwd:66 hudson boulevard east, new york, ny, 10001-2192": {
+  "class": "place",
+  "display_name": "66, Hudson Boulevard East, Chelsea District, Manhattan Community Board 4, Manhattan, New York County, New York, 10199, United States",
+  "importance": 9.175936522464359e-05,
+  "lat": 40.7552308,
+  "lon": -73.999549,
+  "query": "66 HUDSON BOULEVARD EAST, NEW YORK, NY, 10001-2192",
+  "type": "house"
+ },
+ "fwd:66 wellington street west, 12th floor, td tower, toronto, ontario, a6, m5k 1a2": null,
+ "fwd:6601 west broad street, richmond, va, 23230": {
+  "class": "highway",
+  "display_name": "West Broad Street, Sauer's Garden, Richmond, Virginia, 23230, United States",
+  "importance": 0.053374048218509156,
+  "lat": 37.5756531,
+  "lon": -77.4863219,
+  "query": "6601 WEST BROAD STREET, RICHMOND, VA, 23230",
+  "type": "primary"
+ },
+ "fwd:675 almanor ave, sunnyvale, ca, 94085": {
+  "class": "building",
+  "display_name": "Synopsys Building 6, 675, Almanor Avenue, Sunnyvale, Santa Clara County, California, 94085, United States",
+  "importance": 0.48911692341970003,
+  "lat": 37.3980452,
+  "lon": -122.0323385,
+  "query": "675 ALMANOR AVE, SUNNYVALE, CA, 94085",
+  "type": "yes"
+ },
+ "fwd:677 washington blvd, ste. 1100, stamford, ct, 06901": {
+  "class": "highway",
+  "display_name": "Washington Boulevard, Northfield, Stamford, Western Connecticut Planning Region, Connecticut, 06902, United States",
+  "importance": 0.05339634317540242,
+  "lat": 41.056787,
+  "lon": -73.5430911,
+  "query": "677 WASHINGTON BLVD, STE. 1100, STAMFORD, CT, 06901",
+  "type": "primary"
+ },
+ "fwd:6800 cintas blvd, p o box 625737, cincinnati, oh, 45262": null,
+ "fwd:6801 rockledge dr, bethesda, md, 20817": {
+  "class": "place",
+  "display_name": "6801, Rockledge Drive, North Bethesda, Montgomery County, Maryland, 20817, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 39.0303212,
+  "lon": -77.1371162,
+  "query": "6801 ROCKLEDGE DR, BETHESDA, MD, 20817",
+  "type": "house"
+ },
+ "fwd:6900 e layton ave, suite 700, denver, co, 80237": null,
+ "fwd:7 world trade center, at 250 greenwich street, new york, ny, 10007": null,
+ "fwd:700 anderson hill rd, purchase, ny, 10577": {
+  "class": "building",
+  "display_name": "PepsiCo Headquarters, 700, Anderson Hill Road, Purchase, Town/Village of Harrison, Westchester County, New York, 10577, United States",
+  "importance": 0.578393530913351,
+  "lat": 41.0348634,
+  "lon": -73.6928308,
+  "query": "700 ANDERSON HILL RD, PURCHASE, NY, 10577",
+  "type": "office"
+ },
+ "fwd:700 universe blvd, juno beach, fl, 33408": {
+  "class": "office",
+  "display_name": "Florida Power and Light (FPL), 700, Universe Boulevard, Juno Beach, Palm Beach County, Florida, 33408, United States",
+  "importance": 5.2134737163302316e-05,
+  "lat": 26.8593958,
+  "lon": -80.0584184,
+  "query": "700 UNIVERSE BLVD, JUNO BEACH, FL, 33408",
+  "type": "yes"
+ },
+ "fwd:7310 north 16th st., suite 135, phoenix, az, 85020": null,
+ "fwd:7550 ogden dale road s.e., calgary alberta, a0, t2c 4x9": null,
+ "fwd:770 cochituate rd, framingham, ma, 01701": {
+  "class": "highway",
+  "display_name": "Cochituate Road, Framingham, Middlesex County, Massachusetts, 01701, United States",
+  "importance": 0.053389261463340165,
+  "lat": 42.303475,
+  "lon": -71.4006629,
+  "query": "770 COCHITUATE RD, FRAMINGHAM, MA, 01701",
+  "type": "primary"
+ },
+ "fwd:7750 wisconsin avenue, bethesda, md, 20814": {
+  "class": "building",
+  "display_name": "Marriott International Headquarters, 7750, Wisconsin Avenue, Downtown Bethesda, Bethesda, Montgomery County, Maryland, 20814, United States",
+  "importance": 6.485313191419879e-05,
+  "lat": 38.9876218,
+  "lon": -77.0954899,
+  "query": "7750 WISCONSIN AVENUE, BETHESDA, MD, 20814",
+  "type": "commercial"
+ },
+ "fwd:777 old saw mill river road, tarrytown, ny, 10591": {
+  "class": "building",
+  "display_name": "777, Old Saw Mill River Road, Regeneron Tarrytown Campus, Eastview, Village of Tarrytown, Town of Greenburgh, Westchester County, New York, 10591, United States",
+  "importance": 5.328374151212356e-05,
+  "lat": 41.0783771,
+  "lon": -73.8235844,
+  "query": "777 OLD SAW MILL RIVER ROAD, TARRYTOWN, NY, 10591",
+  "type": "yes"
+ },
+ "fwd:79 new oxford street, london, wc1a 1dg": {
+  "class": "highway",
+  "display_name": "New Oxford Street, St Giles, Bloomsbury, London Borough of Camden, Greater London, England, WC1A 1HB, United Kingdom",
+  "importance": 0.053426412603952055,
+  "lat": 51.5167434,
+  "lon": -0.1280625,
+  "query": "79 NEW OXFORD STREET, LONDON, WC1A 1DG",
+  "type": "primary"
+ },
+ "fwd:7930 jones branch drive, suite 1100, mclean, va, 22102": null,
+ "fwd:8 canada square, london, x0, e145hq": null,
+ "fwd:800 capitol street, ste 3000, houston, tx, 77002": null,
+ "fwd:800 connecticut ave, norwalk, ct, 06854": {
+  "class": "place",
+  "display_name": "800, Connecticut Avenue, Norwalk, Western Connecticut Planning Region, Connecticut, 06854, United States",
+  "importance": 6.300984206907786e-05,
+  "lat": 41.0932565,
+  "lon": -73.4541467,
+  "query": "800 CONNECTICUT AVE, NORWALK, CT, 06854",
+  "type": "house"
+ },
+ "fwd:8027 forsyth blvd, st louis, mo, 63105": {
+  "class": "highway",
+  "display_name": "Forsyth Boulevard, Wydown Skinker, Clayton, Saint Louis County, Missouri, 63105, United States",
+  "importance": 0.05340832455939571,
+  "lat": 38.6461998,
+  "lon": -90.3034052,
+  "query": "8027 FORSYTH BLVD, ST LOUIS, MO, 63105",
+  "type": "secondary"
+ },
+ "fwd:81 bay street, cibc square, toronto, a6, m5j 0e7": null,
+ "fwd:8111 westchester drive, suite 600, dallas, tx, 75225": null,
+ "fwd:85 willow road, menlo park, ca, 94025": {
+  "class": "place",
+  "display_name": "85, Willow Road, Menlo Park, San Mateo County, California, 94025, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 37.4525071,
+  "lon": -122.1671573,
+  "query": "85 WILLOW ROAD, MENLO PARK, CA, 94025",
+  "type": "house"
+ },
+ "fwd:888 brannan st., san francisco, ca, 94103": {
+  "class": "office",
+  "display_name": "Airbnb, 888, Brannan Street, West SoMa, South of Market, San Francisco, California, 94103, United States",
+  "importance": 0.532519024899363,
+  "lat": 37.7719568,
+  "lon": -122.4054484,
+  "query": "888 BRANNAN ST., SAN FRANCISCO, CA, 94103",
+  "type": "company"
+ },
+ "fwd:9 west 57th street, 42nd floor, new york, ny, 10019": null,
+ "fwd:900 cottage grove road, bloomfield, ct, 06002": {
+  "class": "office",
+  "display_name": "The Cigna Group, 900, Cottage Grove Road, Bloomfield, Capitol Planning Region, Connecticut, 06002, United States",
+  "importance": 6.9572747386847e-05,
+  "lat": 41.8129234,
+  "lon": -72.7432083,
+  "query": "900 COTTAGE GROVE ROAD, BLOOMFIELD, CT, 06002",
+  "type": "insurance"
+ },
+ "fwd:905 west fulton market, suite 200, chicago, il, 60607": null,
+ "fwd:909 kifer road, sunnyvale, ca, 94086": {
+  "class": "highway",
+  "display_name": "Kifer Road, Sunnyvale, Santa Clara County, California, 94086, United States",
+  "importance": 0.05339516365300981,
+  "lat": 37.3770239,
+  "lon": -122.0195761,
+  "query": "909 KIFER ROAD, SUNNYVALE, CA, 94086",
+  "type": "secondary"
+ },
+ "fwd:925 n. eldridge parkway, houston, tx, 77079": {
+  "class": "place",
+  "display_name": "925, North Eldridge Parkway, Energy Corridor, Houston, Harris County, Texas, 77079, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 29.7832208,
+  "lon": -95.6177711,
+  "query": "925 N. ELDRIDGE PARKWAY, HOUSTON, TX, 77079",
+  "type": "house"
+ },
+ "fwd:929 long bridge drive, arlington, va, 22202": {
+  "class": "building",
+  "display_name": "Boeing, 929, Long Bridge Drive, National Landing, Crystal City, Arlington, Arlington County, Virginia, 22202, United States",
+  "importance": 6.485313191419879e-05,
+  "lat": 38.8645633,
+  "lon": -77.0501894,
+  "query": "929 LONG BRIDGE DRIVE, ARLINGTON, VA, 22202",
+  "type": "office"
+ },
+ "fwd:935 de la gauchetiere st w, montreal quebec, canada, a8, h3b 2m9": null,
+ "fwd:942 south shady grove road, memphis, tn, 38120-": {
+  "class": "office",
+  "display_name": "FedEx Corporate Headquarters, 942, South Shady Grove Road, White Station, River Oaks, Memphis, Shelby County, West Tennessee, Tennessee, 38120, United States",
+  "importance": 7.276951247420488e-05,
+  "lat": 35.105625,
+  "lon": -89.8582318,
+  "query": "942 SOUTH SHADY GROVE ROAD, MEMPHIS, TN, 38120-",
+  "type": "company"
+ },
+ "fwd:951 sandisk drive, milpitas, ca, 95035": {
+  "class": "place",
+  "display_name": "951, SanDisk Drive, Milpitas, Santa Clara County, California, 95035, United States",
+  "importance": 9.99999999995449e-06,
+  "lat": 37.4179087,
+  "lon": -121.9215515,
+  "query": "951 SANDISK DRIVE, MILPITAS, CA, 95035",
+  "type": "house"
+ },
+ "fwd:999 lake drive, issaquah, wa, 98027-": {
+  "class": "office",
+  "display_name": "Costco Corporate Building 1, 999, Lake Drive, Costco Corporate Campus, Issaquah, King County, Washington, 98027, United States",
+  "importance": 5.5864042114854924e-05,
+  "lat": 47.5486034,
+  "lon": -122.0506179,
+  "query": "999 LAKE DRIVE, ISSAQUAH, WA, 98027-",
+  "type": "company"
+ },
+ "fwd:am campeon 1-12, neubiberg, munich, 2m, d-85579": null,
+ "fwd:avenida republica do chile 65, rio de janerio rj br": null,
+ "fwd:bahnhofstrasse 45, zurich, ch-8001": {
+  "class": "place",
+  "display_name": "45, Bahnhofstrasse, Lindenhof, Altstadt, Z\u00fcrich, Bezirk Z\u00fcrich, Z\u00fcrich, 8001, Schweiz/Suisse/Svizzera/Svizra",
+  "importance": 7.85145342183111e-05,
+  "lat": 47.3719906,
+  "lon": 8.5382867,
+  "query": "BAHNHOFSTRASSE 45, ZURICH, CH-8001",
+  "type": "house"
+ },
+ "fwd:bank of america corporate center, 100 n tryon st, charlotte, nc, 28255": {
+  "class": "amenity",
+  "display_name": "Bank of America, 100, North Tryon Street, Uptown, Charlotte, Mecklenburg County, North Carolina, 28202, United States",
+  "importance": 7.101625085827447e-05,
+  "lat": 35.2273122,
+  "lon": -80.8422255,
+  "query": "BANK OF AMERICA CORPORATE CENTER, 100 N TRYON ST, CHARLOTTE, NC, 28255",
+  "type": "bank"
+ },
+ "fwd:barengasse 32, zurich, v8, ch-8001": null,
+ "fwd:brookfield place, 181 bay st, ste 100, po box 762, toronto, a6, m5j2t3": null,
+ "fwd:brookfield place, 225 liberty street, 8th floor, new york, ny": null,
+ "fwd:brookfield place, td canada trust tower, 161 bay street suite 3700, toronto, m5j 2s1": null,
+ "fwd:brouwerijplein 1, leuven": {
+  "class": "place",
+  "display_name": "1, Brouwerijplein, Tweewaters, Leuven, Vlaams-Brabant, Vlaanderen, 3000, Belgi\u00eb / Belgique / Belgien",
+  "importance": 6.952849622334657e-05,
+  "lat": 50.8866229,
+  "lon": 4.706972,
+  "query": "BROUWERIJPLEIN 1, LEUVEN",
+  "type": "house"
+ },
+ "fwd:building two parkmore business park west, galway, h91 4k49": null,
+ "fwd:calle azul 4, madrid, u3, 28050": null,
+ "fwd:ciudad grupo santander, boadilla del monte, madrid, u3, 28660": null,
+ "fwd:de run 6501, dr veldhoven, p7, 5504": null,
+ "fwd:deutsche bank ag - legal department, 1 columbus circle, 19th floor, new york, ny, 10019": null,
+ "fwd:dietmar-hopp-allee 16, walldorf, 2m, 69190": null,
+ "fwd:dr. luis bonavita 1294 of. 1733 tower ii, montevideo, x3, 11300": null,
+ "fwd:first floor, 25 st stephen's green, dublin 2": null,
+ "fwd:forge, 43 church street west, woking surrey, x0, gu216ht": null,
+ "fwd:forusbeen 50, stavanger norway, q8, n 4035": null,
+ "fwd:friedrich-ebert-allee 140, bonn, 53113": {
+  "class": "office",
+  "display_name": "Deutsche Telekom AG, 140, Friedrich-Ebert-Allee, Gronau, Stadtbezirk Bonn, Bonn, Nordrhein-Westfalen, 53113, Deutschland",
+  "importance": 7.564583810173216e-05,
+  "lat": 50.7076148,
+  "lon": 7.1288609,
+  "query": "FRIEDRICH-EBERT-ALLEE 140, BONN, 53113",
+  "type": "telecommunication"
+ },
+ "fwd:globe house, 4 temple place, london": {
+  "class": "office",
+  "display_name": "British American Tobacco, 4, Temple Place, St Clement Danes, Covent Garden, City of Westminster, Greater London, England, WC2R 2PG, United Kingdom",
+  "importance": 0.5406616007746948,
+  "lat": 51.511797,
+  "lon": -0.1130734,
+  "query": "GLOBE HOUSE, 4 TEMPLE PLACE, LONDON",
+  "type": "company"
+ },
+ "fwd:gogarburn, po box 1000, edinburgh, scotland, x0, eh12 1hq": null,
+ "fwd:lichtstrasse 35, basel, v8, ch 4056": null,
+ "fwd:lilly corporate ctr, drop code 1094, indianapolis, in, 46285": null,
+ "fwd:midea new headquarter building, no. 6, midea avenue, beijiao town, shunde dist, foshan, guangdong, f4, 528311": null,
+ "fwd:no. 2 xingang road, fujian, 352100": null,
+ "fwd:novo alle dk 2880, bagsvaerd denmark, g7, 00000": null,
+ "fwd:one adp boulvard, roseland, nj, 07068": null,
+ "fwd:one albert quay, albert quay, cork, l2, 00000": null,
+ "fwd:one amgen center drive, thousand oaks, ca, 91320": {
+  "class": "highway",
+  "display_name": "Amgen Center Drive, Newbury Park, Thousand Oaks, Ventura County, California, 91320, United States",
+  "importance": 0.053387969024185515,
+  "lat": 34.1910399,
+  "lon": -118.9206609,
+  "query": "ONE AMGEN CENTER DRIVE, THOUSAND OAKS, CA, 91320",
+  "type": "unclassified"
+ },
+ "fwd:one apple park way, cupertino, ca, 95014": {
+  "class": "highway",
+  "display_name": "Apple Park Way, Cupertino, Santa Clara County, California, 95014, United States",
+  "importance": 0.05339264591439685,
+  "lat": 37.3350144,
+  "lon": -122.0131527,
+  "query": "ONE APPLE PARK WAY, CUPERTINO, CA, 95014",
+  "type": "unclassified"
+ },
+ "fwd:one coca cola plaza, atlanta, ga, 30313": {
+  "class": "building",
+  "display_name": "One Coca-Cola Plaza, 1, PATH Parkway, Atlanta, Fulton County, Georgia, 30313, United States",
+  "importance": 7.908064393067854e-05,
+  "lat": 33.7708677,
+  "lon": -84.3966253,
+  "query": "ONE COCA COLA PLAZA, ATLANTA, GA, 30313",
+  "type": "yes"
+ },
+ "fwd:one comcast center, philadelphia, pa, 19103-2838": null,
+ "fwd:one cvs dr., woonsocket, ri, 02895": {
+  "class": "highway",
+  "display_name": "CVS Drive, Woonsocket, Providence County, Rhode Island, 02895, United States",
+  "importance": 0.053382932021057414,
+  "lat": 41.9919663,
+  "lon": -71.4770385,
+  "query": "ONE CVS DR., WOONSOCKET, RI, 02895",
+  "type": "residential"
+ },
+ "fwd:one dell way, round rock, tx, 78682": {
+  "class": "highway",
+  "display_name": "Dell Way, Dell Technologies - Round Rock Campus, Round Rock, Williamson County, Texas, 78682, United States",
+  "importance": 0.05339597848477909,
+  "lat": 30.4871269,
+  "lon": -97.6674084,
+  "query": "ONE DELL WAY, ROUND ROCK, TX, 78682",
+  "type": "tertiary"
+ },
+ "fwd:one john deere place, moline, il, 61265-8098": null,
+ "fwd:one johnson & johnson plz, new brunswick, nj, 08933": null,
+ "fwd:one lagoon drive, redwood city, ca, 94065": {
+  "class": "highway",
+  "display_name": "Lagoon Drive, Redwood City, San Mateo County, California, 94064, United States",
+  "importance": 0.053388876935988365,
+  "lat": 37.5275451,
+  "lon": -122.2618297,
+  "query": "ONE LAGOON DRIVE, REDWOOD CITY, CA, 94065",
+  "type": "residential"
+ },
+ "fwd:one microsoft way, redmond, wa, 98052-6399": {
+  "class": "building",
+  "display_name": "Microsoft Building 1, 15975, NE One Microsoft Way, Microsoft Redmond East Campus, Overlake, Redmond, King County, Washington, 98052, United States",
+  "importance": 6.192492561222275e-05,
+  "lat": 47.6411813,
+  "lon": -122.1266792,
+  "query": "ONE MICROSOFT WAY, REDMOND, WA, 98052-6399",
+  "type": "yes"
+ },
+ "fwd:one park plz, nashville, tn, 37203": {
+  "class": "highway",
+  "display_name": "Park Plaza, Nashville, Davidson County, Middle Tennessee, Tennessee, 37203, United States",
+  "importance": 0.05340808194094755,
+  "lat": 36.1509307,
+  "lon": -86.8166674,
+  "query": "ONE PARK PLZ, NASHVILLE, TN, 37203",
+  "type": "residential"
+ },
+ "fwd:one pickwick plaza, greenwich, ct, 06830": null,
+ "fwd:one procter & gamble plaza, cincinnati, oh, 45202": {
+  "class": "building",
+  "display_name": "One Procter & Gamble Plaza, 1, Procter & Gamble Plaza, Procter & Gamble General Office, Central Business District, Cincinnati, Hamilton County, Ohio, 45202, United States",
+  "importance": 7.314335851067395e-05,
+  "lat": 39.10304,
+  "lon": -84.5075818,
+  "query": "ONE PROCTER & GAMBLE PLAZA, CINCINNATI, OH, 45202",
+  "type": "office"
+ },
+ "fwd:one riverfront plaza, corning, ny, 14831": null,
+ "fwd:one technology drive, milpitas, ca, 95035": {
+  "class": "highway",
+  "display_name": "Technology Drive, Milpitas, Santa Clara County, California, 95134, United States",
+  "importance": 0.053390553902494815,
+  "lat": 37.4206902,
+  "lon": -121.9225038,
+  "query": "ONE TECHNOLOGY DRIVE, MILPITAS, CA, 95035",
+  "type": "tertiary"
+ },
+ "fwd:one williams ctr, tulsa, ok, 74172": null,
+ "fwd:p o box 34067, seattle, wa, 98124-1067": null,
+ "fwd:p.o. box 2844, 150 - 6th avenue s.w., calgary, a0, t2p 3e3": null,
+ "fwd:p.o. box 660199, dallas, tx, 75266": null,
+ "fwd:p.o. box 696000, san antonio, tx, 78269-6000": null,
+ "fwd:p.o. box 8999, san francisco, ca, 94128-8999": null,
+ "fwd:pc. alfredo egydio de souza aranha, 100, torre ae, 3 andar, cep 04344-902, sao paulo, d5, 00000": null,
+ "fwd:piazzale enrico mattei 1, rome italy, 00144": null,
+ "fwd:pier 1 bay 1, san francisco, ca, 94111": null,
+ "fwd:po box 1800, amsterdam, p7, 1000 bv": null,
+ "fwd:rm 802, 8/f, china life centre, tower a, one harbourgate, no. 18 hung luen road, kowloon, hong kong, 000000": null,
+ "fwd:route 206 and province line road, princeton, nj, 08543": null,
+ "fwd:royal bank plaza, 200 bay street, toronto, m5j 2j5": null,
+ "fwd:shell centre, 2 york road, london, se1 7na": null,
+ "fwd:shin-marunouchi center building, 1-6-2 marunouchi,, chiyoda-ku, tokyo 100-0005, m0, 00000": null,
+ "fwd:suite 3500, 1021 west hastings streeet, vancouver, a1, v6e 0c3": null,
+ "fwd:the tower at pnc plaza, 300 fifth avenue, pittsburgh, pa, 15222-2401": null,
+ "fwd:u.s. bancorp, 200 s. sixth st., minneapolis, mn, 55402": null,
+ "fwd:unilever house, 100 victoria embankment, london, ec4y 0dy": {
+  "class": "office",
+  "display_name": "Unilever, 100, Victoria Embankment, Blackfriars, City of London, Greater London, England, EC4Y 0HQ, United Kingdom",
+  "importance": 9.307927061870783e-05,
+  "lat": 51.5117203,
+  "lon": -0.1050384,
+  "query": "UNILEVER HOUSE, 100 VICTORIA EMBANKMENT, LONDON, EC4Y 0DY",
+  "type": "company"
+ },
+ "fwd:via abetone inferiore n. 4, maranello, l6, i-41053": null,
+ "fwd:werner-von-siemens-strasse 1, munich, 2m, 80333": null,
+ "rev:29.75558,-95.37181": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Houston, Harris County, Texas, United States",
+  "lat": 29.755578,
+  "lon": -95.3718129,
+  "state": "Texas"
+ },
+ "rev:30.10324,-95.44615": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Harris County, Texas, United States",
+  "lat": 30.1032424,
+  "lon": -95.4461518,
+  "state": "Texas"
+ },
+ "rev:30.22193,-97.61877": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Travis County, Texas, United States",
+  "lat": 30.2219321,
+  "lon": -97.6187733,
+  "state": "Texas"
+ },
+ "rev:30.24350,-97.72183": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Austin, Travis County, Texas, United States",
+  "lat": 30.243505,
+  "lon": -97.721831,
+  "state": "Texas"
+ },
+ "rev:30.48713,-97.66741": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Round Rock, Williamson County, Texas, United States",
+  "lat": 30.4871269,
+  "lon": -97.6674084,
+  "state": "Texas"
+ },
+ "rev:33.77087,-84.39663": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Atlanta, Fulton County, Georgia, United States",
+  "lat": 33.7708677,
+  "lon": -84.3966253,
+  "state": "Georgia"
+ },
+ "rev:34.19104,-118.92066": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Thousand Oaks, Ventura County, California, United States",
+  "lat": 34.1910399,
+  "lon": -118.9206609,
+  "state": "California"
+ },
+ "rev:35.22731,-80.84223": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Charlotte, Mecklenburg County, North Carolina, United States",
+  "lat": 35.2273122,
+  "lon": -80.8422255,
+  "state": "North Carolina"
+ },
+ "rev:36.36434,-94.19473": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Bentonville, Benton County, Arkansas, United States",
+  "lat": 36.3643435,
+  "lon": -94.1947297,
+  "state": "Arkansas"
+ },
+ "rev:37.25692,-121.96394": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Los Gatos, Santa Clara County, California, United States",
+  "lat": 37.2569243,
+  "lon": -121.9639389,
+  "state": "California"
+ },
+ "rev:37.33501,-122.01315": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Cupertino, Santa Clara County, California, 95014, United States",
+  "lat": 37.3350144,
+  "lon": -122.0131527,
+  "state": "California"
+ },
+ "rev:37.37054,-121.96708": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Santa Clara, Santa Clara County, California, United States",
+  "lat": 37.3705437,
+  "lon": -121.9670806,
+  "state": "California"
+ },
+ "rev:37.37683,-121.97789": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Santa Clara, Santa Clara County, California, United States",
+  "lat": 37.376829,
+  "lon": -121.97789,
+  "state": "California"
+ },
+ "rev:37.38296,-121.97038": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Santa Clara, Santa Clara County, California, United States",
+  "lat": 37.3829605,
+  "lon": -121.9703774,
+  "state": "California"
+ },
+ "rev:37.38343,-121.98274": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Santa Clara, Santa Clara County, California, United States",
+  "lat": 37.3834303,
+  "lon": -121.9827445,
+  "state": "California"
+ },
+ "rev:37.39903,-122.14442": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Palo Alto, Santa Clara County, California, United States",
+  "lat": 37.3990267,
+  "lon": -122.1444156,
+  "state": "California"
+ },
+ "rev:37.40836,-121.95409": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "San Jose, Santa Clara County, California, United States",
+  "lat": 37.4083584,
+  "lon": -121.9540909,
+  "state": "California"
+ },
+ "rev:37.41203,-121.97595": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Santa Clara, Santa Clara County, California, United States",
+  "lat": 37.4120263,
+  "lon": -121.9759495,
+  "state": "California"
+ },
+ "rev:37.41791,-121.92155": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Milpitas, Santa Clara County, California, 95035, United States",
+  "lat": 37.4179087,
+  "lon": -121.9215515,
+  "state": "California"
+ },
+ "rev:37.42069,-121.92250": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Milpitas, Santa Clara County, California, 95035, United States",
+  "lat": 37.4206902,
+  "lon": -121.9225038,
+  "state": "California"
+ },
+ "rev:37.42249,-122.08558": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Mountain View, Santa Clara County, California, United States",
+  "lat": 37.4224858,
+  "lon": -122.0855846,
+  "state": "California"
+ },
+ "rev:37.48105,-122.15906": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Menlo Park, San Mateo County, California, 94025, United States",
+  "lat": 37.4810509,
+  "lon": -122.1590645,
+  "state": "California"
+ },
+ "rev:37.79194,-122.39740": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "San Francisco, California, United States",
+  "lat": 37.7919383,
+  "lon": -122.3974036,
+  "state": "California"
+ },
+ "rev:38.89407,-77.06911": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Arlington, Arlington County, Virginia, 22209, United States",
+  "lat": 38.8940736,
+  "lon": -77.0691107,
+  "state": "Virginia"
+ },
+ "rev:39.10304,-84.50758": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Cincinnati, Hamilton County, Ohio, United States",
+  "lat": 39.10304,
+  "lon": -84.5075818,
+  "state": "Ohio"
+ },
+ "rev:39.23918,-84.44899": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Evendale, Hamilton County, Ohio, United States",
+  "lat": 39.2391796,
+  "lon": -84.4489878,
+  "state": "Ohio"
+ },
+ "rev:40.71472,-74.01443": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Manhattan, New York County, New York, United States",
+  "lat": 40.7147237,
+  "lon": -74.0144315,
+  "state": "New York"
+ },
+ "rev:40.72065,-74.01117": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Manhattan, New York County, New York, United States",
+  "lat": 40.7206458,
+  "lon": -74.0111721,
+  "state": "New York"
+ },
+ "rev:40.75598,-73.97597": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Manhattan, New York County, New York, United States",
+  "lat": 40.7559787,
+  "lon": -73.9759701,
+  "state": "New York"
+ },
+ "rev:40.75998,-73.98552": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Manhattan, New York County, New York, United States",
+  "lat": 40.7599838,
+  "lon": -73.9855237,
+  "state": "New York"
+ },
+ "rev:41.02538,-73.71316": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Town/Village of Harrison, Westchester County, New York, United States",
+  "lat": 41.0253802,
+  "lon": -73.7131634,
+  "state": "New York"
+ },
+ "rev:41.05679,-73.54309": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Stamford, Western Connecticut Planning Region, Connecticut, United States",
+  "lat": 41.056787,
+  "lon": -73.5430911,
+  "state": "Connecticut"
+ },
+ "rev:41.11340,-73.72036": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Town of North Castle, Westchester County, New York, 10504, United States",
+  "lat": 41.1134016,
+  "lon": -73.720356,
+  "state": "New York"
+ },
+ "rev:41.25741,-95.96539": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Omaha, Douglas County, Nebraska, United States",
+  "lat": 41.2574068,
+  "lon": -95.9653894,
+  "state": "Nebraska"
+ },
+ "rev:42.30156,-87.89025": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Lake County, Illinois, United States",
+  "lat": 42.3015593,
+  "lon": -87.8902499,
+  "state": "Illinois"
+ },
+ "rev:42.36737,-71.08001": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Cambridge, Middlesex County, Massachusetts, United States",
+  "lat": 42.3673664,
+  "lon": -71.0800055,
+  "state": "Massachusetts"
+ },
+ "rev:42.39227,-71.26119": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Waltham, Middlesex County, Massachusetts, United States",
+  "lat": 42.3922706,
+  "lon": -71.2611867,
+  "state": "Massachusetts"
+ },
+ "rev:47.54860,-122.05062": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Issaquah, King County, Washington, United States",
+  "lat": 47.5486034,
+  "lon": -122.0506179,
+  "state": "Washington"
+ },
+ "rev:47.62230,-122.33650": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Seattle, King County, Washington, United States",
+  "lat": 47.622298,
+  "lon": -122.3365001,
+  "state": "Washington"
+ },
+ "rev:47.64118,-122.12668": {
+  "country": "United States",
+  "country_code": "us",
+  "display_name": "Redmond, King County, Washington, 98052, United States",
+  "lat": 47.6411813,
+  "lon": -122.1266792,
+  "state": "Washington"
+ }
+}

@@ -1,0 +1,106 @@
+{
+  "created_utc": "2026-08-30T23:36:34Z",
+  "generator": "fetch_esg_data.py",
+  "sources": {
+    "climatetrace": {
+      "files": {
+        "processed\\climatetrace_sources.csv": {
+          "rows": 78924,
+          "sha256": "51562c7cc35f65a139e2b631baf611b7d276e5cabe791c5d08e4d1420b69aee2",
+          "size_bytes": 13246375
+        },
+        "processed\\climatetrace_top_sources.csv": {
+          "rows": 2000,
+          "sha256": "f91bf51199c15b0e5f7ef9d39723564a4e86ae26abe5f1d7c9f15a0dd432dc11",
+          "size_bytes": 328740
+        }
+      }
+    },
+    "climatetrace_AUS": {
+      "endpoint": "https://api.climatetrace.org/v7/sources",
+      "gas": "co2e_100yr",
+      "matched_columns": {
+        "emissions": "emissionsQuantity",
+        "id": "id",
+        "lat": "centroid.latitude",
+        "lon": "centroid.longitude",
+        "name": "name",
+        "owner": null,
+        "sector": "sector"
+      },
+      "method": "api",
+      "requests": 159,
+      "retrieved_utc": "2026-08-31T00:02:44Z",
+      "year": 2024
+    },
+    "edgar": {
+      "failures": [],
+      "files": {
+        "processed\\edgar_companies.csv": {
+          "rows": 250,
+          "sha256": "7ac79b68c331e2b6ed88334029d68a4865c4d7213cc9b715c8c8195cc63177f1",
+          "size_bytes": 43025
+        },
+        "processed\\edgar_ticker_cik.csv": {
+          "rows": 10391,
+          "sha256": "16c838ff63ea3888cf36526b9803f652dbcefe0de2a69e3e6f521512ab233435",
+          "size_bytes": 396305
+        }
+      },
+      "n_requested": 250,
+      "n_retrieved": 250,
+      "retrieved_utc": "2026-08-31T00:12:57Z",
+      "submissions_url": "https://data.sec.gov/submissions/CIK{cik:010d}.json",
+      "tickers_url": "https://www.sec.gov/files/company_tickers.json"
+    },
+    "nominatim": {
+      "files": {
+        "processed\\geocode_cache.json": {
+          "rows": 290,
+          "sha256": "28c2a019ebc77f836e7ab4b5baa021109482ecb6df5642fcbaf291376196524b",
+          "size_bytes": 65159
+        },
+        "processed\\geocoded_addresses.csv": {
+          "rows": 127,
+          "sha256": "c6012c8ace15eb27d0842892cd3e7d940406ca02666ddb1e0478b8332b75d232",
+          "size_bytes": 27128
+        }
+      },
+      "licence": "ODbL",
+      "n_cached": 290,
+      "provider": "Nominatim / OpenStreetMap",
+      "rate_limit_s": 1.1,
+      "retrieved_utc": "2026-08-31T00:18:33Z",
+      "source_file": "C:\\Users\\Vitali\\Desktop\\Dropbox\\UTS\\Projects\\PYTHON\\_TEACHING\\_SANDBOX 2026\\data\\processed\\edgar_companies.csv"
+    },
+    "worldbank": {
+      "api": "https://api.worldbank.org/v2 via wbgapi",
+      "database": 75,
+      "database_name": "Environment, Social and Governance (ESG) Data",
+      "files": {
+        "processed\\worldbank_countries.csv": {
+          "rows": 260,
+          "sha256": "c15fbe33ffafb4b8c75f64861f1033074b682543a0e0be81c0243d0328ccc39b",
+          "size_bytes": 14449
+        },
+        "processed\\worldbank_esg_indicators.csv": {
+          "rows": 80,
+          "sha256": "65eb638429906ebc31056320a2cf6a76626435a716403ed15226b450bd3aae18",
+          "size_bytes": 5863
+        },
+        "processed\\worldbank_esg_panel.csv": {
+          "rows": 6760,
+          "sha256": "df88f59c0b95f0df3705f560d64bdd1fd3d1bc5ca4a179dccacb1ebf6d985b9c",
+          "size_bytes": 4154071
+        }
+      },
+      "n_indicators": 80,
+      "retrieved_utc": "2026-08-31T00:11:13Z",
+      "years": [
+        2000,
+        2025
+      ]
+    }
+  },
+  "updated_utc": "2026-08-31T00:18:33Z"
+}
