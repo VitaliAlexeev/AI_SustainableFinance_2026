@@ -16,8 +16,16 @@ spacy
 pyLDAvis
 missingno
 statsmodels
-geopy
 folium
 cvxpy
 riskfolio-lib
+scipy>=1.11
+ipywidgets>=8.0         # optional; notebooks fall back to plain variables
 
+# Data fetching 
+requests>=2.31
+wbgapi>=1.0.12          # World Bank API wrapper (database 75 = sovereign ESG)
+geopy>=2.4              # Nominatim client with a built-in rate limiter
+
+# Optional, faster string matching for entity resolution
+rapidfuzz>=3.6
