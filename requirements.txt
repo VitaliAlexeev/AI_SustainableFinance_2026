@@ -29,3 +29,14 @@ geopy>=2.4              # Nominatim client with a built-in rate limiter
 
 # Optional, faster string matching for entity resolution
 rapidfuzz>=3.6
+
+# For lecture 8 on setellite image analysis
+xarray 
+dask 
+rasterio 
+rioxarray 
+pystac-client 
+odc-stac 
+odc-geo 
+ipyleaflet
+earthengine-api
