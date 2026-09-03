@@ -60,6 +60,7 @@ __all__ = [
     "FIRE_PARAMETERS_INDICATIVE",
     "aef_dequantise", "aef_quantise", "aef_check_unit_norm", "aef_load_index",
     "aef_find_tiles", "aef_tile_url", "aef_read_window", "demo_embedding",
+    "_install_arrow_legacy_shim", "AEF_INDEX_MIRROR", "AEF_INDEX_COLUMNS",
     "AEF_HTTPS", "AEF_ROOT", "AEF_INDEX_URL", "AEF_YEARS", "AEF_BANDS",
     "AEF_SCALE", "AEF_POWER", "AEF_NODATA", "AEF_ATTRIBUTION",
 ]
@@ -884,36 +885,146 @@ def aef_check_unit_norm(cube, axis: int = 0, tol: float = 0.02):
     return med, frac
 
 
-def aef_load_index(cache_path: str = "aef_index_slim.parquet",
-                   year: Optional[int] = None, force: bool = False):
-    """Load the AlphaEarth tile index, keeping only the columns we need.
+def _install_arrow_legacy_shim(verbose: bool = False) -> bool:
+    """Work around ArrowKeyError: No type extension with name arrow.py_extension_type.
 
-    The published index is 66 MB and 302,466 rows across all years, with a
-    geometry column that dominates the file size. We read only the seven useful
-    columns, optionally filter to one year, and cache the result to disk so the
-    notebook is offline-capable after the first run.
+    That message is raised by ``pyarrow.unregister_extension_type`` when nothing
+    is registered under the legacy name. It is usually triggered by
+    ``pyarrow_hotfix``, a shim that unregisters the old PyExtensionType to block
+    arbitrary code execution, running against a pyarrow new enough to have
+    removed PyExtensionType altogether. Nothing is wrong with the file.
+
+    Registering a harmless stub under that name makes the unregister call
+    succeed, so the read proceeds. Idempotent, and safe to call repeatedly.
     """
     try:
-        import pandas as pd                                  # noqa: PLC0415
+        import pyarrow as pa                                  # noqa: PLC0415
+    except ImportError:
+        return False
+    name = "arrow.py_extension_type"
+
+    class _LegacyStub(pa.ExtensionType):
+        def __init__(self, storage_type=pa.binary()):
+            super().__init__(storage_type, name)
+
+        def __arrow_ext_serialize__(self):
+            return b""
+
+        @classmethod
+        def __arrow_ext_deserialize__(cls, storage_type, serialized):
+            return cls(storage_type)
+
+    try:
+        pa.register_extension_type(_LegacyStub())
+        if verbose:
+            print(f"Registered a stub for {name!r}.")
+        return True
+    except pa.lib.ArrowKeyError:
+        return True          # already registered, which is what we wanted
+    except Exception as exc:                                  # noqa: BLE001
+        if verbose:
+            print(f"Could not register the shim: {type(exc).__name__}: {exc}")
+        return False
+
+
+AEF_INDEX_COLUMNS = ("path", "year", "utm_zone", "crs",
+                     "wgs84_west", "wgs84_south", "wgs84_east", "wgs84_north")
+
+#: Optional slim mirror of the tile index, held in the teaching repository.
+#: Set this once you have built one with `build_aef_index_mirror.py`; it removes
+#: the 66 MB download, the fsspec dependency and the pyarrow extension problem
+#: from the students' path entirely.
+AEF_INDEX_MIRROR = ("https://raw.githubusercontent.com/VitaliAlexeev/"
+                    "AI_SustainableFinance_2026/main/data/aef_index_slim.parquet")
+
+
+def aef_load_index(cache_path: str = "aef_index_slim.parquet",
+                   year: Optional[int] = None, force: bool = False,
+                   mirror_url: Optional[str] = None, verbose: bool = True):
+    """Load the AlphaEarth tile index, keeping only the columns we need.
+
+    Four sources are tried in order, so a failure in one does not end the lab:
+
+      1. a local slim cache written by an earlier run;
+      2. a slim mirror in the teaching repository, if one has been built;
+      3. the published 66 MB index, read over ranged HTTP with fsspec;
+      4. the same file, downloaded whole with the standard library.
+
+    Steps 3 and 4 install the legacy-extension shim first, because some
+    environments raise ArrowKeyError on any pyarrow read. See
+    `_install_arrow_legacy_shim`.
+    """
+    try:
+        import pandas as pd                                   # noqa: PLC0415
     except ImportError as exc:
         raise ImportError("aef_load_index needs pandas") from exc
 
     cache = pathlib.Path(cache_path)
+    cols = list(AEF_INDEX_COLUMNS)
+
+    def _finish(df):
+        df = df[[c for c in cols if c in df.columns]]
+        if not cache.exists() or force:
+            try:
+                df.to_parquet(cache, index=False)
+            except Exception:                                 # noqa: BLE001
+                pass
+        return df[df["year"] == year] if year is not None else df
+
+    # 1. local cache
     if cache.exists() and not force:
-        df = pd.read_parquet(cache)
-    else:
         try:
-            import fsspec                                    # noqa: PLC0415
-            import pyarrow.parquet as pq                     # noqa: PLC0415
-        except ImportError as exc:
-            raise ImportError("aef_load_index needs fsspec and pyarrow "
-                              "(pandas 3 already requires pyarrow)") from exc
-        cols = ["path", "year", "utm_zone", "crs",
-                "wgs84_west", "wgs84_south", "wgs84_east", "wgs84_north"]
+            return _finish(pd.read_parquet(cache))
+        except Exception as exc:                              # noqa: BLE001
+            if verbose:
+                print(f"Cache unreadable ({type(exc).__name__}); refetching.")
+
+    # 2. slim mirror
+    mirror = mirror_url or AEF_INDEX_MIRROR
+    if mirror:
+        try:
+            df = pd.read_parquet(mirror)
+            if verbose:
+                print(f"Loaded the slim index mirror ({len(df):,} rows).")
+            return _finish(df)
+        except Exception as exc:                              # noqa: BLE001
+            if verbose:
+                print(f"Mirror unavailable ({type(exc).__name__}); trying the "
+                      f"published index.")
+
+    _install_arrow_legacy_shim()
+
+    # 3. ranged read of the published index
+    try:
+        import fsspec                                         # noqa: PLC0415
+        import pyarrow.parquet as pq                          # noqa: PLC0415
         with fsspec.open(AEF_INDEX_URL) as fh:
             df = pq.ParquetFile(fh).read(columns=cols).to_pandas()
-        df.to_parquet(cache, index=False)
-    return df[df["year"] == year] if year is not None else df
+        if verbose:
+            print(f"Read the published index over HTTP ({len(df):,} rows).")
+        return _finish(df)
+    except Exception as exc:                                  # noqa: BLE001
+        if verbose:
+            print(f"Ranged read failed ({type(exc).__name__}: {str(exc)[:90]}).")
+            print("Falling back to a full download. This is about 66 MB, once.")
+
+    # 4. plain download, no fsspec and no aiohttp needed
+    import urllib.request                                     # noqa: PLC0415
+    raw = pathlib.Path("aef_index_full.parquet")
+    try:
+        if not raw.exists() or force:
+            urllib.request.urlretrieve(AEF_INDEX_URL, raw)
+        import pyarrow.parquet as pq                          # noqa: PLC0415
+        df = pq.ParquetFile(raw).read(columns=cols).to_pandas()
+        if verbose:
+            print(f"Downloaded and read the index ({len(df):,} rows).")
+        return _finish(df)
+    except Exception as exc:                                  # noqa: BLE001
+        raise RuntimeError(
+            f"Could not obtain the AlphaEarth tile index ({type(exc).__name__}: {exc}). "
+            f"Install pyarrow and fsspec[http], or build a slim mirror with "
+            f"build_aef_index_mirror.py and set esgsat.AEF_INDEX_MIRROR."
+        ) from exc
 
 
 def aef_find_tiles(index_df, lon: float, lat: float, year: Optional[int] = None):

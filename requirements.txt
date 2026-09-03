@@ -30,13 +30,42 @@ geopy>=2.4              # Nominatim client with a built-in rate limiter
 # Optional, faster string matching for entity resolution
 rapidfuzz>=3.6
 
-# For lecture 8 on setellite image analysis
-xarray 
-dask 
-rasterio 
-rioxarray 
-pystac-client 
-odc-stac 
-odc-geo 
+# ---------------------------------------------------------------------------
+# Lecture 8: satellite imagery and embeddings
+# ---------------------------------------------------------------------------
+xarray
+dask
+rasterio
+rioxarray
+pystac-client
+odc-stac
+odc-geo
 ipyleaflet
+
+# The three below were missing and broke the Binder build (1 September 2026).
+#
+# pyarrow      - needed to read the AlphaEarth tile index in 08c. pandas 3.x
+#                requires it anyway, but pandas 2.x does not, so on Binder it
+#                was simply absent. Pinned at >=14 because older releases carry
+#                the legacy PyExtensionType machinery that causes
+#                "ArrowKeyError: No type extension with name arrow.py_extension_type".
+# fsspec[http] - the [http] extra pulls in aiohttp, without which fsspec cannot
+#                open an https URL. The error message names requests and aiohttp
+#                but installing them directly is not enough; the extra is.
+# aiohttp      - listed explicitly as well, so the requirement is visible.
+pyarrow>=14
+fsspec[http]>=2024.6
+aiohttp>=3.9
+
+# NOT required. The Lecture 8 labs read AlphaEarth from public Google Cloud
+# Storage, which needs no account. Uncomment only if you add an Earth Engine
+# path, which would require every student to authenticate and register a
+# Cloud project.
 earthengine-api
+
+# If you ever see "ArrowKeyError: No type extension with name
+# arrow.py_extension_type found", check whether pyarrow_hotfix is present:
+#     pip show pyarrow_hotfix
+# It is a shim that unregisters the legacy extension type, and it fails against
+# a pyarrow new enough to have removed that type. esgsat installs a stub to
+# neutralise it, but uninstalling pyarrow_hotfix is the cleaner fix.
