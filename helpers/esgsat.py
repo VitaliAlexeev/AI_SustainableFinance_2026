@@ -970,7 +970,8 @@ def aef_read_window(tile_url: str, lon: float, lat: float, size_px: int = 256,
 
 def demo_embedding(labels, seed: int = 25881, n_bands: int = AEF_BANDS,
                    nodata_fraction: float = 0.03, noise: float = 0.9,
-                   smooth_px: int = 0, as_int8: bool = True):
+                   smooth_px: int = 0, as_int8: bool = True,
+                   noise_seed: Optional[int] = None):
     """Synthetic AlphaEarth-like embeddings, for the offline path.
 
     Each land-cover class gets a random unit direction in 64-space; pixels are
@@ -985,6 +986,9 @@ def demo_embedding(labels, seed: int = 25881, n_bands: int = AEF_BANDS,
     numbers. The offline path exists to test the code, not the claim.
     """
     rng = np.random.default_rng(seed)
+    # A separate stream for the noise, so two years can share class directions
+    # but differ in their realisation - which is what real change data looks like.
+    nrng = np.random.default_rng(seed if noise_seed is None else noise_seed)
     lab = np.asarray(labels)
     codes = np.unique(lab)
     directions = rng.normal(size=(len(codes), n_bands)).astype("float32")
@@ -997,7 +1001,7 @@ def demo_embedding(labels, seed: int = 25881, n_bands: int = AEF_BANDS,
         if not n:
             continue
         cube[:, sel] = directions[i][:, None]
-    eps = rng.normal(0, noise, size=(n_bands,) + lab.shape).astype("float32")
+    eps = nrng.normal(0, noise, size=(n_bands,) + lab.shape).astype("float32")
     if smooth_px > 1:
         eps = np.stack([_box_blur(e, smooth_px) * float(smooth_px) for e in eps])
     cube = cube + eps
@@ -1006,7 +1010,7 @@ def demo_embedding(labels, seed: int = 25881, n_bands: int = AEF_BANDS,
     q = aef_quantise(cube)
     if nodata_fraction > 0:
         h, w = lab.shape
-        mask = rng.random((h, w)) < nodata_fraction
+        mask = nrng.random((h, w)) < nodata_fraction
         q[:, mask] = AEF_NODATA
     return q if as_int8 else aef_dequantise(q)
 
