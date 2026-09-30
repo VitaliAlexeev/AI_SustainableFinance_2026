@@ -1,0 +1,2004 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clustering, and how to audit a label — Lecture 9 playground</title>
+<style>
+:root {
+  --paper: #F4F7FA; --sheet: #FFFFFF; --grid-minor: #E7EDF3; --grid-major: #D5DEE7;
+  --ink: #123F69; --text: #1F2E3C; --muted: #5A6A7A; --rule: #CBD5DF; --soft: #EAF0F6;
+  --flag: #B03A2E; --ethical: #3F7F0E; --default: #6B7785; --win: #7FB95B; --loss: #D98A7E;
+  --focus: #E69F00;
+  --ui: "Seravek", "Gill Sans Nova", "Gill Sans", "Segoe UI", Calibri, "Helvetica Neue", Arial, sans-serif;
+  --math: "Cambria Math", "STIX Two Math", "Latin Modern Math", Cambria, "Times New Roman", serif;
+  --base: 15px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0F1822; --sheet: #14202C; --grid-minor: #1B2937; --grid-major: #243646;
+    --ink: #A7C8E8; --text: #DCE5EE; --muted: #97A8B9; --rule: #2C3E50; --soft: #1A2836;
+    --flag: #E0786B; --ethical: #8FCB5E; --default: #9AA6B2; --win: #5E9A3C; --loss: #A9564A;
+    color-scheme: dark;
+  }
+}
+html.present { --base: 19px; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--paper); color: var(--text); }
+body { font-family: var(--ui); font-size: var(--base); line-height: 1.45; font-variant-numeric: tabular-nums; }
+h1, h2, h3 { color: var(--ink); font-weight: 600; line-height: 1.2; margin: 0; }
+p { margin: 0 0 0.6em; max-width: 68ch; }
+button, select, input { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+/* ---------- header and route */
+header { display: flex; align-items: flex-end; gap: 1.5rem; padding: 0.9rem 1.4rem 0.5rem; flex-wrap: wrap; }
+header .titles { flex: 1 1 auto; min-width: 16rem; }
+header h1 { font-size: 1.45em; letter-spacing: -0.01em; }
+header .sub { color: var(--muted); font-size: 0.86em; margin-top: 0.15rem; }
+.present-toggle { border: 1px solid var(--rule); background: var(--sheet); border-radius: 6px; padding: 0.3rem 0.7rem; cursor: pointer; font-size: 0.85em; }
+nav.route { display: flex; gap: 0; padding: 0.2rem 1.4rem 0.7rem; overflow-x: auto; }
+nav.route button {
+  flex: 1 0 auto; display: flex; flex-direction: column; align-items: flex-start; gap: 0.15rem;
+  background: none; border: 0; border-top: 3px solid var(--rule); padding: 0.45rem 0.9rem 0.2rem 0; cursor: pointer;
+  color: var(--muted); font-size: 0.86em; text-align: left; min-width: 6.2rem;
+}
+nav.route button .n { font-weight: 600; color: var(--muted); }
+nav.route button.visited { border-top-color: var(--ink); }
+nav.route button.visited .n::after { content: " \2713"; color: var(--ethical); }
+nav.route button[aria-current="step"] { border-top: 5px solid var(--ink); color: var(--ink); font-weight: 600; padding-top: 0.35rem; }
+nav.route button[aria-current="step"] .n { color: var(--ink); }
+
+/* ---------- module layout */
+main { padding: 0 1.4rem 1.4rem; }
+section.module { display: none; grid-template-columns: minmax(0, 1.62fr) minmax(18rem, 1fr); gap: 1.2rem; align-items: start; }
+section.module.active { display: grid; }
+.sheetcol { display: flex; flex-direction: column; gap: 0.8rem; min-width: 0; }
+.sheet { background: var(--sheet); border: 1px solid var(--rule); border-radius: 3px; padding: 0.35rem; }
+.sheet svg { display: block; width: 100%; height: auto; }
+.sheet .cap { font-size: 0.8em; color: var(--muted); padding: 0.1rem 0.35rem 0.25rem; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+.work { display: flex; flex-direction: column; gap: 0.75rem; min-width: 0; }
+.work h2 { font-size: 1.3em; }
+.lede { color: var(--text); }
+.predict { border-left: 3px solid var(--focus); padding: 0.1rem 0 0.1rem 0.7rem; color: var(--text); font-style: italic; }
+.controls { display: grid; grid-template-columns: auto 1fr; gap: 0.4rem 0.7rem; align-items: center; font-size: 0.92em; }
+.controls label { color: var(--muted); }
+.controls select, .controls input[type=number] { background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 0.22rem 0.4rem; min-width: 0; }
+.controls input[type=range] { width: 100%; accent-color: var(--ink); }
+.row { display: flex; gap: 0.4rem; flex-wrap: wrap; align-items: center; }
+.btn { border: 1px solid var(--ink); background: var(--sheet); color: var(--ink); border-radius: 4px; padding: 0.3rem 0.75rem; cursor: pointer; font-size: 0.92em; }
+.btn.primary { background: var(--ink); color: var(--sheet); }
+.btn:disabled { opacity: 0.45; cursor: default; }
+.check { display: inline-flex; align-items: center; gap: 0.35rem; color: var(--text); font-size: 0.92em; cursor: pointer; }
+.readout { background: var(--sheet); border: 1px solid var(--rule); border-radius: 3px; padding: 0.55rem 0.75rem; font-size: 0.92em; }
+.readout .big { font-size: 1.9em; color: var(--ink); font-weight: 600; line-height: 1.1; }
+.readout .kv { display: grid; grid-template-columns: 1fr auto; gap: 0.1rem 1rem; }
+.readout .kv span:nth-child(even) { text-align: right; font-weight: 600; color: var(--ink); }
+.readout .note { color: var(--muted); font-size: 0.9em; margin-top: 0.3rem; }
+.formula { font-family: var(--math); font-size: 1.08em; color: var(--text); margin: 0.2rem 0; }
+.formula i { font-style: italic; }
+.chip { display: inline-block; width: 0.8em; height: 0.8em; border-radius: 2px; vertical-align: -0.05em; margin-right: 0.25em; }
+.flag { color: var(--flag); font-weight: 600; }
+details { background: var(--sheet); border: 1px solid var(--rule); border-radius: 3px; padding: 0.45rem 0.75rem; }
+details > summary { cursor: pointer; color: var(--ink); font-weight: 600; }
+details ol { margin: 0.4rem 0 0.2rem; padding-left: 1.2rem; }
+details li { margin-bottom: 0.45rem; }
+details li details { border: 0; background: var(--soft); padding: 0.25rem 0.55rem; margin-top: 0.25rem; }
+details li details > summary { font-weight: 400; font-size: 0.9em; }
+details li details[open] > summary { color: var(--ethical); }
+.maths p { font-size: 0.95em; }
+.navline { display: flex; justify-content: space-between; gap: 0.5rem; margin-top: 0.2rem; }
+.list { margin: 0.2rem 0 0; padding-left: 1.1rem; font-size: 0.92em; }
+table.ct { border-collapse: collapse; font-size: 0.9em; width: 100%; }
+table.ct th, table.ct td { border: 1px solid var(--rule); padding: 0.22rem 0.45rem; text-align: right; }
+table.ct th { color: var(--muted); font-weight: 600; background: var(--soft); }
+table.ct td.l, table.ct th.l { text-align: left; }
+.legend { display: flex; gap: 0.9rem; flex-wrap: wrap; font-size: 0.82em; color: var(--muted); padding: 0.1rem 0.35rem 0.25rem; }
+.legend svg { width: 14px; height: 14px; vertical-align: -2px; display: inline; }
+.muted { color: var(--muted); }
+.tip { position: fixed; pointer-events: none; background: var(--ink); color: var(--sheet); font-size: 0.82em; padding: 0.25rem 0.5rem; border-radius: 3px; z-index: 5; display: none; max-width: 22rem; }
+
+/* ---------- svg */
+svg text { font-family: var(--ui); fill: var(--muted); font-size: 12px; }
+svg .axis line, svg .axis path { stroke: var(--rule); }
+svg .axis text { font-size: 11px; }
+svg .axlabel { fill: var(--ink); font-size: 12.5px; }
+svg .gminor { stroke: var(--grid-minor); stroke-width: 1; }
+svg .gmajor { stroke: var(--grid-major); stroke-width: 1; }
+svg .inkline { stroke: var(--ink); }
+svg .ink { fill: var(--ink); }
+svg .pt { cursor: pointer; }
+svg .bgpaper { fill: var(--sheet); }
+html.present svg text { font-size: 14px; }
+
+.row input[type=range] { flex: 1 1 8rem; width: auto; min-width: 7rem; }
+@media (min-width: 901px) {
+  .work { max-height: calc(100vh - 168px); overflow-y: auto; padding-right: 0.5rem; scrollbar-gutter: stable; }
+  .sheetcol svg { max-height: 31vh; }
+  .sheetcol > .sheet:first-child svg { max-height: 46vh; }
+  .sheetcol.agg > .sheet:first-child svg { max-height: 37vh; }
+  .sheetcol .dend svg { max-height: 38vh; }
+  html.present .work { max-height: none; overflow: visible; }
+  html.present .sheetcol svg, html.present .sheetcol > .sheet:first-child svg { max-height: none; }
+}
+@media (max-width: 900px) {
+  section.module.active { grid-template-columns: 1fr; }
+  .pair { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="titles">
+    <h1>Clustering, and how to audit a label</h1>
+    <div class="sub">A playground for Lecture 9 of AI-integrated Sustainable Finance (25881), UTS Business School</div>
+  </div>
+  <button class="present-toggle" id="presentToggle" aria-pressed="false">Presentation mode</button>
+</header>
+<nav class="route" id="route" aria-label="Modules"></nav>
+<main id="main"></main>
+<div class="tip" id="tip" role="status"></div>
+<script>
+/* Lecture 9 playground — algorithm library.
+   Runs unchanged in the browser and in Node, so every number the page shows can
+   be checked against scikit-learn and SciPy on identical data. */
+const L9 = (function () {
+  "use strict";
+
+  // ------------------------------------------------------------------ data
+  // Mindful Money (2026), Inside Australia's Super Funds, CC BY-NC 4.0.
+  // fund type and disclosure % as shown on mindfulmoney.nz/australia/funds.
+  const RAW = [
+    ["AMP", "Future Directions Balanced", "MySuper", 7.51, 3.26, 2.51, 1.15, 1.29, 1.08, 13.48, 73.51],
+    ["Australian Ethical", "Growth", "Ethical", 0.01, 1.12, 0.0, 0.0, 0.0, 0.0, 1.13, 79.25],
+    ["Australian Ethical", "MySuper Balanced", "MySuper", 0.01, 0.95, 0.0, 0.0, 0.0, 0.0, 0.96, 76.23],
+    ["Australian Retirement Trust", "Socially Conscious Balanced", "Ethical", 0.46, 0.43, 0.22, 0.0, 0.67, 0.0, 1.56, 55.82],
+    ["Australian Retirement Trust", "MySuper Lifecycle (under 50)", "MySuper", 6.06, 1.95, 2.9, 1.16, 1.1, 0.8, 10.19, 59.97],
+    ["AustralianSuper", "Socially Aware", "Ethical", 2.25, 2.43, 0.84, 0.47, 1.62, 1.08, 7.49, 64.44],
+    ["AustralianSuper", "MySuper Balanced", "MySuper", 7.04, 3.14, 2.58, 1.66, 1.37, 1.02, 12.81, 68.07],
+    ["Aware Super", "Balanced Socially Conscious", "Ethical", 0.17, 1.39, 0.09, 0.0, 0.96, 0.06, 2.65, 61.79],
+    ["Aware Super", "High Growth Socially Conscious", "Ethical", 0.21, 1.65, 0.11, 0.0, 1.13, 0.07, 3.15, 71.36],
+    ["Aware Super", "MySuper Lifecycle (under 55)", "MySuper", 4.99, 2.81, 2.39, 1.15, 1.14, 1.26, 10.86, 70.22],
+    ["CareSuper", "Sustainable Balanced", "Ethical", 2.62, 1.27, 1.96, 0.05, 0.37, 0.02, 3.91, 57.1],
+    ["CareSuper", "MySuper Balanced", "MySuper", 4.69, 1.91, 2.01, 1.16, 1.37, 0.42, 8.9, 56.97],
+    ["Cbus", "MySuper Growth", "MySuper", 4.11, 2.17, 1.99, 1.13, 1.03, 0.73, 8.87, 59.41],
+    ["Colonial First State", "Thrive+ Sustainable Growth", "Ethical", 1.4, 3.64, 0.0, 0.0, 0.49, 0.0, 4.12, 79.24],
+    ["Colonial First State", "MySuper Lifestage 2005-2009", "MySuper", 8.45, 2.18, 3.77, 1.1, 1.57, 1.25, 13.53, 93.01],
+    ["HESTA", "MySuper Balanced Growth", "MySuper", 4.58, 2.45, 2.11, 0.86, 1.16, 0.61, 9.11, 62.69],
+    ["HESTA", "Sustainable Growth", "Ethical", 0.38, 2.08, 0.39, 0.2, 1.35, 0.19, 4.44, 67.59],
+    ["Hostplus", "MySuper Balanced", "MySuper", 4.03, 0.96, 1.44, 1.28, 1.09, 0.14, 6.83, 49.73],
+    ["Hostplus", "Socially Responsible Balanced", "Ethical", 0.02, 1.26, 0.02, 0.0, 0.46, 0.0, 1.74, 55.86],
+    ["Hostplus", "Socially Responsible High Growth", "Ethical", 0.03, 2.11, 0.04, 0.0, 0.77, 0.0, 2.91, 86.58],
+    ["Mercer Super", "MySuper SmartPath 1964-68", "MySuper", 5.69, 2.36, 2.64, 1.06, 1.5, 0.54, 10.54, 62.73],
+    ["Mercer Super", "Sustainable High Growth", "Ethical", 2.6, 4.62, 0.75, 0.0, 3.5, 0.52, 11.39, 84.84],
+    ["MLC", "MySuper Growth (under 55)", "MySuper", 6.22, 2.68, 3.35, 1.0, 1.62, 0.92, 11.62, 72.65],
+    ["MLC", "Socially Responsible Growth", "Ethical", 7.25, 3.41, 3.67, 0.0, 1.87, 0.78, 12.7, 87.79],
+    ["Rest", "MySuper Growth", "MySuper", 5.92, 2.19, 2.47, 1.17, 1.34, 0.82, 10.88, 65.48],
+    ["Rest", "Sustainable Growth", "Ethical", 0.19, 0.69, 0.33, 0.25, 1.39, 0.49, 3.06, 78.35],
+    ["UniSuper", "MySuper Balanced", "MySuper", 2.35, 2.23, 0.61, 1.38, 0.69, 0.88, 7.01, 80.47],
+    ["UniSuper", "Sustainable Balanced", "Ethical", 0.18, 2.29, 0.43, 0.0, 1.81, 0.17, 4.53, 89.97],
+    ["UniSuper", "Sustainable High Growth", "Ethical", 0.14, 3.12, 0.62, 0.0, 2.55, 0.22, 6.17, 95.39],
+    ["Vanguard Super", "MySuper Lifecycle (High Growth)", "MySuper", 5.4, 3.73, 1.18, 1.35, 2.03, 0.86, 12.26, 92.62],
+    ["Vanguard Super", "Ethically Conscious Growth", "Ethical", 0.15, 2.76, 0.77, 0.0, 1.13, 0.02, 4.54, 98.32],
+  ];
+  const DIMS = ["fossil", "human_rights", "env_harm", "social_harm", "animal", "weapons"];
+  const DIM_LABEL = {
+    fossil: "Fossil fuels", human_rights: "Human rights", env_harm: "Environmental harm",
+    social_harm: "Social harm", animal: "Animal cruelty", weapons: "Weapons", total: "Total",
+  };
+  const DIM_KIND = {
+    fossil: "sector", social_harm: "sector", weapons: "sector",
+    human_rights: "conduct", env_harm: "mixed", animal: "mixed",
+  };
+  const SHORT = {
+    "Australian Retirement Trust": "ART", "Colonial First State": "CFS", "Vanguard Super": "Vanguard",
+    "Mercer Super": "Mercer", "Australian Ethical": "Aust. Ethical", "AustralianSuper": "AustSuper",
+  };
+  const PANEL = RAW.map((r, i) => {
+    const o = { id: i, fund: r[0], option: r[1], type: r[2], total: r[9], disclosure: r[10] };
+    DIMS.forEach((d, j) => { o[d] = r[3 + j]; });
+    o.name = r[0] + " \u2014 " + r[1];
+    o.short = (SHORT[r[0]] || r[0]) + " \u2014 " + r[1];
+    o.ethical = r[2] === "Ethical" ? 1 : 0;
+    return o;
+  });
+  const LABEL = PANEL.map((p) => p.ethical);
+
+  // ------------------------------------------------------------------ random
+  function rng(seed) {                       // mulberry32
+    let a = (seed >>> 0) || 1;
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function randn(r) {
+    let u = 0, v = 0;
+    while (u === 0) u = r();
+    while (v === 0) v = r();
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+  }
+  function shuffled(arr, r) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(r() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  // ------------------------------------------------------------------ basics
+  const sum = (a) => a.reduce((s, v) => s + v, 0);
+  const mean = (a) => sum(a) / a.length;
+  function percentile(a, q) {               // numpy 'linear'
+    const s = a.slice().sort((x, y) => x - y);
+    const p = q * (s.length - 1), lo = Math.floor(p), hi = Math.ceil(p);
+    return s[lo] + (s[hi] - s[lo]) * (p - lo);
+  }
+  function column(X, j) { return X.map((r) => r[j]); }
+  function dist(a, b) {
+    let s = 0;
+    for (let i = 0; i < a.length; i++) { const d = a[i] - b[i]; s += d * d; }
+    return Math.sqrt(s);
+  }
+  function pairwise(X) {
+    const n = X.length, D = Array.from({ length: n }, () => new Float64Array(n));
+    for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) { D[i][j] = D[j][i] = dist(X[i], X[j]); }
+    return D;
+  }
+
+  /* Scaling, matching scikit-learn: StandardScaler (ddof 0), MinMaxScaler,
+     RobustScaler (median, 25-75 IQR). A zero spread is replaced by 1. */
+  function scale(X, how) {
+    if (how === "none") return X.map((r) => r.slice());
+    const m = X[0].length, centre = [], spread = [];
+    for (let j = 0; j < m; j++) {
+      const c = column(X, j);
+      if (how === "standard") {
+        const mu = mean(c), sd = Math.sqrt(mean(c.map((v) => (v - mu) ** 2)));
+        centre.push(mu); spread.push(sd > 0 ? sd : 1);
+      } else if (how === "minmax") {
+        const lo = Math.min(...c), hi = Math.max(...c);
+        centre.push(lo); spread.push(hi - lo > 0 ? hi - lo : 1);
+      } else if (how === "robust") {
+        const iqr = percentile(c, 0.75) - percentile(c, 0.25);
+        centre.push(percentile(c, 0.5)); spread.push(iqr > 0 ? iqr : 1);
+      } else throw new Error("unknown scaling " + how);
+    }
+    return X.map((r) => r.map((v, j) => (v - centre[j]) / spread[j]));
+  }
+  function panelMatrix(dims) { return PANEL.map((p) => dims.map((d) => p[d])); }
+
+  // ------------------------------------------------------------------ k-means
+  function assign(X, C) {
+    return X.map((x) => {
+      let best = 0, bd = Infinity;
+      C.forEach((c, k) => { const d = dist(x, c); if (d < bd - 1e-12) { bd = d; best = k; } });
+      return best;
+    });
+  }
+  function centroids(X, labels, k, previous) {
+    const m = X[0].length;
+    const C = Array.from({ length: k }, () => new Array(m).fill(0)), n = new Array(k).fill(0);
+    X.forEach((x, i) => { n[labels[i]]++; for (let j = 0; j < m; j++) C[labels[i]][j] += x[j]; });
+    return C.map((c, k2) => (n[k2] ? c.map((v) => v / n[k2]) : (previous ? previous[k2].slice() : c)));
+  }
+  function inertia(X, labels, C) {
+    return sum(X.map((x, i) => dist(x, C[labels[i]]) ** 2));
+  }
+  function initCentroids(X, k, r, method) {
+    const n = X.length;
+    if (method === "random") return shuffled([...Array(n).keys()], r).slice(0, k).map((i) => X[i].slice());
+    const C = [X[Math.floor(r() * n)].slice()];            // k-means++ (D^2 sampling)
+    while (C.length < k) {
+      const d2 = X.map((x) => Math.min(...C.map((c) => dist(x, c) ** 2)));
+      const tot = sum(d2);
+      if (tot === 0) { C.push(X[Math.floor(r() * n)].slice()); continue; }
+      let u = r() * tot, i = 0;
+      while (i < n - 1 && u > d2[i]) { u -= d2[i]; i++; }
+      C.push(X[i].slice());
+    }
+    return C;
+  }
+  function lloyd(X, C0, maxIter = 300) {
+    let C = C0.map((c) => c.slice()), labels = assign(X, C), it = 0;
+    const history = [{ C: C.map((c) => c.slice()), labels: labels.slice(), inertia: inertia(X, labels, C) }];
+    for (; it < maxIter; it++) {
+      const C2 = centroids(X, labels, C.length, C);
+      const l2 = assign(X, C2);
+      const moved = Math.max(...C.map((c, k) => dist(c, C2[k])));
+      C = C2;
+      history.push({ C: C.map((c) => c.slice()), labels: l2.slice(), inertia: inertia(X, l2, C) });
+      const same = l2.every((v, i) => v === labels[i]);
+      labels = l2;
+      if (same && moved < 1e-12) break;
+    }
+    return { labels, C, inertia: inertia(X, labels, C), iterations: history.length - 1, history };
+  }
+  function kmeans(X, k, opts = {}) {
+    const nInit = opts.nInit || 25, r = rng(opts.seed == null ? 42 : opts.seed), init = opts.init || "kmeans++";
+    let best = null;
+    for (let t = 0; t < nInit; t++) {
+      const res = lloyd(X, initCentroids(X, k, r, init));
+      if (!best || res.inertia < best.inertia - 1e-9) best = res;
+    }
+    return best;
+  }
+
+  // ------------------------------------------------------------------ silhouette
+  /* scikit-learn's definition: a = mean distance to the rest of your own
+     cluster, b = smallest mean distance to another cluster, s = (b-a)/max(a,b);
+     a point alone in its cluster scores 0. */
+  function silhouette(D, labels) {
+    const n = labels.length, ks = [...new Set(labels)];
+    const out = { s: new Array(n), a: new Array(n), b: new Array(n), nearest: new Array(n) };
+    for (let i = 0; i < n; i++) {
+      const tot = {}, cnt = {};
+      ks.forEach((k) => { tot[k] = 0; cnt[k] = 0; });
+      for (let j = 0; j < n; j++) { if (j === i) continue; tot[labels[j]] += D[i][j]; cnt[labels[j]]++; }
+      const own = labels[i];
+      if (cnt[own] === 0) { out.s[i] = 0; out.a[i] = 0; out.b[i] = NaN; out.nearest[i] = null; continue; }
+      const a = tot[own] / cnt[own];
+      let b = Infinity, nb = null;
+      ks.forEach((k) => { if (k !== own && cnt[k] > 0) { const v = tot[k] / cnt[k]; if (v < b) { b = v; nb = k; } } });
+      out.a[i] = a; out.b[i] = b; out.nearest[i] = nb;
+      out.s[i] = b === Infinity ? 0 : (b - a) / Math.max(a, b);
+    }
+    out.mean = mean(out.s);
+    return out;
+  }
+
+  // ------------------------------------------------------------------ agglomerative
+  /* Exact Lance-Williams updates, as SciPy: single, complete, average (UPGMA),
+     and Ward on Euclidean distances, whose merge height is sqrt(2 * increase in
+     within-cluster sum of squares). Clusters are numbered as in SciPy: leaves
+     0..n-1, the merge at step t creates cluster n+t. */
+  function linkage(X, method) {
+    const n = X.length, D0 = pairwise(X);
+    const active = new Map();                      // id -> {members, size}
+    for (let i = 0; i < n; i++) active.set(i, { members: [i], size: 1 });
+    const d = new Map(), key = (a, b) => (a < b ? a + "," + b : b + "," + a);
+    for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) d.set(key(i, j), D0[i][j]);
+    const merges = [];
+    let next = n;
+    while (active.size > 1) {
+      let best = Infinity, bi = -1, bj = -1;
+      const ids = [...active.keys()];
+      for (let x = 0; x < ids.length; x++) for (let y = x + 1; y < ids.length; y++) {
+        const v = d.get(key(ids[x], ids[y]));
+        if (v < best - 1e-12) { best = v; bi = ids[x]; bj = ids[y]; }
+      }
+      const A = active.get(bi), B = active.get(bj), ni = A.size, nj = B.size;
+      const id = next++, mem = A.members.concat(B.members);
+      for (const k of ids) {
+        if (k === bi || k === bj) continue;
+        const dki = d.get(key(k, bi)), dkj = d.get(key(k, bj)), nk = active.get(k).size;
+        let v;
+        if (method === "single") v = Math.min(dki, dkj);
+        else if (method === "complete") v = Math.max(dki, dkj);
+        else if (method === "average") v = (ni * dki + nj * dkj) / (ni + nj);
+        else if (method === "ward") v = Math.sqrt(((nk + ni) * dki * dki + (nk + nj) * dkj * dkj - nk * best * best) / (ni + nj + nk));
+        else throw new Error("unknown linkage " + method);
+        d.set(key(k, id), v);
+      }
+      active.delete(bi); active.delete(bj);
+      active.set(id, { members: mem, size: ni + nj });
+      merges.push({ a: Math.min(bi, bj), b: Math.max(bi, bj), height: best, size: ni + nj, members: mem, id });
+    }
+    return merges;
+  }
+  function cutTree(merges, n, k) {
+    const parent = new Array(2 * n - 1).fill(-1);
+    merges.slice(0, n - k).forEach((m) => { parent[m.a] = m.id; parent[m.b] = m.id; });
+    const root = (i) => { while (parent[i] !== -1) i = parent[i]; return i; };
+    const roots = [...Array(n).keys()].map(root), map = new Map();
+    return roots.map((r2) => { if (!map.has(r2)) map.set(r2, map.size); return map.get(r2); });
+  }
+  function leafOrder(merges, n) {
+    if (n === 1) return [0];
+    const kids = new Map(); merges.forEach((m) => kids.set(m.id, [m.a, m.b]));
+    const out = [], walk = (i) => { if (i < n) out.push(i); else { walk(kids.get(i)[0]); walk(kids.get(i)[1]); } };
+    walk(merges[merges.length - 1].id);
+    return out;
+  }
+
+  // ------------------------------------------------------------------ bisecting k-means
+  /* Top-down, as scikit-learn's BisectingKMeans: repeatedly split the cluster
+     with the biggest inertia (or the most points) using 2-means. */
+  function sse(X, idx) {
+    if (idx.length < 2) return 0;
+    const c = centroids(idx.map((i) => X[i]), idx.map(() => 0), 1)[0];
+    return sum(idx.map((i) => dist(X[i], c) ** 2));
+  }
+  function bisect(X, idx, seed, nInit = 20) {
+    const sub = idx.map((i) => X[i]);
+    const res = kmeans(sub, 2, { nInit, seed, init: "random" });
+    const left = [], right = [];
+    res.labels.forEach((l, t) => (l === 0 ? left : right).push(idx[t]));
+    return { left, right, centroids: res.C };
+  }
+  function bisectingTree(X, maxLeaves, opts = {}) {
+    const strategy = opts.strategy || "biggest_inertia", seed = opts.seed == null ? 0 : opts.seed;
+    const root = { id: 0, idx: [...Array(X.length).keys()], depth: 0, children: null, step: null };
+    const nodes = [root], leaves = [root], steps = [];
+    let next = 1;
+    while (leaves.length < maxLeaves) {
+      const splittable = leaves.filter((l) => l.idx.length >= 2);
+      if (!splittable.length) break;
+      const score = (l) => (strategy === "largest_cluster" ? l.idx.length : sse(X, l.idx));
+      const target = splittable.reduce((a, b) => (score(b) > score(a) + 1e-12 ? b : a));
+      const sp = bisect(X, target.idx, seed + steps.length);
+      const L = { id: next++, idx: sp.left, depth: target.depth + 1, children: null, step: null };
+      const R = { id: next++, idx: sp.right, depth: target.depth + 1, children: null, step: null };
+      target.children = [L, R]; target.step = steps.length; target.centroids = sp.centroids;
+      nodes.push(L, R);
+      leaves.splice(leaves.indexOf(target), 1, L, R);
+      steps.push({ node: target, left: L, right: R });
+    }
+    const labels = new Array(X.length);
+    leaves.forEach((l, k) => l.idx.forEach((i) => { labels[i] = k; }));
+    return { root, nodes, leaves, steps, labels };
+  }
+
+  // ------------------------------------------------------------------ AUC / ROC
+  /* AUC of the rule "lower value means positive", from ranks with ties counted
+     as half a win. Equals scikit-learn's roc_auc_score(y, -x). */
+  function auc(x, y) {
+    let wins = 0, pairs = 0;
+    for (let i = 0; i < x.length; i++) if (y[i] === 1)
+      for (let j = 0; j < x.length; j++) if (y[j] === 0) {
+        pairs++; wins += x[i] < x[j] ? 1 : x[i] === x[j] ? 0.5 : 0;
+      }
+    return wins / pairs;
+  }
+  function roc(x, y) {
+    const P = sum(y), N = y.length - P, vals = [...new Set(x)].sort((a, b) => a - b);
+    const cuts = [vals[0] - 1].concat(vals.map((v, i) => (i < vals.length - 1 ? (v + vals[i + 1]) / 2 : v + 1)));
+    return cuts.map((t) => {
+      let tp = 0, fp = 0;
+      x.forEach((v, i) => { if (v < t) { if (y[i]) tp++; else fp++; } });
+      return { t, tp, fp, fn: P - tp, tn: N - fp, tpr: tp / P, fpr: fp / N, errors: P - tp + fp };
+    });
+  }
+  function bestThreshold(x, y) {
+    const r = roc(x, y);
+    return r.reduce((a, b) => (b.errors < a.errors ? b : a));
+  }
+
+  // ------------------------------------------------------------------ ARI / NMI
+  const comb2 = (v) => (v * (v - 1)) / 2;
+  function contingency(u, v) {
+    const cu = [...new Set(u)].sort((a, b) => a - b), cv = [...new Set(v)].sort((a, b) => a - b);
+    const T = cu.map(() => cv.map(() => 0));
+    u.forEach((a, i) => { T[cu.indexOf(a)][cv.indexOf(v[i])]++; });
+    return { rows: cu, cols: cv, table: T };
+  }
+  /* Pair counting on unordered pairs: together in both (a), apart in both (b),
+     together in the label only (c), together in the partition only (d). */
+  function pairCounts(u, v) {
+    const n = u.length;
+    const { table } = contingency(u, v);
+    const both = sum(table.flat().map(comb2));
+    const inU = sum(table.map((r) => comb2(sum(r))));
+    const inV = sum(table[0].map((_, j) => comb2(sum(table.map((r) => r[j])))));
+    const total = comb2(n);
+    return { a: both, c: inU - both, d: inV - both, b: total - inU - inV + both, total, inU, inV };
+  }
+  function ari(u, v) {
+    const p = pairCounts(u, v);
+    const expected = (p.inU * p.inV) / p.total, maxIndex = (p.inU + p.inV) / 2;
+    if (maxIndex === expected) return 1;          // both partitions trivial and identical
+    return (p.a - expected) / (maxIndex - expected);
+  }
+  function randIndex(u, v) { const p = pairCounts(u, v); return (p.a + p.b) / p.total; }
+  function nmi(u, v) {
+    const n = u.length, { table } = contingency(u, v);
+    const rs = table.map((r) => sum(r)), cs = table[0].map((_, j) => sum(table.map((r) => r[j])));
+    const H = (c) => -sum(c.filter((x) => x > 0).map((x) => (x / n) * Math.log(x / n)));
+    let mi = 0;
+    table.forEach((r, i) => r.forEach((nij, j) => { if (nij > 0) mi += (nij / n) * Math.log((n * nij) / (rs[i] * cs[j])); }));
+    const hu = H(rs), hv = H(cs);
+    if (hu === 0 && hv === 0) return 1;
+    return (hu + hv) / 2 > 0 ? mi / ((hu + hv) / 2) : 0;
+  }
+
+  // ------------------------------------------------------------------ PCA
+  function jacobiEigen(S) {
+    const n = S.length, A = S.map((r) => r.slice()), V = S.map((_, i) => S.map((__, j) => (i === j ? 1 : 0)));
+    for (let sweep = 0; sweep < 100; sweep++) {
+      let off = 0;
+      for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) off += A[i][j] * A[i][j];
+      if (off < 1e-22) break;
+      for (let p = 0; p < n; p++) for (let q = p + 1; q < n; q++) {
+        if (Math.abs(A[p][q]) < 1e-300) continue;
+        const th = (A[q][q] - A[p][p]) / (2 * A[p][q]);
+        const t = Math.sign(th || 1) / (Math.abs(th) + Math.sqrt(th * th + 1));
+        const c = 1 / Math.sqrt(t * t + 1), s = t * c;
+        for (let k = 0; k < n; k++) {
+          const akp = A[k][p], akq = A[k][q];
+          A[k][p] = c * akp - s * akq; A[k][q] = s * akp + c * akq;
+        }
+        for (let k = 0; k < n; k++) {
+          const apk = A[p][k], aqk = A[q][k];
+          A[p][k] = c * apk - s * aqk; A[q][k] = s * apk + c * aqk;
+        }
+        for (let k = 0; k < n; k++) {
+          const vkp = V[k][p], vkq = V[k][q];
+          V[k][p] = c * vkp - s * vkq; V[k][q] = s * vkp + c * vkq;
+        }
+      }
+    }
+    return { values: A.map((r, i) => r[i]), vectors: V };
+  }
+  /* PCA of an already scaled matrix. Signs are fixed so that PC1 loads
+     positively overall and PC2 loads positively on the second-named feature. */
+  function pca(X, orientIndex = 1) {
+    const n = X.length, m = X[0].length, mu = [...Array(m).keys()].map((j) => mean(column(X, j)));
+    const Xc = X.map((r) => r.map((v, j) => v - mu[j]));
+    const S = [...Array(m).keys()].map((i) => [...Array(m).keys()].map((j) => sum(Xc.map((r) => r[i] * r[j])) / (n - 1)));
+    const { values, vectors } = jacobiEigen(S);
+    const order = [...Array(m).keys()].sort((a, b) => values[b] - values[a]);
+    const comps = order.slice(0, 2).map((k) => vectors.map((r) => r[k]));
+    if (sum(comps[0]) < 0) comps[0] = comps[0].map((v) => -v);
+    if (comps[1] && comps[1][orientIndex] < 0) comps[1] = comps[1].map((v) => -v);
+    const tot = sum(values);
+    const project = (x) => comps.map((c) => sum(c.map((w, j) => w * (x[j] - mu[j]))));
+    return { components: comps, ratio: order.slice(0, 2).map((k) => values[k] / tot), mean: mu, project,
+             scores: X.map(project) };
+  }
+
+  // ------------------------------------------------------------------ simulated presets
+  /* Each preset is built to show one behaviour. Units are arbitrary and both
+     axes share them, so no scaling is needed. `truth` is the generating group. */
+  const PRESETS = {
+    families: "Three clear families",
+    overlap: "Overlapping families",
+    bridge: "Two families joined by a bridge",
+    nested: "Families within families",
+    unequal: "One large, one small",
+    elongated: "Two long bands",
+    outlier: "One product with no peers",
+    noise: "No structure at all",
+  };
+  function blob(r, n, cx, cy, sx, sy, g, out) {
+    for (let i = 0; i < n; i++) out.push({ x: cx + sx * randn(r), y: cy + (sy == null ? sx : sy) * randn(r), g });
+  }
+  function preset(name, seed = 7) {
+    const r = rng(seed * 7919 + name.length * 131), P = [];
+    if (name === "families") { blob(r, 16, 2.6, 7.0, 0.55, null, 0, P); blob(r, 16, 7.4, 7.2, 0.55, null, 1, P); blob(r, 16, 5.0, 2.6, 0.55, null, 2, P); }
+    else if (name === "overlap") { blob(r, 18, 3.6, 6.2, 0.95, null, 0, P); blob(r, 18, 6.4, 6.4, 0.95, null, 1, P); blob(r, 18, 5.0, 3.6, 0.95, null, 2, P); }
+    else if (name === "bridge") {
+      blob(r, 18, 2.3, 5.0, 0.55, null, 0, P); blob(r, 18, 7.7, 5.0, 0.55, null, 1, P);
+      for (let i = 0; i < 9; i++) { const x = 3.3 + (i + 0.5) * (3.4 / 9); P.push({ x, y: 5.0 + 0.12 * randn(r), g: x < 5 ? 0 : 1 }); }
+    } else if (name === "nested") {
+      blob(r, 12, 2.0, 7.4, 0.42, null, 0, P); blob(r, 12, 3.6, 7.4, 0.42, null, 1, P);
+      blob(r, 12, 6.4, 2.6, 0.42, null, 2, P); blob(r, 12, 8.0, 2.6, 0.42, null, 3, P);
+    } else if (name === "unequal") { blob(r, 40, 3.8, 5.0, 1.35, null, 0, P); blob(r, 8, 8.3, 5.0, 0.28, null, 1, P); }
+    else if (name === "elongated") { blob(r, 22, 5.0, 3.6, 2.3, 0.28, 0, P); blob(r, 22, 5.0, 6.4, 2.3, 0.28, 1, P); }
+    else if (name === "outlier") { blob(r, 18, 3.0, 4.2, 0.6, null, 0, P); blob(r, 18, 6.8, 4.6, 0.6, null, 1, P); P.push({ x: 8.8, y: 9.0, g: 2 }); }
+    else if (name === "noise") { for (let i = 0; i < 45; i++) P.push({ x: 0.6 + 8.8 * r(), y: 0.6 + 8.8 * r(), g: 0 }); }
+    else throw new Error("unknown preset " + name);
+    return P.map((p, i) => ({ id: i, x: Math.round(p.x * 100) / 100, y: Math.round(p.y * 100) / 100, g: p.g }));
+  }
+  /* Two groups on one axis for the AUC module: 16 "ethical", 15 "default",
+     separated by `delta` standard deviations. */
+  function twoGroups(delta, seed = 3) {
+    const r = rng(seed * 104729 + 17), out = [];
+    for (let i = 0; i < 16; i++) out.push({ v: 5 - delta / 2 + randn(r), y: 1 });
+    for (let i = 0; i < 15; i++) out.push({ v: 5 + delta / 2 + randn(r), y: 0 });
+    return out.map((o, i) => ({ id: i, v: Math.round(o.v * 100) / 100, y: o.y }));
+  }
+
+  return {
+    PANEL, LABEL, DIMS, DIM_LABEL, DIM_KIND, PRESETS,
+    rng, randn, shuffled, sum, mean, percentile, dist, pairwise, scale, panelMatrix,
+    assign, centroids, inertia, initCentroids, lloyd, kmeans,
+    silhouette, linkage, cutTree, leafOrder, sse, bisectingTree,
+    auc, roc, bestThreshold, contingency, pairCounts, ari, randIndex, nmi,
+    pca, preset, twoGroups,
+  };
+})();
+if (typeof module !== "undefined") module.exports = L9;
+
+</script>
+<script>
+/* Lecture 9 playground — interface components (vanilla JS + SVG). */
+"use strict";
+const NS = "http://www.w3.org/2000/svg";
+const OKABE = ["#0072B2", "#E69F00", "#009E73", "#CC79A7", "#56B4E9", "#D55E00", "#8C6D31", "#7F7F7F"];
+const colourOf = (k) => (k == null || k < 0 ? "#9AA5B1" : OKABE[k % OKABE.length]);
+const REDUCED = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function h(tag, attrs = {}, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v == null || v === false) continue;
+    if (k === "class") e.className = v;
+    else if (k === "html") e.innerHTML = v;
+    else if (k.startsWith("on") && typeof v === "function") e.addEventListener(k.slice(2), v);
+    else e.setAttribute(k, v === true ? "" : v);
+  }
+  kids.flat().forEach((c) => { if (c != null && c !== false) e.append(c.nodeType ? c : document.createTextNode(String(c))); });
+  return e;
+}
+function s(tag, attrs = {}, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs || {})) if (v != null) e.setAttribute(k, v);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+const clear = (n) => { while (n && n.firstChild) n.removeChild(n.firstChild); return n; };
+const fmt = (v, d = 3) => (v == null || Number.isNaN(v) ? "\u2013" : Number(v).toFixed(d));
+const pct = (v, d = 1) => (100 * v).toFixed(d) + "%";
+
+// ------------------------------------------------------------------ tooltip
+const tipEl = () => document.getElementById("tip");
+function showTip(text, evt) {
+  const t = tipEl(); if (!t) return;
+  t.textContent = text; t.style.display = "block";
+  const x = (evt && evt.clientX) || 0, y = (evt && evt.clientY) || 0;
+  t.style.left = Math.min(x + 14, (window.innerWidth || 1200) - 320) + "px"; t.style.top = y + 14 + "px";
+}
+function hideTip() { const t = tipEl(); if (t) t.style.display = "none"; }
+
+// ------------------------------------------------------------------ shapes
+function shapePath(shape, r) {
+  const q = r * 0.92;
+  switch (shape) {
+    case "cross": return `M${-q},${-q}L${q},${q}M${-q},${q}L${q},${-q}`;
+    case "square": return `M${-q},${-q}H${q}V${q}H${-q}Z`;
+    case "triangle": return `M0,${-r * 1.1}L${r},${r * 0.75}L${-r},${r * 0.75}Z`;
+    case "diamond": return `M0,${-r * 1.2}L${r * 1.05},0L0,${r * 1.2}L${-r * 1.05},0Z`;
+    default: return `M${r},0A${r},${r} 0 1,1 ${-r},0A${r},${r} 0 1,1 ${r},0Z`;
+  }
+}
+const SIM_SHAPES = ["circle", "square", "triangle", "diamond", "cross"];
+
+// ------------------------------------------------------------------ ticks
+function niceTicks(lo, hi, count = 6) {
+  const span = hi - lo || 1, raw = span / count, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  const step = [1, 2, 2.5, 5, 10].map((m) => m * mag).find((st) => span / st <= count) || 10 * mag;
+  const out = [];
+  for (let v = Math.ceil(lo / step) * step; v <= hi + 1e-9; v += step) out.push(+v.toFixed(10));
+  return { ticks: out, step };
+}
+
+// ------------------------------------------------------------------ scatter on graph paper
+class Scatter {
+  constructor(parent, o = {}) {
+    this.w = o.w || 660; this.h = o.h || 440;
+    this.pad = Object.assign({ l: 50, r: 14, t: 12, b: 42 }, o.pad || {});
+    this.svg = s("svg", { viewBox: `0 0 ${this.w} ${this.h}`, role: "img", "aria-label": o.label || "scatter plot" }, parent);
+    this.gPaper = s("g", {}, this.svg); this.gBg = s("g", {}, this.svg); this.gGeo = s("g", {}, this.svg);
+    this.gPts = s("g", {}, this.svg); this.gTop = s("g", {}, this.svg);
+    this.onClick = null; this.onDrag = null; this.draggable = false;
+  }
+  setDomain(P, o = {}) {
+    let xs = P.map((p) => p[0]), ys = P.map((p) => p[1]);
+    if (o.extra) { xs = xs.concat(o.extra.map((p) => p[0])); ys = ys.concat(o.extra.map((p) => p[1])); }
+    let x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+    if (o.fixed) [x0, x1, y0, y1] = o.fixed;
+    const px = (x1 - x0 || 1) * 0.07, py = (y1 - y0 || 1) * 0.07;
+    x0 -= px; x1 += px; y0 -= py; y1 += py;
+    const iw = this.w - this.pad.l - this.pad.r, ih = this.h - this.pad.t - this.pad.b;
+    if (o.equal) {
+      const ux = (x1 - x0) / iw, uy = (y1 - y0) / ih, u = Math.max(ux, uy);
+      const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+      x0 = cx - (u * iw) / 2; x1 = cx + (u * iw) / 2; y0 = cy - (u * ih) / 2; y1 = cy + (u * ih) / 2;
+    }
+    this.dom = [x0, x1, y0, y1];
+    this.sx = (x) => this.pad.l + ((x - x0) / (x1 - x0)) * iw;
+    this.sy = (y) => this.pad.t + ih - ((y - y0) / (y1 - y0)) * ih;
+    this.ix = (px2) => x0 + ((px2 - this.pad.l) / iw) * (x1 - x0);
+    this.iy = (py2) => y0 + ((this.pad.t + ih - py2) / ih) * (y1 - y0);
+    this.drawPaper(o.xLabel || "", o.yLabel || "");
+  }
+  drawPaper(xl, yl) {
+    const g = clear(this.gPaper), [x0, x1, y0, y1] = this.dom;
+    const L = this.pad.l, R = this.w - this.pad.r, T = this.pad.t, B = this.h - this.pad.b;
+    s("rect", { x: L, y: T, width: R - L, height: B - T, class: "bgpaper" }, g);
+    const tx = niceTicks(x0, x1, 7), ty = niceTicks(y0, y1, 6);
+    const minor = (t, lo, hi) => { const out = []; const st = t.step / 5; for (let v = Math.ceil(lo / st) * st; v <= hi; v += st) out.push(v); return out; };
+    minor(tx, x0, x1).forEach((v) => s("line", { x1: this.sx(v), x2: this.sx(v), y1: T, y2: B, class: "gminor" }, g));
+    minor(ty, y0, y1).forEach((v) => s("line", { y1: this.sy(v), y2: this.sy(v), x1: L, x2: R, class: "gminor" }, g));
+    const ax = s("g", { class: "axis" }, g);
+    tx.ticks.forEach((v) => {
+      s("line", { x1: this.sx(v), x2: this.sx(v), y1: T, y2: B, class: "gmajor" }, g);
+      s("text", { x: this.sx(v), y: B + 15, "text-anchor": "middle" }, ax).textContent = +v.toFixed(3);
+    });
+    ty.ticks.forEach((v) => {
+      s("line", { y1: this.sy(v), y2: this.sy(v), x1: L, x2: R, class: "gmajor" }, g);
+      s("text", { x: L - 6, y: this.sy(v) + 4, "text-anchor": "end" }, ax).textContent = +v.toFixed(3);
+    });
+    s("rect", { x: L, y: T, width: R - L, height: B - T, fill: "none", class: "inkline", "stroke-width": 1 }, g);
+    s("text", { x: (L + R) / 2, y: this.h - 6, "text-anchor": "middle", class: "axlabel" }, g).textContent = xl;
+    const yt = s("text", { x: 13, y: (T + B) / 2, "text-anchor": "middle", class: "axlabel", transform: `rotate(-90 13 ${(T + B) / 2})` }, g);
+    yt.textContent = yl;
+  }
+  clearLayer(name) { clear(this["g" + name]); }
+  line(a, b, attrs = {}, layer = "Geo") {
+    return s("line", Object.assign({ x1: this.sx(a[0]), y1: this.sy(a[1]), x2: this.sx(b[0]), y2: this.sy(b[1]) }, attrs), this["g" + layer]);
+  }
+  poly(pts, attrs = {}, layer = "Geo") {
+    return s("polygon", Object.assign({ points: pts.map((p) => `${this.sx(p[0])},${this.sy(p[1])}`).join(" ") }, attrs), this["g" + layer]);
+  }
+  label(p, text, attrs = {}, layer = "Top") {
+    const t = s("text", Object.assign({ x: this.sx(p[0]) + 8, y: this.sy(p[1]) - 8 }, attrs), this["g" + layer]);
+    t.textContent = text; return t;
+  }
+  centroid(p, k, attrs = {}) {
+    const g = s("g", { transform: `translate(${this.sx(p[0])},${this.sy(p[1])})` }, this.gTop);
+    s("path", { d: "M-9,0H9M0,-9V9", stroke: "#fff", "stroke-width": 7, "stroke-linecap": "round" }, g);
+    s("path", { d: "M-9,0H9M0,-9V9", stroke: colourOf(k), "stroke-width": 3.6, "stroke-linecap": "round" }, g);
+    Object.entries(attrs).forEach(([a, v]) => g.setAttribute(a, v));
+    return g;
+  }
+  points(P, o = {}) {
+    const g = clear(this.gPts), r = o.r || 5.2;
+    this._P = P;
+    P.forEach((p, i) => {
+      const shape = o.shape ? o.shape(i) : "circle", col = o.colour ? o.colour(i) : "#6B7785";
+      const cross = shape === "cross";
+      const grp = s("g", { transform: `translate(${this.sx(p[0])},${this.sy(p[1])})`, class: "pt", "data-i": i }, g);
+      if (o.ring && o.ring(i)) s("circle", { r: r + 5, fill: "none", stroke: "var(--ink)", "stroke-width": 2 }, grp);
+      s("circle", { r: r + 3, fill: "transparent" }, grp);
+      const d = shapePath(shape, r);
+      if (cross) {
+        s("path", { d, stroke: "var(--sheet)", "stroke-width": 5, "stroke-linecap": "round" }, grp);
+        s("path", { d, stroke: col, "stroke-width": 2.6, "stroke-linecap": "round", opacity: o.opacity ? o.opacity(i) : 1 }, grp);
+      } else {
+        s("path", { d, fill: col, stroke: "var(--sheet)", "stroke-width": 1.4, opacity: o.opacity ? o.opacity(i) : 1 }, grp);
+      }
+      const title = o.title ? o.title(i) : null;
+      grp.addEventListener("mousemove", (e) => { if (title) showTip(title, e); });
+      grp.addEventListener("mouseleave", hideTip);
+      grp.addEventListener("click", (e) => { if (this.onClick) this.onClick(i, e); });
+      grp.addEventListener("pointerdown", (e) => this._startDrag(i, e));
+    });
+  }
+  _startDrag(i, e) {
+    if (!this.draggable || !this.onDrag || !this.svg.getScreenCTM) return;
+    e.preventDefault();
+    const move = (ev) => {
+      const m = this.svg.getScreenCTM(); if (!m) return;
+      const pt = this.svg.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY;
+      const q = pt.matrixTransform(m.inverse());
+      this.onDrag(i, this.ix(q.x), this.iy(q.y));
+    };
+    const up = () => { window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up); if (this.onDragEnd) this.onDragEnd(i); };
+    window.addEventListener("pointermove", move); window.addEventListener("pointerup", up);
+  }
+}
+
+// ------------------------------------------------------------------ generic line chart
+function lineChart(parent, o) {
+  const w = o.w || 420, hh = o.h || 190, pad = { l: 58, r: 12, t: 14, b: 34 };
+  const svg = s("svg", { viewBox: `0 0 ${w} ${hh}`, role: "img", "aria-label": o.label || "chart" }, clear(parent));
+  const all = o.series.flatMap((se) => se.xs.map((x, i) => [x, se.ys[i]])).filter((p) => p[1] != null && !Number.isNaN(p[1]));
+  let [x0, x1] = o.xDomain || [Math.min(...all.map((p) => p[0])), Math.max(...all.map((p) => p[0]))];
+  let [y0, y1] = o.yDomain || [Math.min(...all.map((p) => p[1])), Math.max(...all.map((p) => p[1]))];
+  if (x1 === x0) x1 = x0 + 1;
+  if (y1 === y0) { y0 -= 0.5; y1 += 0.5; }
+  if (!o.yDomain) { const py = (y1 - y0) * 0.1; y0 -= py; y1 += py; }
+  const X = (x) => pad.l + ((x - x0) / (x1 - x0)) * (w - pad.l - pad.r);
+  const Y = (y) => hh - pad.b - ((y - y0) / (y1 - y0)) * (hh - pad.t - pad.b);
+  s("rect", { x: pad.l, y: pad.t, width: w - pad.l - pad.r, height: hh - pad.t - pad.b, class: "bgpaper" }, svg);
+  const ty = niceTicks(y0, y1, 4).ticks, tx = o.xTicks || niceTicks(x0, x1, 6).ticks;
+  ty.forEach((v) => { s("line", { x1: pad.l, x2: w - pad.r, y1: Y(v), y2: Y(v), class: "gmajor" }, svg); s("text", { x: pad.l - 5, y: Y(v) + 4, "text-anchor": "end" }, svg).textContent = +v.toFixed(3); });
+  tx.forEach((v) => { s("text", { x: X(v), y: hh - pad.b + 14, "text-anchor": "middle" }, svg).textContent = +(+v).toFixed(3); });
+  (o.hlines || []).forEach((hl) => s("line", { x1: pad.l, x2: w - pad.r, y1: Y(hl.y), y2: Y(hl.y), stroke: hl.colour || "var(--muted)", "stroke-dasharray": "4 3" }, svg));
+  (o.areas || []).forEach((ar) => {
+    const d = ar.xs.map((x, i) => `${i ? "L" : "M"}${X(x)},${Y(ar.ys[i])}`).join("") + `L${X(ar.xs[ar.xs.length - 1])},${Y(y0)}L${X(ar.xs[0])},${Y(y0)}Z`;
+    s("path", { d, fill: ar.colour, opacity: ar.opacity || 0.18 }, svg);
+  });
+  o.series.forEach((se) => {
+    const pts = se.xs.map((x, i) => [X(x), Y(se.ys[i])]);
+    if (se.line !== false) s("path", { d: pts.map((p, i) => `${i ? "L" : "M"}${p[0]},${p[1]}`).join(""), fill: "none", stroke: se.colour || "var(--ink)", "stroke-width": se.width || 2, "stroke-dasharray": se.dash || null }, svg);
+    if (se.dots) pts.forEach((p, i) => s("circle", { cx: p[0], cy: p[1], r: se.r || 3.2, fill: se.dotColour ? se.dotColour(i) : se.colour || "var(--ink)" }, svg));
+  });
+  (o.marks || []).forEach((m) => {
+    s("circle", { cx: X(m.x), cy: Y(m.y), r: 6, fill: "none", stroke: m.colour || "var(--flag)", "stroke-width": 2.2 }, svg);
+    if (m.label) s("text", { x: X(m.x) + 8, y: Y(m.y) - 7, fill: m.colour || "var(--flag)", style: "fill:" + (m.colour || "var(--flag)") }, svg).textContent = m.label;
+  });
+  s("text", { x: (pad.l + w - pad.r) / 2, y: hh - 4, "text-anchor": "middle", class: "axlabel" }, svg).textContent = o.xLabel || "";
+  s("text", { x: 11, y: (pad.t + hh - pad.b) / 2, "text-anchor": "middle", class: "axlabel", transform: `rotate(-90 11 ${(pad.t + hh - pad.b) / 2})` }, svg).textContent = o.yLabel || "";
+  return { svg, X, Y };
+}
+
+// ------------------------------------------------------------------ silhouette bars
+function silBars(parent, o) {
+  const n = o.s.length, w = o.w || 420, rowH = Math.max(2.2, Math.min(7, 250 / n)), top = 14;
+  const groups = [...new Set(o.labels)].sort((a, b) => a - b), gap = 7;
+  const hh = top + n * rowH + groups.length * gap + 30;
+  const svg = s("svg", { viewBox: `0 0 ${w} ${hh}`, role: "img", "aria-label": "silhouette plot" }, clear(parent));
+  const L = 40, R = w - 12, X = (v) => L + ((v + 1) / 2) * (R - L);
+  s("rect", { x: L, y: top - 4, width: R - L, height: hh - top - 22, class: "bgpaper" }, svg);
+  [-1, -0.5, 0, 0.5, 1].forEach((v) => { s("line", { x1: X(v), x2: X(v), y1: top - 4, y2: hh - 26, class: v === 0 ? "inkline" : "gmajor" }, svg); s("text", { x: X(v), y: hh - 12, "text-anchor": "middle" }, svg).textContent = v; });
+  let y = top;
+  groups.forEach((gk) => {
+    const idx = o.s.map((v, i) => [v, i]).filter((p) => o.labels[p[1]] === gk).sort((a, b) => b[0] - a[0]);
+    s("text", { x: L - 6, y: y + (idx.length * rowH) / 2 + 4, "text-anchor": "end", style: `fill:${colourOf(gk)}` }, svg).textContent = gk + 1;
+    idx.forEach(([v, i]) => {
+      const x0 = X(Math.min(0, v)), x1 = X(Math.max(0, v));
+      const r = s("rect", { x: x0, y, width: Math.max(0.8, x1 - x0), height: rowH * 0.86, fill: colourOf(gk), opacity: o.selected === i ? 1 : 0.8, stroke: o.selected === i ? "var(--ink)" : null, "stroke-width": o.selected === i ? 1.5 : null }, svg);
+      r.addEventListener("mousemove", (e) => showTip((o.names ? o.names[i] + ": " : "") + "s = " + fmt(v), e));
+      r.addEventListener("mouseleave", hideTip);
+      if (o.onClick) r.addEventListener("click", () => o.onClick(i));
+      y += rowH;
+    });
+    y += gap;
+  });
+  s("line", { x1: X(o.mean), x2: X(o.mean), y1: top - 6, y2: hh - 26, stroke: "var(--flag)", "stroke-dasharray": "5 3", "stroke-width": 1.8 }, svg);
+  s("text", { x: X(o.mean) + 4, y: top + 4, style: "fill:var(--flag)" }, svg).textContent = "mean " + fmt(o.mean);
+  return svg;
+}
+
+// ------------------------------------------------------------------ dendrogram
+let DCLIP = 0;
+/* Dendrogram with three height scales:
+   follow  the axis top sits just above the NEXT merge, so the merge being made
+           always fills the plot; later merges run off the top until they happen
+   sqrt    the whole tree, heights on a square-root scale
+   linear  the whole tree, true heights (the honest view for choosing a cut)   */
+function dendrogram(parent, o) {
+  const n = o.n, merges = o.merges, w = o.w || 660, hh = o.h || 250;
+  const pad = { l: o.leafLabels ? 118 : 52, r: 10, t: 12, b: o.leafLabels ? 138 : 28 };
+  const svg = s("svg", { viewBox: `0 0 ${w} ${hh}`, role: "img", "aria-label": "dendrogram" }, clear(parent));
+  const order = L9.leafOrder(merges, n), pos = new Array(2 * n - 1);
+  order.forEach((leaf, i) => { pos[leaf] = pad.l + ((i + 0.5) / n) * (w - pad.l - pad.r); });
+  const Hmax = Math.max(...merges.map((m) => m.height)) || 1;
+  const shown = o.step == null ? merges.length : o.step, scale = o.scale || "linear";
+  const f = scale === "sqrt" ? Math.sqrt : (v) => v;
+  const top = scale === "follow" && shown < merges.length
+    ? Math.max(merges[shown].height * 1.5, Hmax * 0.01)
+    : f(Hmax) * (scale === "sqrt" ? 1.04 : 1.05);
+  const plotH = hh - pad.t - pad.b, base = hh - pad.b;
+  const Yv = (v) => base - (v / top) * plotH, Yh = (hgt) => Yv(f(hgt));
+  s("rect", { x: pad.l, y: pad.t, width: w - pad.l - pad.r, height: plotH, class: "bgpaper" }, svg);
+  let ticks;
+  if (scale === "sqrt") {
+    const cand = [], lo = Math.floor(Math.log10(Math.max(Hmax / 2000, 1e-6)));
+    for (let e = lo; e <= Math.ceil(Math.log10(Hmax)) + 1; e++) [1, 2, 5].forEach((mm) => { const v = mm * Math.pow(10, e); if (v <= Hmax * 1.02) cand.push(v); });
+    ticks = [0]; cand.sort((x, y) => x - y).forEach((v) => { if (Yh(ticks[ticks.length - 1]) - Yh(v) >= 17) ticks.push(v); });
+  } else ticks = niceTicks(0, top, 4).ticks.filter((v) => v <= top);
+  ticks.forEach((v) => {
+    s("line", { x1: pad.l, x2: w - pad.r, y1: Yh(v), y2: Yh(v), class: "gmajor" }, svg);
+    s("text", { x: pad.l - 5, y: Yh(v) + 4, "text-anchor": "end" }, svg).textContent = v === 0 ? "0" : v < 1 ? +v.toFixed(3) : +v.toFixed(2);
+  });
+  const ylab = o.yLabel || ("merge height" + (scale === "sqrt" ? ", square-root scale" : scale === "follow" ? ", zoomed to the next merge" : ""));
+  s("text", { x: 12, y: (pad.t + base) / 2, "text-anchor": "middle", class: "axlabel", transform: `rotate(-90 12 ${(pad.t + base) / 2})` }, svg).textContent = ylab;
+  const cid = "dclip" + (++DCLIP), defs = s("defs", {}, svg), cp = s("clipPath", { id: cid }, defs);
+  s("rect", { x: pad.l, y: pad.t, width: w - pad.l - pad.r, height: plotH + 2 }, cp);
+  const g = s("g", { "clip-path": `url(#${cid})` }, svg);
+  const leafCol = o.leafColour || (() => "var(--ink)"), ht = new Array(2 * n - 1).fill(0);
+  merges.forEach((m, t) => {
+    pos[m.id] = (pos[m.a] + pos[m.b]) / 2; ht[m.id] = m.height;
+    const done = t < shown, latest = t === shown - 1, next = t === shown;
+    const cols = new Set(m.members.map((i) => leafCol(i)));
+    const col = done && cols.size === 1 ? [...cols][0] : "var(--ink)";
+    if (scale === "follow" && !done && !next) return;      // zoomed view: only what has happened, plus the next step
+    const d = `M${pos[m.a]},${Yh(ht[m.a])}V${Yh(m.height)}H${pos[m.b]}V${Yh(ht[m.b])}`;
+    s("path", { d, fill: "none", stroke: latest || next ? "var(--flag)" : done ? col : "var(--rule)",
+      "stroke-width": latest ? 3.4 : done ? 1.9 : next ? 2 : 1, "stroke-dasharray": done ? null : next ? "6 3" : "3 3" }, g);
+    const hit = s("path", { d, fill: "none", stroke: "transparent", "stroke-width": 9, style: "cursor:pointer" }, g);
+    hit.addEventListener("mousemove", (e) => { showTip(`merge ${t + 1}${latest ? " (just made)" : next ? " (next)" : ""}: ${m.size} ${o.unit || "points"} at height ${fmt(m.height)}`, e); if (o.onHover) o.onHover(m.members); });
+    hit.addEventListener("mouseleave", () => { hideTip(); if (o.onHover) o.onHover(null); });
+  });
+  s("line", { x1: pad.l, x2: w - pad.r, y1: base, y2: base, stroke: "var(--rule)" }, svg);
+  order.forEach((leaf) => {                         // leaves sit just below the baseline
+    s("circle", { cx: pos[leaf], cy: base + 5, r: 2.4, fill: leafCol(leaf) }, svg);
+    if (o.leafLabels) {
+      const t = s("text", { x: pos[leaf], y: base + 12, "text-anchor": "end", transform: `rotate(-60 ${pos[leaf]} ${base + 12})`, style: `font-size:10.5px;fill:${o.leafLabelColour ? o.leafLabelColour(leaf) : "var(--muted)"}` }, svg);
+      const full = o.leafLabels[leaf];
+      t.textContent = full.length > 26 ? full.slice(0, 25) + "\u2026" : full;
+      s("title", {}, t).textContent = full;
+    }
+  });
+  if (o.k != null && o.k >= 1 && o.k < n) {
+    const yLo = n - o.k - 1 >= 0 ? Yh(merges[n - o.k - 1].height) : base;
+    const yHi = merges[n - o.k] ? Yh(merges[n - o.k].height) : pad.t;
+    const yc = Math.max(pad.t + 2, (yLo + yHi) / 2);
+    s("line", { x1: pad.l, x2: w - pad.r, y1: yc, y2: yc, stroke: "var(--flag)", "stroke-width": 1.6, "stroke-dasharray": "7 4", opacity: 0.8 }, svg);
+    const lbl = `cut: ${o.k} clusters`, lw = 7 * lbl.length + 8;
+    s("rect", { x: w - pad.r - lw - 2, y: yc - 19, width: lw, height: 15, rx: 2, class: "bgpaper", opacity: 0.92 }, svg);
+    s("text", { x: w - pad.r - 6, y: yc - 7, "text-anchor": "end", style: "fill:var(--flag)" }, svg).textContent = lbl;
+  }
+  if (o.onCut) {
+    svg.addEventListener("click", (e) => {
+      const m = svg.getScreenCTM && svg.getScreenCTM(); if (!m) return;
+      const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+      const q = pt.matrixTransform(m.inverse()), v = ((base - q.y) / plotH) * top;
+      const k = 1 + merges.filter((mm) => f(mm.height) > v).length;
+      o.onCut(Math.max(1, Math.min(n, k)));
+    });
+  }
+  return svg;
+}
+
+// ------------------------------------------------------------------ divisive tree
+function divTree(parent, o) {
+  const w = o.w || 660, hh = o.h || 220;
+  const svg = s("svg", { viewBox: `0 0 ${w} ${hh}`, role: "img", "aria-label": "divisive tree" }, clear(parent));
+  s("rect", { x: 0, y: 0, width: w, height: hh, class: "bgpaper" }, svg);
+  const shownSteps = o.steps, visible = (node) => node.children && node.step < shownSteps;
+  const leaves = [];
+  (function walk(nd) { if (visible(nd)) nd.children.forEach(walk); else leaves.push(nd); })(o.root);
+  const maxDepth = Math.max(1, ...leaves.map((l) => l.depth)), X = new Map(), Yd = (d) => 24 + (d / maxDepth) * (hh - 60);
+  leaves.forEach((l, i) => X.set(l.id, 30 + ((i + 0.5) / leaves.length) * (w - 60)));
+  (function place(nd) { if (visible(nd)) { nd.children.forEach(place); X.set(nd.id, (X.get(nd.children[0].id) + X.get(nd.children[1].id)) / 2); } })(o.root);
+  (function edges(nd) {
+    if (!visible(nd)) return;
+    nd.children.forEach((c) => { s("path", { d: `M${X.get(nd.id)},${Yd(nd.depth) + 9}V${(Yd(nd.depth) + Yd(c.depth)) / 2}H${X.get(c.id)}V${Yd(c.depth) - 9}`, fill: "none", stroke: nd.step === shownSteps - 1 ? "var(--flag)" : "var(--ink)", "stroke-width": nd.step === shownSteps - 1 ? 2.6 : 1.5 }, svg); edges(c); });
+  })(o.root);
+  const leafIndex = new Map(leaves.map((l, i) => [l.id, i]));
+  (function nodes(nd) {
+    const isLeaf = !visible(nd), x = X.get(nd.id), y = Yd(nd.depth);
+    const col = isLeaf && o.leafColour ? o.leafColour(leafIndex.get(nd.id)) : "var(--sheet)";
+    const g = s("g", { style: "cursor:pointer" }, svg);
+    s("rect", { x: x - 17, y: y - 9, width: 34, height: 18, rx: 3, fill: col, stroke: "var(--ink)", "stroke-width": 1.2 }, g);
+    s("text", { x, y: y + 4, "text-anchor": "middle", style: `font-size:11px;font-weight:600;fill:${isLeaf ? "#fff" : "var(--ink)"}` }, g).textContent = nd.idx.length;
+    g.addEventListener("mousemove", (e) => { showTip(`${nd.idx.length} ${o.unit || "points"}${isLeaf ? "" : ` \u2014 split ${nd.step + 1}`}`, e); if (o.onHover) o.onHover(nd.idx); });
+    g.addEventListener("mouseleave", () => { hideTip(); if (o.onHover) o.onHover(null); });
+    if (!isLeaf) nd.children.forEach(nodes);
+  })(o.root);
+  return { svg, leaves };
+}
+
+// ------------------------------------------------------------------ histogram
+function histogram(parent, o) {
+  const w = o.w || 420, hh = o.h || 160, pad = { l: 34, r: 10, t: 12, b: 34 };
+  const svg = s("svg", { viewBox: `0 0 ${w} ${hh}`, role: "img", "aria-label": o.label || "histogram" }, clear(parent));
+  const [x0, x1] = o.domain, bins = o.bins || 30, cnt = new Array(bins).fill(0);
+  o.values.forEach((v) => { const b = Math.min(bins - 1, Math.max(0, Math.floor(((v - x0) / (x1 - x0)) * bins))); cnt[b]++; });
+  const mx = Math.max(1, ...cnt), X = (v) => pad.l + ((v - x0) / (x1 - x0)) * (w - pad.l - pad.r), bw = (w - pad.l - pad.r) / bins;
+  s("rect", { x: pad.l, y: pad.t, width: w - pad.l - pad.r, height: hh - pad.t - pad.b, class: "bgpaper" }, svg);
+  cnt.forEach((c, i) => { const hgt = (c / mx) * (hh - pad.t - pad.b); s("rect", { x: pad.l + i * bw + 0.5, y: hh - pad.b - hgt, width: bw - 1, height: hgt, fill: o.colour || "var(--default)", opacity: 0.75 }, svg); });
+  niceTicks(x0, x1, 5).ticks.forEach((v) => { s("text", { x: X(v), y: hh - pad.b + 14, "text-anchor": "middle" }, svg).textContent = +v.toFixed(2); });
+  (o.marks || []).forEach((m) => { const near = X(m.x) > w - 80; s("line", { x1: X(m.x), x2: X(m.x), y1: pad.t, y2: hh - pad.b, stroke: m.colour || "var(--flag)", "stroke-width": 2.2 }, svg); s("text", { x: X(m.x) + (near ? -4 : 4), y: pad.t + 11, "text-anchor": near ? "end" : "start", style: `fill:${m.colour || "var(--flag)"}` }, svg).textContent = m.label; });
+  s("text", { x: (pad.l + w - pad.r) / 2, y: hh - 4, "text-anchor": "middle", class: "axlabel" }, svg).textContent = o.xLabel || "";
+  return svg;
+}
+
+// ------------------------------------------------------------------ tables
+function contingencyTable(truth, labels, o = {}) {
+  const { rows, cols, table } = L9.contingency(truth, labels);
+  const rn = o.rowName || ((r) => "group " + (r + 1));
+  const t = h("table", { class: "ct" });
+  const head = h("tr", {}, h("th", { class: "l" }, o.corner || ""), ...cols.map((c) => h("th", {}, h("span", { class: "chip", style: `background:${colourOf(c)}` }), "cluster " + (c + 1))), h("th", {}, "total"));
+  t.append(head);
+  table.forEach((r, i) => t.append(h("tr", {}, h("td", { class: "l" }, rn(rows[i])), ...r.map((v) => h("td", {}, v)), h("td", {}, L9.sum(r)))));
+  t.append(h("tr", {}, h("td", { class: "l muted" }, "total"), ...cols.map((_, j) => h("td", { class: "muted" }, L9.sum(table.map((r) => r[j])))), h("td", { class: "muted" }, truth.length)));
+  return t;
+}
+function heatTable(values, rowNames, colNames, o = {}) {
+  const t = h("table", { class: "ct" });
+  t.append(h("tr", {}, h("th", { class: "l" }, o.corner || ""), ...colNames.map((c) => h("th", {}, c))));
+  values.forEach((r, i) => t.append(h("tr", {}, h("th", { class: "l" }, rowNames[i]), ...r.map((v) => {
+    const a = Math.max(0, Math.min(1, v)), bg = `rgba(0,114,178,${(0.08 + 0.72 * a).toFixed(3)})`;
+    return h("td", { style: `background:${bg};color:${a > 0.55 ? "#fff" : "inherit"};font-weight:600` }, fmt(v, 2));
+  }))));
+  return t;
+}
+
+// ------------------------------------------------------------------ datasets
+const SCALE_NAME = { none: "raw units", standard: "standardised", minmax: "min\u2013max", robust: "robust" };
+let PCA_FIXED = null;
+function pcaFixed() {
+  if (!PCA_FIXED) PCA_FIXED = L9.pca(L9.scale(L9.panelMatrix(L9.DIMS), "standard"), 1);
+  return PCA_FIXED;
+}
+/* spec: {source:'sim', preset} | {source:'real', view:'pair', x, y, scaling} | {source:'real', view:'pca', scaling} */
+function dataset(spec) {
+  if (spec.source === "sim") {
+    const P = L9.preset(spec.preset, spec.seed || 7), X = P.map((p) => [p.x, p.y]);
+    return { sim: true, spec, n: P.length, X, disp: X.map((r) => r.slice()), truth: P.map((p) => p.g),
+      names: P.map((p, i) => "point " + (i + 1)), unit: "points", xLabel: "feature 1", yLabel: "feature 2", equal: true,
+      shape: (i, show) => (show ? SIM_SHAPES[P[i].g % SIM_SHAPES.length] : "circle"), key: X.map((r) => r[0]),
+      truthName: (g) => "group " + String.fromCharCode(65 + g), featureNames: ["feature 1", "feature 2"], raw: X };
+  }
+  const names = L9.PANEL.map((p) => p.short), truth = L9.LABEL.slice(), key = L9.PANEL.map((p) => p.total);
+  const shape = (i, show) => (show ? (truth[i] ? "circle" : "cross") : "circle");
+  const truthName = (g) => (g ? "ethical option" : "MySuper default");
+  if (spec.view === "pair") {
+    const raw = L9.PANEL.map((p) => [p[spec.x], p[spec.y]]), X = L9.scale(raw, spec.scaling);
+    const unit = spec.scaling === "none" ? " (% of portfolio)" : ` (${SCALE_NAME[spec.scaling]})`;
+    return { sim: false, spec, n: 31, X, disp: X.map((r) => r.slice()), truth, names, unit: "options", key, shape, truthName, equal: spec.scaling !== "none",
+      xLabel: L9.DIM_LABEL[spec.x] + unit, yLabel: L9.DIM_LABEL[spec.y] + unit, featureNames: [L9.DIM_LABEL[spec.x], L9.DIM_LABEL[spec.y]], raw };
+  }
+  const raw = L9.panelMatrix(L9.DIMS), X = L9.scale(raw, spec.scaling), p = pcaFixed();
+  return { sim: false, pca: true, spec, n: 31, X, disp: p.scores, truth, names, unit: "options", key, shape, truthName, equal: true,
+    xLabel: `PC1: general harm exposure (${Math.round(100 * p.ratio[0])}% of variance)`,
+    yLabel: `PC2: human rights and animal welfare (${Math.round(100 * p.ratio[1])}%)`,
+    featureNames: L9.DIMS.map((d) => L9.DIM_LABEL[d]), raw, project: p.project };
+}
+/* Renumber clusters so colours are stable: ascending mean of `key`. */
+function canon(labels, key) {
+  const ks = [...new Set(labels)];
+  const m = ks.map((k) => [k, L9.mean(labels.map((l, i) => [l, i]).filter((q) => q[0] === k).map((q) => key[q[1]]))]).sort((a, b) => a[1] - b[1]);
+  const map = new Map(m.map((q, i) => [q[0], i]));
+  return labels.map((l) => map.get(l));
+}
+
+// ------------------------------------------------------------------ data picker
+function dataPicker(o, onChange) {
+  const st = Object.assign({ source: "sim", preset: "families", view: "pair", x: "fossil", y: "human_rights", scaling: "standard", show: false }, o.initial || {});
+  const box = h("div", { class: "controls" });
+  const sel = h("select", { "aria-label": "data" });
+  if (o.sim !== false) {
+    const og = h("optgroup", { label: "Simulated, to see the mechanics" });
+    Object.entries(o.presets || L9.PRESETS).forEach(([k, v]) => og.append(h("option", { value: "sim:" + k }, v)));
+    sel.append(og);
+  }
+  if (o.real !== false) {
+    const og = h("optgroup", { label: "Real: the 31 super options" });
+    og.append(h("option", { value: "real:pair" }, "two categories"));
+    if (o.pca !== false) og.append(h("option", { value: "real:pca" }, "all six categories (PCA map)"));
+    sel.append(og);
+  }
+  const catSel = (v) => { const e = h("select"); L9.DIMS.forEach((d) => e.append(h("option", { value: d }, L9.DIM_LABEL[d]))); e.value = v; return e; };
+  const xs = catSel(st.x), ys = catSel(st.y), sc = h("select");
+  ["standard", "minmax", "robust", "none"].forEach((k) => sc.append(h("option", { value: k }, SCALE_NAME[k])));
+  sc.value = st.scaling;
+  const show = h("input", { type: "checkbox" }); show.checked = st.show;
+  const showLbl = h("label", { class: "check" }, show, h("span", {}, ""));
+  const rows = {
+    data: [h("label", {}, "Data"), sel], x: [h("label", {}, "Horizontal"), xs], y: [h("label", {}, "Vertical"), ys],
+    sc: [h("label", {}, "Scaling"), sc], show: [h("span", {}), showLbl],
+  };
+  Object.values(rows).forEach((r) => box.append(...r));
+  sel.value = st.source === "sim" ? "sim:" + st.preset : "real:" + st.view;
+  const sync = () => {
+    const [src, v] = sel.value.split(":");
+    st.source = src; if (src === "sim") st.preset = v; else st.view = v;
+    st.x = xs.value; st.y = ys.value; st.scaling = sc.value; st.show = show.checked;
+    const real = src === "real";
+    [rows.x, rows.y].forEach((r) => r.forEach((e) => { e.style.display = real && st.view === "pair" ? "" : "none"; }));
+    rows.sc.forEach((e) => { e.style.display = real && o.scaling !== false ? "" : "none"; });
+    showLbl.lastChild.textContent = real ? "Show the label (circle = ethical, cross = default)" : "Show the generating groups (as shapes)";
+    if (o.hideShow) rows.show.forEach((e) => { e.style.display = "none"; });
+  };
+  [sel, xs, ys, sc].forEach((e) => e.addEventListener("change", () => { sync(); onChange(Object.assign({}, st), "data"); }));
+  show.addEventListener("change", () => { sync(); onChange(Object.assign({}, st), "show"); });
+  sync();
+  return { el: box, get: () => Object.assign({}, st), set(v) { Object.assign(st, v); sel.value = st.source === "sim" ? "sim:" + st.preset : "real:" + st.view; xs.value = st.x; ys.value = st.y; sc.value = st.scaling; show.checked = st.show; sync(); } };
+}
+
+// ------------------------------------------------------------------ page scaffolding
+const MODULES = [];
+function registerModule(m) { MODULES.push(m); }
+function tryList(items) {
+  const d = h("details", { open: true }, h("summary", {}, "Try this"));
+  const ol = h("ol");
+  items.forEach((it) => {
+    const ans = h("details", {}, h("summary", {}, "Show the answer"));
+    const body = h("div");
+    ans.append(body);
+    ans.addEventListener("toggle", () => { if (ans.open) body.innerHTML = typeof it.a === "function" ? it.a() : it.a; });
+    const li = h("li", { html: it.q });
+    li.append(ans);
+    ol.append(li);
+  });
+  d.append(ol);
+  return d;
+}
+function mathsBox(html) { return h("details", { class: "maths" }, h("summary", {}, "How it works"), h("div", { html })); }
+function navLine(i) {
+  const prev = MODULES[i - 1], next = MODULES[i + 1];
+  return h("div", { class: "navline" },
+    prev ? h("button", { class: "btn", onclick: () => showModule(i - 1) }, "Back: " + prev.short) : h("span"),
+    next ? h("button", { class: "btn primary", onclick: () => showModule(i + 1) }, "Next: " + next.short) : h("span"));
+}
+function moduleShell(m, i) {
+  const sec = h("section", { class: "module", id: "m-" + m.id, "aria-labelledby": "h-" + m.id });
+  const sheet = h("div", { class: "sheetcol" }), work = h("div", { class: "work" });
+  work.append(h("h2", { id: "h-" + m.id }, m.title));
+  sec.append(sheet, work);
+  return { sec, sheet, work, nav: () => navLine(i) };
+}
+let CURRENT = -1;
+function showModule(i) {
+  MODULES.forEach((m, j) => {
+    if (!m._built && j === i) { m._built = true; m.build(m._shell); }
+    m._shell.sec.classList.toggle("active", j === i);
+    m._btn.setAttribute("aria-current", j === i ? "step" : "false");
+  });
+  MODULES[i]._btn.classList.add("visited");
+  CURRENT = i;
+  if (MODULES[i].onShow) MODULES[i].onShow();
+  if (typeof window !== "undefined" && window.scrollTo) try { window.scrollTo(0, 0); } catch (e) { /* jsdom */ }
+  if (typeof history !== "undefined" && history.replaceState) try { history.replaceState(null, "", "#" + MODULES[i].id); } catch (e) { /* file:// */ }
+}
+function boot() {
+  const route = document.getElementById("route"), main = document.getElementById("main");
+  MODULES.forEach((m, i) => {
+    m._shell = moduleShell(m, i);
+    main.append(m._shell.sec);
+    m._btn = h("button", { onclick: () => showModule(i) }, h("span", { class: "n" }, String(i)), h("span", {}, m.short));
+    route.append(m._btn);
+  });
+  const t = document.getElementById("presentToggle");
+  t.addEventListener("click", () => { const on = document.documentElement.classList.toggle("present"); t.setAttribute("aria-pressed", String(on)); });
+  const hash = (location.hash || "").slice(1), start = Math.max(0, MODULES.findIndex((m) => m.id === hash));
+  showModule(start);
+}
+
+</script>
+<script>
+/* Modules 0-3 */
+"use strict";
+const NEUTRAL = "#5A6F86";
+const nameList = (arr) => arr.length ? "<ul class='list'>" + arr.map((n) => "<li>" + n + "</li>").join("") + "</ul>" : "<p>none</p>";
+
+// =========================================================== 0. Start
+registerModule({
+  id: "start", short: "Start", title: "Can you tell what a product is without its label?",
+  build(sh) {
+    const box = h("div", { class: "sheet" }), w = 660, hh = 400;
+    const svg = s("svg", { viewBox: `0 0 ${w} ${hh}`, role: "img", "aria-label": "the audit loop" }, box);
+    s("rect", { x: 0, y: 0, width: w, height: hh, class: "bgpaper" }, svg);
+    for (let x = 0; x <= w; x += 22) s("line", { x1: x, x2: x, y1: 0, y2: hh, class: "gminor" }, svg);
+    for (let y = 0; y <= hh; y += 22) s("line", { y1: y, y2: y, x1: 0, x2: w, class: "gminor" }, svg);
+    const steps = [
+      { t: "Claim", d: ["the label on the product"], go: null, x: 30, y: 40 },
+      { t: "Holdings", d: ["what the product owns"], go: null, x: 240, y: 40 },
+      { t: "Features", d: ["a fingerprint", "for each product"], go: 1, m: "screen 1", x: 450, y: 40 },
+      { t: "Partition", d: ["cluster, never", "showing the label"], go: 2, m: "screens 2, 4 and 5", x: 450, y: 220 },
+      { t: "Compare", d: ["score the partition", "against the label"], go: 6, m: "screens 3, 6 and 7", x: 240, y: 220 },
+      { t: "Verdict", d: ["consistent, or not"], go: 8, m: "screen 8", x: 30, y: 220 },
+    ];
+    s("defs", {}, svg).innerHTML = '<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="currentColor"/></marker>';
+    const arrow = (x1, y1, x2, y2, dash) => s("line", { x1, y1, x2, y2, stroke: "var(--ink)", "stroke-width": 1.8, "marker-end": "url(#ah)", style: "color:var(--ink)", "stroke-dasharray": dash || null }, svg);
+    arrow(210, 85, 236, 85); arrow(420, 85, 446, 85); arrow(540, 130, 540, 216); arrow(446, 265, 420, 265); arrow(236, 265, 210, 265);
+    arrow(120, 216, 120, 134, "5 4");
+    s("text", { x: 130, y: 180, style: "font-size:11px;fill:var(--muted)" }, svg).textContent = "if it is not, the disagreement is the finding";
+    steps.forEach((st) => {
+      const g = s("g", { style: st.go != null ? "cursor:pointer" : "" }, svg);
+      s("rect", { x: st.x, y: st.y, width: 180, height: 90, rx: 3, fill: "var(--sheet)", stroke: "var(--ink)", "stroke-width": st.go != null ? 2 : 1.2 }, g);
+      s("text", { x: st.x + 12, y: st.y + 26, style: "font-size:16px;font-weight:600;fill:var(--ink)" }, g).textContent = st.t;
+      st.d.forEach((line, k) => { s("text", { x: st.x + 12, y: st.y + 46 + 15 * k, style: "font-size:11.5px;fill:var(--text)" }, g).textContent = line; });
+      if (st.m) s("text", { x: st.x + 12, y: st.y + 80, style: "font-size:11px;fill:var(--ink);text-decoration:underline" }, g).textContent = st.m;
+      if (st.go != null) g.addEventListener("click", () => showModule(st.go));
+    });
+    const lg = s("g", { transform: "translate(30,350)" }, svg);
+    s("path", { d: shapePath("circle", 6), fill: OKABE[0], transform: "translate(6,0)" }, lg);
+    s("path", { d: shapePath("circle", 6), fill: OKABE[1], transform: "translate(22,0)" }, lg);
+    s("text", { x: 36, y: 4, style: "font-size:12px;fill:var(--text)" }, lg).textContent = "colour = the cluster an algorithm found";
+    s("path", { d: shapePath("circle", 6), fill: NEUTRAL, transform: "translate(310,0)" }, lg);
+    s("path", { d: shapePath("cross", 6), stroke: NEUTRAL, "stroke-width": 2.6, transform: "translate(328,0)" }, lg);
+    s("text", { x: 342, y: 4, style: "font-size:12px;fill:var(--text)" }, lg).textContent = "shape = the label, hidden until you ask";
+    sh.sheet.append(box);
+    sh.work.append(
+      h("p", { class: "lede" }, "The lecture audits a label by clustering products on what they hold, without ever showing the algorithm the label, and only afterwards comparing the two."),
+      h("p", {}, "Each screen here takes one piece of that loop apart so you can watch it work. Two kinds of data appear throughout. Simulated points, in two dimensions, show the mechanics as clearly as possible, including the ways each method fails. The real panel of 31 Australian superannuation options shows what the method finds when it matters."),
+      h("p", {}, "On every screen: read the question, make a prediction, then play. The answers to the challenges are computed from the data when you open them."),
+      h("p", { class: "muted" }, "Data: Mindful Money (2026), Inside Australia's Super Funds, CC BY-NC 4.0. Holdings as at 30 June 2025. Everything runs in this page; nothing is sent anywhere."),
+      sh.nav());
+  },
+});
+
+// =========================================================== 1. Distance and scaling
+registerModule({
+  id: "distance", short: "Distance", title: "Who counts as a neighbour depends on your units",
+  build(sh) {
+    const st = { x: "fossil", y: "weapons", scaling: "none", equal: true, show: false, sel: null };
+    const plotBox = h("div", { class: "sheet" }), cap = h("div", { class: "cap" });
+    const sc = new Scatter(plotBox, { h: 420, label: "options in two categories" });
+    plotBox.append(cap);
+    const barBox = h("div", { class: "sheet" });
+    sh.sheet.append(plotBox, barBox);
+    const X2 = () => L9.scale(L9.PANEL.map((p) => [p[st.x], p[st.y]]), st.scaling);
+    const nn = (X, i, k = 3) => X.map((r, j) => [j, L9.dist(r, X[i])]).filter((q) => q[0] !== i).sort((a, b) => a[1] - b[1]).slice(0, k);
+    const readout = h("div", { class: "readout" });
+    const ctl = h("div", { class: "controls" });
+    const catSel = (v, f) => { const e = h("select"); L9.DIMS.forEach((d) => e.append(h("option", { value: d }, L9.DIM_LABEL[d]))); e.value = v; e.onchange = () => { st[f] = e.value; draw(); }; return e; };
+    const scSel = h("select"); ["none", "standard", "minmax", "robust"].forEach((k) => scSel.append(h("option", { value: k }, SCALE_NAME[k])));
+    scSel.value = st.scaling; scSel.onchange = () => { st.scaling = scSel.value; draw(); };
+    const eq = h("input", { type: "checkbox" }); eq.checked = true; eq.onchange = () => { st.equal = eq.checked; draw(); };
+    const sh2 = h("input", { type: "checkbox" }); sh2.onchange = () => { st.show = sh2.checked; draw(); };
+    ctl.append(h("label", {}, "Horizontal"), catSel(st.x, "x"), h("label", {}, "Vertical"), catSel(st.y, "y"),
+      h("label", {}, "Scaling"), scSel, h("span"), h("label", { class: "check" }, eq, "True proportions (one unit is the same length on both axes)"),
+      h("span"), h("label", { class: "check" }, sh2, "Show the label"));
+    function draw() {
+      const X = X2(), unit = st.scaling === "none" ? " (% of portfolio)" : ` (${SCALE_NAME[st.scaling]})`;
+      sc.setDomain(X, { equal: st.equal, xLabel: L9.DIM_LABEL[st.x] + unit, yLabel: L9.DIM_LABEL[st.y] + unit });
+      sc.clearLayer("Geo"); sc.clearLayer("Top");
+      const near = st.sel == null ? [] : nn(X, st.sel);
+      near.forEach(([j], r) => { sc.line(X[st.sel], X[j], { stroke: OKABE[1], "stroke-width": 2.2 }); sc.label(X[j], String(r + 1), { style: "font-weight:600;fill:" + OKABE[1] }); });
+      sc.points(X, {
+        colour: (i) => (i === st.sel ? "var(--ink)" : near.some((q) => q[0] === i) ? OKABE[1] : NEUTRAL),
+        shape: (i) => (st.show ? (L9.LABEL[i] ? "circle" : "cross") : "circle"), ring: (i) => i === st.sel,
+        title: (i) => L9.PANEL[i].short + `: ${L9.DIM_LABEL[st.x]} ${L9.PANEL[i][st.x]}%, ${L9.DIM_LABEL[st.y]} ${L9.PANEL[i][st.y]}%`,
+      });
+      sc.onClick = (i) => { st.sel = i; draw(); };
+      cap.textContent = st.sel == null ? "Click any option to draw lines to its three nearest neighbours." : "Orange lines join the selected option to its three nearest neighbours in the units shown.";
+      clear(readout);
+      if (st.sel == null) { readout.append(h("div", { class: "note" }, "No option selected yet.")); drawBar(null); return; }
+      const byRaw = nn(L9.scale(L9.PANEL.map((p) => [p[st.x], p[st.y]]), "none"), st.sel)[0][0];
+      const byStd = nn(L9.scale(L9.PANEL.map((p) => [p[st.x], p[st.y]]), "standard"), st.sel)[0][0];
+      readout.append(h("div", {}, h("strong", {}, L9.PANEL[st.sel].short)),
+        h("div", { class: "note" }, "Nearest neighbours, " + SCALE_NAME[st.scaling] + ":"),
+        h("ol", { class: "list" }, ...near.map(([j, d]) => h("li", {}, L9.PANEL[j].short + "  (distance " + fmt(d, 2) + ")"))),
+        h("div", { class: "note", html: byRaw === byStd ? "Its nearest neighbour is the same in raw and standardised units." : `<span class="flag">Its nearest neighbour changes:</span> ${L9.PANEL[byRaw].short} in raw units, ${L9.PANEL[byStd].short} when standardised.` }));
+      drawBar(near[0][0]);
+    }
+    function drawBar(j) {
+      clear(barBox);
+      if (j == null) { barBox.append(h("div", { class: "cap" }, "When you select an option, these bars show how much of its squared distance comes from each category.")); return; }
+      barBox.append(h("div", { class: "cap" }, "Share of the selected option's squared distance that comes from each category."));
+      const X = X2(), me = X[st.sel];
+      const share = (others) => { let a = 0, b = 0; others.forEach((o) => { a += (me[0] - X[o][0]) ** 2; b += (me[1] - X[o][1]) ** 2; }); return a / (a + b || 1); };
+      const rows = [["Nearest neighbour", share([j])], ["All 30 others", share([...Array(31).keys()].filter((q) => q !== st.sel))]];
+      const w = 660, svg = s("svg", { viewBox: `0 0 ${w} 100`, role: "img", "aria-label": "share of squared distance by category" }, barBox);
+      rows.forEach(([lbl, sh2], r2) => {
+        const y = 8 + r2 * 46, L = 150, R = w - 10, split = L + sh2 * (R - L);
+        s("text", { x: 10, y: y + 15, style: "fill:var(--text)" }, svg).textContent = lbl;
+        s("rect", { x: L, y, width: split - L, height: 20, fill: OKABE[0] }, svg);
+        s("rect", { x: split, y, width: R - split, height: 20, fill: OKABE[2] }, svg);
+        s("text", { x: L, y: y + 34, style: "font-size:11px;fill:var(--text)" }, svg).textContent = `${L9.DIM_LABEL[st.x]} ${pct(sh2, 0)}`;
+        s("text", { x: R, y: y + 34, "text-anchor": "end", style: "font-size:11px;fill:var(--text)" }, svg).textContent = `${L9.DIM_LABEL[st.y]} ${pct(1 - sh2, 0)}`;
+      });
+    }
+    const shareOver = (how) => {
+      const X = L9.scale(L9.PANEL.map((p) => [p[st.x], p[st.y]]), how); let a = 0, b = 0;
+      for (let i = 0; i < 31; i++) for (let j = i + 1; j < 31; j++) { a += (X[i][0] - X[j][0]) ** 2; b += (X[i][1] - X[j][1]) ** 2; }
+      return a / (a + b);
+    };
+    const sd = (d) => { const v = L9.PANEL.map((p) => p[d]), m = L9.mean(v); return Math.sqrt(L9.mean(v.map((q) => (q - m) ** 2))); };
+    sh.work.append(
+      h("p", { class: "lede" }, "Every clustering method in this lecture starts from distances between products. A distance adds up differences across categories, so a category measured on a bigger scale gets a bigger say."),
+      h("p", { class: "predict" }, "Before you click: with fossil fuels on one axis and weapons on the other, in raw units, which category will decide who is close to whom?"),
+      ctl, readout,
+      tryList([
+        { q: "Keep raw units and true proportions. Which category decides almost every distance? Then look at the top bar: why can the nearest neighbour still be decided by the other category?",
+          a: () => `<p><strong>${L9.DIM_LABEL[st.x]}</strong> (horizontal) accounts for ${pct(shareOver("none"), 0)} of all squared distances between pairs of options in raw units. Its standard deviation is ${fmt(sd(st.x), 2)} percentage points, against ${fmt(sd(st.y), 2)} for ${L9.DIM_LABEL[st.y].toLowerCase()}. Standardised, the split becomes ${pct(shareOver("standard"), 0)} to ${pct(1 - shareOver("standard"), 0)}.</p><p>The nearest neighbour is a different matter: an option is nearest <em>because</em> its ${L9.DIM_LABEL[st.x].toLowerCase()} value is almost identical, so the little distance that remains comes from the other category. Dominance shows up in who is <em>far</em>, which is what decides everyone's peer group.</p>` },
+        { q: "Switch between raw units and standardised. For how many of the 31 options does the nearest neighbour change?",
+          a: () => { const R = L9.scale(L9.PANEL.map((p) => [p[st.x], p[st.y]]), "none"), S = L9.scale(L9.PANEL.map((p) => [p[st.x], p[st.y]]), "standard"); const ch = L9.PANEL.filter((_, i) => nn(R, i)[0][0] !== nn(S, i)[0][0]).map((p) => p.short); return `<p>${ch.length} of 31, for the two categories currently shown. Each of them has a different peer group depending only on the units.</p>` + nameList(ch); } },
+        { q: "If standardising gives every category an equal say, why is it not simply the right answer?",
+          a: "<p>Because an equal say is itself a judgement. It treats one standard deviation of weapons exposure as exactly as important as one standard deviation of fossil-fuel exposure. Sometimes that is what you want; sometimes one category deserves more weight. The lecture's sixteen-pipeline grid shows the audit verdict moving with this choice.</p>" },
+      ]),
+      mathsBox("<p class='formula'>d(<i>i</i>, <i>j</i>) = &radic;[ &Sigma;<sub><i>c</i></sub> (<i>x</i><sub><i>ic</i></sub> &minus; <i>x</i><sub><i>jc</i></sub>)&sup2; ]</p><p>Each category enters in the square of its own units, so its contribution grows with its variance.</p><p><strong>Standardised</strong>: subtract the mean, divide by the standard deviation. <strong>Min&ndash;max</strong>: map the smallest value to 0 and the largest to 1. <strong>Robust</strong>: subtract the median, divide by the interquartile range, so one extreme product cannot set the scale.</p>"),
+      sh.nav());
+    draw();
+  },
+});
+
+// =========================================================== 2. k-means
+registerModule({
+  id: "kmeans", short: "k-means", title: "k-means: assign, move, repeat",
+  build(sh) {
+    const st = { spec: { source: "sim", preset: "families", show: false }, k: 3, init: "kmeans++", seed: 1, C: null, labels: null,
+                 trail: [], hist: [], phase: "start", done: false, lines: true };
+    let D = null;
+    const plotBox = h("div", { class: "sheet" }), cap = h("div", { class: "cap" });
+    const sc = new Scatter(plotBox, { h: 400, label: "k-means" });
+    plotBox.append(cap);
+    const c1 = h("div", { class: "sheet" }), c2 = h("div", { class: "sheet" });
+    sh.sheet.append(plotBox, h("div", { class: "pair" }, c1, c2));
+    const picker = dataPicker({ initial: st.spec }, (spec, why) => { st.spec = spec; if (why === "data") reset(); else draw(); });
+    const kIn = h("input", { type: "range", min: 1, max: 6, value: st.k }), kOut = h("span", {}, st.k);
+    kIn.oninput = () => { st.k = +kIn.value; kOut.textContent = st.k; reset(); };
+    const initSel = h("select"); [["kmeans++", "k-means++ (spread out)"], ["random", "random points"]].forEach(([v, t]) => initSel.append(h("option", { value: v }, t)));
+    initSel.onchange = () => { st.init = initSel.value; reset(); };
+    const seedIn = h("input", { type: "number", min: 1, max: 999, value: st.seed, style: "width:5rem" });
+    seedIn.onchange = () => { st.seed = +seedIn.value || 1; reset(); };
+    const linesCb = h("input", { type: "checkbox" }); linesCb.checked = true; linesCb.onchange = () => { st.lines = linesCb.checked; draw(); };
+    const ctl = h("div", { class: "controls" }, h("label", {}, "Clusters k"), h("div", { class: "row" }, kIn, kOut),
+      h("label", {}, "Starting centroids"), initSel, h("label", {}, "Seed"), h("div", { class: "row" }, seedIn, h("button", { class: "btn", onclick: () => { st.seed = 1 + Math.floor(Math.random() * 998); seedIn.value = st.seed; reset(); } }, "New seed")),
+      h("span"), h("label", { class: "check" }, linesCb, "Draw each point's distance to its centroid"));
+    const bAssign = h("button", { class: "btn", onclick: () => doAssign() }, "Assign points");
+    const bMove = h("button", { class: "btn", onclick: () => doMove() }, "Move centroids");
+    const bStep = h("button", { class: "btn primary", onclick: () => { doAssign(); if (!st.done) doMove(); } }, "One full step");
+    const bRun = h("button", { class: "btn", onclick: () => { for (let t = 0; t < 200 && !st.done; t++) { doAssign(false); if (!st.done) doMove(false); } draw(); } }, "Run to the end");
+    const bReset = h("button", { class: "btn", onclick: () => reset() }, "Reset");
+    const readout = h("div", { class: "readout" });
+    function reset() {
+      D = dataset(st.spec);
+      st.C = L9.initCentroids(D.X, st.k, L9.rng(st.seed), st.init);
+      st.labels = null; st.trail = [st.C.map((c) => c.slice())]; st.done = false; st.phase = "start";
+      st.hist = []; st.changed = null;
+      draw(); restarts(false);
+    }
+    function doAssign(redraw = true) {
+      const l2 = L9.assign(D.X, st.C);
+      st.changed = st.labels ? l2.filter((v, i) => v !== st.labels[i]).length : null;
+      if (st.labels && st.changed === 0) st.done = true;
+      st.labels = l2; st.phase = "assigned";
+      st.hist.push({ kind: "assign", w: L9.inertia(D.X, st.labels, st.C) });
+      if (redraw) draw();
+    }
+    function doMove(redraw = true) {
+      if (!st.labels) doAssign(false);
+      st.C = L9.centroids(D.X, st.labels, st.k, st.C); st.trail.push(st.C.map((c) => c.slice())); st.phase = "moved";
+      st.hist.push({ kind: "move", w: L9.inertia(D.X, st.labels, st.C) });
+      if (redraw) draw();
+    }
+    const disp = (c) => (D.pca ? D.project(c) : c);
+    function draw() {
+      const Pc = st.C.map(disp);
+      sc.setDomain(D.disp, { equal: D.equal, xLabel: D.xLabel, yLabel: D.yLabel, extra: Pc });
+      sc.clearLayer("Bg"); sc.clearLayer("Geo"); sc.clearLayer("Top");
+      if (!D.pca) {                                  // nearest-centroid regions
+        const [x0, x1, y0, y1] = sc.dom, nx = 44, ny = 30;
+        for (let a = 0; a < nx; a++) for (let b = 0; b < ny; b++) {
+          const x = x0 + ((a + 0.5) / nx) * (x1 - x0), y = y0 + ((b + 0.5) / ny) * (y1 - y0);
+          const k = L9.assign([[x, y]], st.C)[0];
+          s("rect", { x: sc.sx(x0 + (a / nx) * (x1 - x0)), y: sc.sy(y0 + ((b + 1) / ny) * (y1 - y0)), width: (sc.sx(x1) - sc.sx(x0)) / nx + 0.5, height: (sc.sy(y0) - sc.sy(y1)) / ny + 0.5, fill: colourOf(k), opacity: 0.11 }, sc.gBg);
+        }
+      }
+      if (st.labels && st.lines) D.disp.forEach((p, i) => sc.line(p, Pc[st.labels[i]], { stroke: colourOf(st.labels[i]), "stroke-width": 1, opacity: 0.45 }));
+      st.C.forEach((_, k) => {
+        const path = st.trail.map((T) => disp(T[k]));
+        if (path.length > 1) s("polyline", { points: path.map((p) => `${sc.sx(p[0])},${sc.sy(p[1])}`).join(" "), fill: "none", stroke: colourOf(k), "stroke-width": 2, "stroke-dasharray": "4 3" }, sc.gGeo);
+      });
+      sc.points(D.disp, { colour: (i) => (st.labels ? colourOf(st.labels[i]) : NEUTRAL), shape: (i) => D.shape(i, st.spec.show), title: (i) => D.names[i] + (st.labels ? `, cluster ${st.labels[i] + 1}` : "") });
+      Pc.forEach((p, k) => sc.centroid(p, k));
+      cap.textContent = (D.pca ? "Centroids live in six dimensions and are projected onto the map; regions are not shaded because they are not flat on this map. " : "Shading shows which centroid is nearest to every location. ") + "Dashed lines trace where each centroid has been.";
+      const last = st.hist.length ? st.hist[st.hist.length - 1].w : L9.inertia(D.X, L9.assign(D.X, st.C), st.C);
+      clear(readout).append(h("div", { class: "kv" },
+        h("span", {}, "Iterations completed"), h("span", {}, st.hist.filter((q) => q.kind === "move").length),
+        h("span", {}, "Within-cluster sum of squares"), h("span", {}, fmt(last, 2)),
+        h("span", {}, "Points that changed cluster, last assignment"), h("span", {}, st.changed == null ? "\u2013" : st.changed)),
+        h("div", { class: "note", html: st.done ? "<strong>Converged.</strong> No point changed cluster, so nothing more can move." : st.phase === "start" ? "Centroids placed. Press <em>Assign points</em> or <em>One full step</em>." : st.phase === "assigned" ? "Every point now belongs to its nearest centroid. Next: move each centroid to the mean of its points." : "Centroids moved to the mean of their points. Some points may now be nearer a different centroid." }));
+      bAssign.disabled = bMove.disabled = bStep.disabled = bRun.disabled = st.done;
+      const nh = st.hist.length, xt = nh <= 12 ? [...Array(nh).keys()].map((i) => i + 1) : niceTicks(1, nh, 6).ticks.filter(Number.isInteger);
+      if (nh) lineChart(c1, { h: 180, series: [{ xs: st.hist.map((_, i) => i + 1), ys: st.hist.map((q) => q.w), dots: true, dotColour: (i) => (st.hist[i].kind === "assign" ? OKABE[0] : OKABE[1]) }], xLabel: "half-step (blue assign, orange move)", yLabel: "sum of squares", xTicks: xt });
+      else clear(c1).append(h("div", { class: "cap" }, "The sum of squared distances to the centroids will appear here, one dot per half-step. Watch whether it can ever go up."));
+    }
+    let lastRestarts = null;
+    function restarts(show = true) {
+      if (!D) return;
+      const r = L9.rng(1000 + st.seed), finals = [];
+      for (let t = 0; t < 20; t++) finals.push(L9.lloyd(D.X, L9.initCentroids(D.X, st.k, r, st.init)).inertia);
+      const best = Math.min(...finals), hit = finals.filter((v) => v < best + 1e-6).length;
+      lastRestarts = { finals, best, hit, init: st.init, k: st.k, name: D.sim ? L9.PRESETS[st.spec.preset] : "the real panel" };
+      if (!show) { clear(c2).append(h("div", { class: "cap" }, "Press 'Twenty starts' to run k-means from twenty different starting positions and compare where each one ends.")); return; }
+      lineChart(c2, { h: 180, series: [{ xs: finals.map((_, i) => i + 1), ys: finals, line: false, dots: true, dotColour: (i) => (finals[i] < best + 1e-6 ? OKABE[2] : OKABE[5]) }],
+        hlines: [{ y: best, colour: OKABE[2] }], xLabel: `start number (${hit} of 20 reach the lowest)`, yLabel: "final sum of squares", xTicks: [1, 5, 10, 15, 20] });
+    }
+    const bRestarts = h("button", { class: "btn", onclick: () => restarts(true) }, "Twenty starts");
+    sh.work.append(
+      h("p", { class: "lede" }, "k-means repeats two moves: give every point to its nearest centroid, then move each centroid to the average of its points. Stop when nothing changes."),
+      h("p", { class: "predict" }, "Before you run it: can the sum of squared distances ever increase from one half-step to the next?"),
+      picker.el, ctl, h("div", { class: "row" }, bAssign, bMove, bStep, bRun, bReset, bRestarts), readout,
+      tryList([
+        { q: "Choose <em>Overlapping families</em>, k = 3, random starting points, then press <em>Twenty starts</em>. How many starts reach the lowest sum of squares?",
+          a: () => { const X = dataset({ source: "sim", preset: "overlap" }).X, r = L9.rng(4242), f = []; for (let t = 0; t < 20; t++) f.push(L9.lloyd(X, L9.initCentroids(X, 3, r, "random")).inertia); const b = Math.min(...f), n = f.filter((v) => v < b + 1e-6).length; return `<p>From twenty random starts on that preset, ${n} reach the lowest value (${fmt(b, 2)}); the rest stop in a worse local optimum, as high as ${fmt(Math.max(...f), 2)}. That is why real software runs many starts and keeps the best, and why the k-means++ option spreads its starting points out.</p>` + (lastRestarts ? `<p class="muted">Your last run: ${lastRestarts.hit} of 20 reached the lowest value on ${lastRestarts.name}, k = ${lastRestarts.k}, ${lastRestarts.init} starts.</p>` : ""); } },
+        { q: "Choose <em>No structure at all</em> and k = 4. Does k-means refuse to answer?",
+          a: () => { const X = dataset({ source: "sim", preset: "noise" }).X, km = L9.kmeans(X, 4, { nInit: 20, seed: 3 }), sil = L9.silhouette(L9.pairwise(X), km.labels).mean; return `<p>No. It always returns exactly k groups, and the sum of squares still falls at every step. Nothing in the algorithm asks whether the groups are real. The mean silhouette of this partition is only ${fmt(sil, 2)}; the next screen explains why that number is the warning sign.</p>`; } },
+        { q: "Choose <em>Two long bands</em>, k = 2. Where does k-means draw its boundary, and why?",
+          a: () => { const D2 = dataset({ source: "sim", preset: "elongated" }), km = L9.kmeans(D2.X, 2, { nInit: 25, seed: 1 }), sl = L9.cutTree(L9.linkage(D2.X, "single"), D2.n, 2); return `<p>It tends to cut across the bands, not between them, because it looks for round groups of similar size around a centre. Scored against the two bands that generated the data, its adjusted Rand index is ${fmt(L9.ari(D2.truth, km.labels), 2)}; single-linkage clustering, which follows chains of nearby points, scores ${fmt(L9.ari(D2.truth, sl), 2)}. Screen 4 shows how.</p>`; } },
+        { q: "Choose the real panel, all six categories, k = 2, and show the label. Which ethical options sit with the defaults?",
+          a: () => { const D2 = dataset({ source: "real", view: "pca", scaling: "standard" }), km = L9.kmeans(D2.X, 2, { nInit: 100, seed: 42 }), lab = canon(km.labels, D2.key); const inHigh = L9.PANEL.filter((p, i) => p.ethical && lab[i] === 1).map((p) => p.short), inLow = L9.PANEL.filter((p, i) => !p.ethical && lab[i] === 0).map((p) => p.short); return `<p>These ethical options land in the higher-exposure cluster:</p>${nameList(inHigh)}<p>and this default lands with the ethical options:</p>${nameList(inLow)}<p>These are the lecture's three false positives and one false negative.</p>`; } },
+      ]),
+      mathsBox("<p>k-means chooses clusters to minimise the <strong>within-cluster sum of squares</strong>:</p><p class='formula'>W = &Sigma;<sub><i>k</i></sub> &Sigma;<sub><i>i</i> &isin; <i>C<sub>k</sub></i></sub> &#8214;<i>x<sub>i</sub></i> &minus; <i>&mu;<sub>k</sub></i>&#8214;&sup2;</p><p>Assigning each point to its nearest centroid cannot increase W, and moving a centroid to the mean of its points cannot increase W either, because the mean is the point that minimises the sum of squared distances. So W falls, or stays level, at every half-step, and the procedure must stop. It stops at a <strong>local</strong> minimum, which depends on where it started.</p><p><strong>k-means++</strong> picks the first centroid at random and each further one with probability proportional to its squared distance from the nearest centroid already chosen. Starts that are spread out rarely end badly.</p>"),
+      sh.nav());
+    reset();
+  },
+});
+
+// =========================================================== 3. Silhouette
+registerModule({
+  id: "silhouette", short: "Silhouette", title: "Silhouette: is each point closer to its own cluster?",
+  build(sh) {
+    const st = { spec: { source: "sim", preset: "overlap", show: false }, k: 3, labels: null, sel: null };
+    let D = null, Dm = null, curve = null;
+    const plotBox = h("div", { class: "sheet" }), cap = h("div", { class: "cap" });
+    const sc = new Scatter(plotBox, { h: 380, label: "silhouette" });
+    plotBox.append(cap);
+    const barBox = h("div", { class: "sheet" }), kBox = h("div", { class: "sheet" });
+    sh.sheet.append(plotBox, h("div", { class: "pair" }, barBox, kBox));
+    const picker = dataPicker({ initial: st.spec }, (spec, why) => { st.spec = spec; if (why === "data") reset(); else draw(); });
+    const kIn = h("input", { type: "range", min: 2, max: 8, value: st.k }), kOut = h("span", {}, st.k);
+    kIn.oninput = () => { st.k = +kIn.value; kOut.textContent = st.k; partition(); };
+    const reassign = h("div", { class: "row" });
+    const ctl = h("div", { class: "controls" }, h("label", {}, "Clusters k"), h("div", { class: "row" }, kIn, kOut), h("label", {}, "Move selected to"), reassign);
+    const readout = h("div", { class: "readout" });
+    function reset() { D = dataset(st.spec); Dm = L9.pairwise(D.X); curve = null; st.sel = null; partition(); }
+    function partition() {
+      st.labels = canon(L9.kmeans(D.X, st.k, { nInit: D.sim ? 25 : 100, seed: 42 }).labels, D.key);
+      draw();
+    }
+    function draw() {
+      const S = L9.silhouette(Dm, st.labels);
+      sc.setDomain(D.disp, { equal: D.equal, xLabel: D.xLabel, yLabel: D.yLabel });
+      sc.clearLayer("Geo"); sc.clearLayer("Top");
+      if (st.sel != null) {
+        const i = st.sel, own = st.labels[i], nb = S.nearest[i];
+        D.disp.forEach((p, j) => {
+          if (j === i) return;
+          if (st.labels[j] === own) sc.line(D.disp[i], p, { stroke: colourOf(own), "stroke-width": 1.4, opacity: 0.7 });
+          else if (st.labels[j] === nb) sc.line(D.disp[i], p, { stroke: colourOf(nb), "stroke-width": 1.2, opacity: 0.6, "stroke-dasharray": "4 3" });
+        });
+      }
+      sc.points(D.disp, { colour: (i) => colourOf(st.labels[i]), shape: (i) => D.shape(i, st.spec.show), ring: (i) => i === st.sel, title: (i) => `${D.names[i]}: s = ${fmt(S.s[i], 2)}` });
+      sc.onClick = (i) => { st.sel = i; draw(); };
+      cap.textContent = st.sel == null ? "Click a point. Solid lines go to the rest of its own cluster; dashed lines go to the nearest other cluster." : "Solid lines: distances averaged into a. Dashed lines: distances averaged into b." + (D.pca ? " Distances are measured in all six categories; the lines are drawn on the map." : "");
+      silBars(barBox, { s: S.s, labels: st.labels, mean: S.mean, selected: st.sel, names: D.names, onClick: (i) => { st.sel = i; draw(); } });
+      if (!curve) { curve = []; for (let k = 2; k <= 8; k++) curve.push(L9.silhouette(Dm, L9.kmeans(D.X, k, { nInit: D.sim ? 12 : 40, seed: 42 }).labels).mean); }
+      lineChart(kBox, { h: 200, series: [{ xs: [2, 3, 4, 5, 6, 7, 8], ys: curve, dots: true }], marks: [{ x: st.k, y: curve[st.k - 2], label: "your k" }], xLabel: "number of clusters k", yLabel: "mean silhouette", xTicks: [2, 3, 4, 5, 6, 7, 8] });
+      clear(reassign);
+      [...Array(st.k).keys()].forEach((k) => reassign.append(h("button", { class: "btn", disabled: st.sel == null || st.labels[st.sel] === k, style: `border-color:${colourOf(k)};color:${colourOf(k)}`, onclick: () => { st.labels = st.labels.slice(); st.labels[st.sel] = k; draw(); } }, String(k + 1))));
+      reassign.append(h("button", { class: "btn", onclick: () => partition() }, "Undo moves"));
+      clear(readout);
+      if (st.sel == null) readout.append(h("div", { class: "kv" }, h("span", {}, "Mean silhouette"), h("span", {}, fmt(S.mean, 3))), h("div", { class: "note" }, "Select a point to see its own calculation."));
+      else {
+        const i = st.sel, a = S.a[i], b = S.b[i];
+        readout.append(h("div", {}, h("strong", {}, D.names[i]), " in ", h("span", { class: "chip", style: `background:${colourOf(st.labels[i])}` }), "cluster " + (st.labels[i] + 1)),
+          h("div", { class: "kv" }, h("span", {}, "a: mean distance to its own cluster"), h("span", {}, fmt(a, 3)),
+            h("span", {}, "b: mean distance to cluster " + (S.nearest[i] == null ? "\u2013" : S.nearest[i] + 1)), h("span", {}, fmt(b, 3))),
+          h("div", { class: "formula", html: `s = (b &minus; a) / max(a, b) = (${fmt(b, 3)} &minus; ${fmt(a, 3)}) / ${fmt(Math.max(a, b), 3)} = <strong>${fmt(S.s[i], 3)}</strong>` }),
+          h("div", { class: "note", html: (S.s[i] < 0 ? "<span class='flag'>Negative: on average this point is closer to another cluster than to its own.</span> " : S.s[i] < 0.25 ? "Near zero: this point sits on a border. " : "Comfortably inside its own cluster. ") + `Mean silhouette of the whole partition: ${fmt(S.mean, 3)}.` }));
+      }
+    }
+    sh.work.append(
+      h("p", { class: "lede" }, "The silhouette asks one question of every point: is it, on average, closer to the other points in its own cluster than to the points in the next-nearest cluster?"),
+      h("p", { class: "predict" }, "Before you click: where in the picture will you find the points with the lowest scores?"),
+      picker.el, ctl, readout,
+      tryList([
+        { q: "Find the point with the lowest silhouette in the current partition. Why is it so low?",
+          a: () => { const S = L9.silhouette(Dm, st.labels), i = S.s.indexOf(Math.min(...S.s)); return `<p><strong>${D.names[i]}</strong>, with s = ${fmt(S.s[i], 3)}: its mean distance to its own cluster (a = ${fmt(S.a[i], 3)}) is ${S.s[i] < 0 ? "larger" : "barely smaller"} than to cluster ${S.nearest[i] + 1} (b = ${fmt(S.b[i], 3)}). Points on a border, or stranded in the wrong group, score lowest.</p>`; } },
+        { q: "Select a well-placed point and move it into a neighbouring cluster with the buttons. What happens to its silhouette?",
+          a: "<p>It turns negative. After the move, the point's own cluster is the far one, so a becomes larger than b. The mean silhouette of the partition falls too. That is exactly the sense in which silhouette measures fit: it rewards points that sit closer to their own group than to any other.</p>" },
+        { q: "Choose <em>Families within families</em>. Which k gives the highest mean silhouette? Now show the generating groups: how many are there?",
+          a: () => { const D2 = dataset({ source: "sim", preset: "nested" }), M = L9.pairwise(D2.X), c = []; for (let k = 2; k <= 8; k++) c.push(L9.silhouette(M, L9.kmeans(D2.X, k, { nInit: 12, seed: 42 }).labels).mean); const kb = 2 + c.indexOf(Math.max(...c)); return `<p>The mean silhouette peaks at <strong>k = ${kb}</strong> (${fmt(Math.max(...c), 3)}); at k = 4 it is ${fmt(c[2], 3)}. The data were generated from <strong>four</strong> groups, arranged as two pairs. Silhouette rewards the cleanest split it can find, which here is the coarse one. It is a measure of geometric tidiness, not of truth.</p>`; } },
+        { q: "Choose the real panel, all six categories. Compare the mean silhouette at k = 2 and k = 3.",
+          a: () => { const D2 = dataset({ source: "real", view: "pca", scaling: "standard" }), M = L9.pairwise(D2.X); const s2 = L9.silhouette(M, L9.kmeans(D2.X, 2, { nInit: 100, seed: 42 }).labels).mean, s3 = L9.silhouette(M, L9.kmeans(D2.X, 3, { nInit: 100, seed: 42 }).labels).mean; return `<p>${fmt(s2, 3)} at k = 2 and ${fmt(s3, 3)} at k = 3: a real but slim preference for three clusters, and not by itself a reason to choose. In the lecture, the third cluster is the one that makes economic sense: two options that screened fossil fuels and left human rights alone.</p>`; } },
+      ]),
+      mathsBox("<p>For point <i>i</i> in cluster <i>A</i>:</p><p class='formula'><i>a</i>(<i>i</i>) = mean distance from <i>i</i> to the other members of <i>A</i></p><p class='formula'><i>b</i>(<i>i</i>) = min over other clusters <i>B</i> of the mean distance from <i>i</i> to members of <i>B</i></p><p class='formula'><i>s</i>(<i>i</i>) = (<i>b</i> &minus; <i>a</i>) / max(<i>a</i>, <i>b</i>)</p><p>s lies between &minus;1 and 1. A point alone in its cluster is given s = 0. The <strong>mean silhouette</strong> summarises a whole partition, and comparing it across k is a common way to choose the number of clusters (Rousseeuw, 1987).</p>"),
+      sh.nav());
+    reset();
+  },
+});
+
+/* Modules 4-6 */
+"use strict";
+function hull(pts) {                       // Andrew's monotone chain; pts: [[x,y]]
+  const P = pts.map((p, i) => [p[0], p[1], i]).sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  if (P.length < 3) return P;
+  const cr = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+  const lo = [], up = [];
+  P.forEach((p) => { while (lo.length >= 2 && cr(lo[lo.length - 2], lo[lo.length - 1], p) <= 0) lo.pop(); lo.push(p); });
+  P.slice().reverse().forEach((p) => { while (up.length >= 2 && cr(up[up.length - 2], up[up.length - 1], p) <= 0) up.pop(); up.push(p); });
+  return lo.slice(0, -1).concat(up.slice(0, -1));
+}
+const LINK_TEXT = {
+  single: "Single linkage: the distance between two groups is the distance between their <strong>closest</strong> pair of points.",
+  complete: "Complete linkage: the distance between two groups is the distance between their <strong>farthest</strong> pair.",
+  average: "Average linkage: the <strong>mean</strong> of every distance between a point in one group and a point in the other.",
+  ward: "Ward: merge the pair of groups whose union <strong>increases the within-cluster sum of squares least</strong>.",
+};
+function membersOf(merges, n, id) { return id < n ? [id] : merges[id - n].members; }
+
+// =========================================================== 4. Agglomerative
+registerModule({
+  id: "agglomerative", short: "Agglomerative", title: "Agglomerative: merge the closest pair, again and again",
+  build(sh) {
+    const st = { spec: { source: "sim", preset: "bridge", show: false }, method: "ward", step: 0, hover: null, timer: null, scale: "follow" };
+    let D = null, merges = null;
+    const plotBox = h("div", { class: "sheet" }), cap = h("div", { class: "cap" });
+    const sc = new Scatter(plotBox, { h: 360, label: "agglomerative clustering" });
+    plotBox.append(cap);
+    const dBox = h("div", { class: "sheet dend" }), dCap = h("div", { class: "cap" });
+    sh.sheet.classList.add("agg");
+    sh.sheet.append(plotBox, h("div", {}, dBox, dCap));
+    const picker = dataPicker({ initial: st.spec }, (spec, why) => { st.spec = spec; if (why === "data") reset(); else draw(); });
+    const mSel = h("select"); ["single", "complete", "average", "ward"].forEach((m) => mSel.append(h("option", { value: m }, m === "ward" ? "Ward" : m)));
+    mSel.value = st.method; mSel.onchange = () => { st.method = mSel.value; reset(true); };
+    const kIn = h("input", { type: "range", min: 1, max: 60, value: 60 }), kOut = h("span");
+    kIn.oninput = () => { st.step = D.n - +kIn.value; stop(); draw(); };
+    const scSel = h("select");
+    [["follow", "follow the merging (zoomed)"], ["sqrt", "whole tree, square-root heights"], ["linear", "whole tree, true heights"]].forEach(([v, t]) => scSel.append(h("option", { value: v }, t)));
+    scSel.value = st.scale; scSel.onchange = () => { st.scale = scSel.value; draw(); };
+    const ctl = h("div", { class: "controls" }, h("label", {}, "Linkage"), mSel, h("label", {}, "Tree height"), scSel, h("label", {}, "Clusters left"), h("div", { class: "row" }, kIn, kOut));
+    const bBack = h("button", { class: "btn", onclick: () => { stop(); st.step = Math.max(0, st.step - 1); draw(); } }, "Back one");
+    const bNext = h("button", { class: "btn primary", onclick: () => { stop(); st.step = Math.min(D.n - 1, st.step + 1); draw(); } }, "Next merge");
+    const bPlay = h("button", { class: "btn", onclick: () => play() }, "Play");
+    const bEnd = h("button", { class: "btn", onclick: () => { stop(); st.step = D.n - 1; draw(); } }, "Finish");
+    const readout = h("div", { class: "readout" }), linkNote = h("p", { class: "muted", html: LINK_TEXT[st.method] });
+    function stop() { if (st.timer) { clearInterval(st.timer); st.timer = null; bPlay.textContent = "Play"; } }
+    function play() {
+      if (st.timer) return stop();
+      if (st.step >= D.n - 1) st.step = 0;
+      if (REDUCED) { st.step = D.n - 1; draw(); return; }
+      bPlay.textContent = "Pause";
+      st.timer = setInterval(() => { if (st.step >= D.n - 1) return stop(); st.step++; draw(); }, 260);
+    }
+    function reset(keepStep) {
+      stop(); D = dataset(st.spec); merges = L9.linkage(D.X, st.method);
+      if (!keepStep) st.step = 0; st.step = Math.min(st.step, D.n - 1);
+      kIn.max = D.n; linkNote.innerHTML = LINK_TEXT[st.method]; draw();
+    }
+    function draw() {
+      const n = D.n, kLeft = n - st.step, lab = L9.cutTree(merges, n, kLeft);
+      const sizes = {}; lab.forEach((l) => { sizes[l] = (sizes[l] || 0) + 1; });
+      const multi = [...new Set(lab)].filter((l) => sizes[l] > 1);
+      const order = multi.map((l) => [l, L9.mean(lab.map((v, i) => [v, i]).filter((q) => q[0] === l).map((q) => D.key[q[1]]))]).sort((a, b) => a[1] - b[1]);
+      const cmap = new Map(order.map((q, i) => [q[0], i]));
+      const col = (i) => (sizes[lab[i]] > 1 ? colourOf(cmap.get(lab[i])) : NEUTRAL);
+      sc.setDomain(D.disp, { equal: D.equal, xLabel: D.xLabel, yLabel: D.yLabel });
+      sc.clearLayer("Bg"); sc.clearLayer("Geo"); sc.clearLayer("Top");
+      multi.forEach((l) => {
+        const idx = lab.map((v, i) => [v, i]).filter((q) => q[0] === l).map((q) => q[1]);
+        const pts = idx.map((i) => D.disp[i]);
+        if (pts.length >= 3) sc.poly(hull(pts), { fill: colourOf(cmap.get(l)), opacity: 0.12, stroke: colourOf(cmap.get(l)), "stroke-width": 1 }, "Bg");
+        else sc.line(pts[0], pts[1], { stroke: colourOf(cmap.get(l)), "stroke-width": 3, opacity: 0.35 }, "Bg");
+      });
+      const nextM = st.step < n - 1 ? merges[st.step] : null;
+      let ringSet = new Set();
+      if (nextM) {
+        const A = membersOf(merges, n, nextM.a), B = membersOf(merges, n, nextM.b);
+        ringSet = new Set(A.concat(B));
+        let best = null;
+        const d = (i, j) => L9.dist(D.X[i], D.X[j]);
+        if (st.method === "single" || st.method === "complete") {
+          A.forEach((i) => B.forEach((j) => { const v = d(i, j); if (!best || (st.method === "single" ? v < best[2] : v > best[2])) best = [i, j, v]; }));
+          sc.line(D.disp[best[0]], D.disp[best[1]], { stroke: "var(--flag)", "stroke-width": 2.6 });
+        } else if (st.method === "average") {
+          const pairs = []; A.forEach((i) => B.forEach((j) => pairs.push([i, j])));
+          const stepP = Math.max(1, Math.floor(pairs.length / 300));
+          pairs.forEach((p, t) => { if (t % stepP === 0) sc.line(D.disp[p[0]], D.disp[p[1]], { stroke: "var(--flag)", "stroke-width": 0.8, opacity: 0.35 }); });
+        } else {
+          const cA = L9.centroids(A.map((i) => D.disp[i]), A.map(() => 0), 1)[0], cB = L9.centroids(B.map((i) => D.disp[i]), B.map(() => 0), 1)[0];
+          sc.line(cA, cB, { stroke: "var(--flag)", "stroke-width": 2.4, "stroke-dasharray": "5 3" });
+          [cA, cB].forEach((c) => sc.centroid(c, -1));
+        }
+      }
+      const hov = st.hover ? new Set(st.hover) : null;
+      sc.points(D.disp, { colour: col, shape: (i) => D.shape(i, st.spec.show), ring: (i) => (hov ? hov.has(i) : ringSet.has(i)), opacity: (i) => (hov && !hov.has(i) ? 0.3 : 1), title: (i) => D.names[i] });
+      cap.innerHTML = nextM ? "The two ringed groups merge next; the red line shows the linkage distance that makes them the closest pair." + (D.pca ? " Distances are measured in all six categories and drawn on the map." : "") : "Everything has merged into one group.";
+      const leafCol = (leaf) => col(leaf);
+      dendrogram(dBox, { merges, n, step: st.step, k: kLeft > 1 && kLeft < n ? kLeft : null, leafColour: leafCol, h: D.sim ? 230 : 350, scale: st.scale, unit: D.unit,
+        leafLabels: D.sim ? null : D.names, leafLabelColour: (leaf) => (st.spec.show && !D.sim ? (D.truth[leaf] ? "var(--ethical)" : "var(--muted)") : "var(--muted)"),
+        onHover: (mem) => { st.hover = mem; draw(); }, onCut: (k) => { stop(); st.step = n - k; draw(); } });
+      dCap.textContent = (st.scale === "follow" ? "Zoomed: the top of the axis sits just above the next merge, so each merge fills the view as it happens, and only merges already made are drawn. Switch to a whole-tree view to see what is still to come. " : st.scale === "sqrt" ? "Square-root heights compress the tall final merges so the early ones stay visible. " : "True heights: the honest view for judging where to cut. ") + "Thick red: the merge just made. Dashed red: the next one. Click the tree to cut it; hover a branch to see its members.";
+      kIn.value = kLeft; kOut.textContent = kLeft;
+      bBack.disabled = st.step === 0; bNext.disabled = st.step >= n - 1;
+      const last = st.step > 0 ? merges[st.step - 1] : null;
+      const score = L9.ari(D.truth, lab);
+      clear(readout).append(h("div", { class: "kv" },
+        h("span", {}, "Merges done"), h("span", {}, `${st.step} of ${n - 1}`),
+        h("span", {}, "Clusters left"), h("span", {}, kLeft),
+        h("span", {}, "Height of the last merge"), h("span", {}, last ? fmt(last.height, 3) : "\u2013"),
+        h("span", {}, "Next merge would be at"), h("span", {}, nextM ? fmt(nextM.height, 3) : "\u2013"),
+        h("span", {}, D.sim ? "ARI against the generating groups" : "ARI against the label"), h("span", {}, fmt(score, 3))),
+        h("div", { class: "note" }, "ARI is explained on screen 7; for now, 1 means the clusters match exactly and 0 means no better than chance."));
+    }
+    sh.work.append(
+      h("p", { class: "lede" }, "Start with every point on its own. Repeatedly merge the two groups that are closest. The whole history of merges is the tree; cutting the tree at some height gives a partition."),
+      linkNote,
+      h("p", { class: "predict" }, "Before you press Play on the bridge data: which linkage will cross the bridge early and join the two families into one?"),
+      picker.el, ctl, h("div", { class: "row" }, bBack, bNext, bPlay, bEnd), readout,
+      tryList([
+        { q: "<em>Two families joined by a bridge</em>: set Clusters left to 2 and compare the four linkages.",
+          a: () => { const D2 = dataset({ source: "sim", preset: "bridge" }); return "<table class='ct'><tr><th class='l'>linkage</th><th>ARI at 2 clusters</th><th>cluster sizes</th></tr>" + ["single", "complete", "average", "ward"].map((m) => { const l = L9.cutTree(L9.linkage(D2.X, m), D2.n, 2), sz = [0, 0]; l.forEach((v) => sz[v]++); return `<tr><td class='l'>${m}</td><td>${fmt(L9.ari(D2.truth, l), 2)}</td><td>${sz.sort((a, b) => b - a).join(" + ")}</td></tr>`; }).join("") + "</table><p>Single linkage walks along the bridge one short step at a time, so the families join early and the last split is not between them. That is <strong>chaining</strong>, the same failure that sends average linkage to an ARI of zero in the lecture's grid.</p>"; } },
+        { q: "Set <em>Tree height</em> to true heights. Where would you cut the tree? Look for the tallest stretch with no merges in it.",
+          a: () => { const hs = merges.map((m) => m.height); let g = 0, at = 0; for (let t = 1; t < hs.length; t++) if (hs[t] - hs[t - 1] > g) { g = hs[t] - hs[t - 1]; at = t; } const k = D.n - at; return `<p>The biggest jump in merge height is between merges ${at} and ${at + 1} (from ${fmt(hs[at - 1], 3)} to ${fmt(hs[at], 3)}), which suggests cutting at <strong>${k} clusters</strong>. Groups that only join at a great height are not really groups. This is a rule of thumb, not a test, and it needs true heights: the zoomed and square-root views deliberately distort the gaps.</p>`; } },
+        { q: "Choose the real panel, all six categories, Ward. Which pair of options merges first, and at what height?",
+          a: () => { const D2 = dataset({ source: "real", view: "pca", scaling: "standard" }), m = L9.linkage(D2.X, "ward")[0]; return `<p><strong>${L9.PANEL[m.a].short}</strong> and <strong>${L9.PANEL[m.b].short}</strong>, at ${fmt(m.height, 3)}. An ethical option and a MySuper default from the same provider are the closest pair of products in the market, because the provider sells only ethical products. The label lives at the provider there, not the option.</p>`; } },
+        { q: "Real panel, all six categories, average linkage, 2 clusters left. What has gone wrong?",
+          a: () => { const D2 = dataset({ source: "real", view: "pca", scaling: "standard" }), l = L9.cutTree(L9.linkage(D2.X, "average"), 31, 2), sz = [0, 0]; l.forEach((v) => sz[v]++); const small = L9.PANEL.filter((p, i) => l[i] === (sz[0] < sz[1] ? 0 : 1)).map((p) => p.short); return `<p>The split is ${Math.max(...sz)} against ${Math.min(...sz)}: the last merge only brings in ${nameList(small)}Everything else has chained together first. Its ARI against the label is ${fmt(L9.ari(L9.LABEL, l), 2)}. This is the cell of the lecture's sensitivity grid that says the label is pure noise.</p>`; } },
+      ]),
+      mathsBox("<p>With groups <i>A</i> and <i>B</i> and point distances <i>d</i>(<i>i</i>, <i>j</i>):</p><p class='formula'>single: min <i>d</i>(<i>i</i>, <i>j</i>) &nbsp;&nbsp; complete: max <i>d</i>(<i>i</i>, <i>j</i>) &nbsp;&nbsp; average: mean <i>d</i>(<i>i</i>, <i>j</i>)</p><p class='formula'>Ward: height = &radic;(2 &Delta;<i>W</i>), &nbsp; &Delta;<i>W</i> = |<i>A</i>||<i>B</i>| / (|<i>A</i>| + |<i>B</i>|) &middot; &#8214;<i>&mu;<sub>A</sub></i> &minus; <i>&mu;<sub>B</sub></i>&#8214;&sup2;</p><p>&Delta;<i>W</i> is the increase in the within-cluster sum of squares caused by merging. For two single points the Ward height is simply their distance. The heights here match SciPy's <code>linkage</code> exactly.</p>"),
+      sh.nav());
+    reset();
+  },
+});
+
+// =========================================================== 5. Divisive
+registerModule({
+  id: "divisive", short: "Divisive", title: "Divisive: split the whole on its sharpest fault line",
+  build(sh) {
+    const st = { spec: { source: "sim", preset: "nested", show: false }, strategy: "biggest_inertia", steps: 1, hover: null };
+    let D = null, T = null;
+    const plotBox = h("div", { class: "sheet" }), cap = h("div", { class: "cap" });
+    const sc = new Scatter(plotBox, { h: 360, label: "divisive clustering" });
+    plotBox.append(cap);
+    const tBox = h("div", { class: "sheet" }), tCap = h("div", { class: "cap" }, "The tree grows downwards: the red branches are the latest split. Numbers are group sizes; hover a box to see its members.");
+    sh.sheet.append(plotBox, h("div", {}, tBox, tCap));
+    const picker = dataPicker({ initial: st.spec }, (spec, why) => { st.spec = spec; if (why === "data") reset(); else draw(); });
+    const sSel = h("select"); [["biggest_inertia", "the group with the largest spread"], ["largest_cluster", "the group with the most points"]].forEach(([v, t]) => sSel.append(h("option", { value: v }, t)));
+    sSel.onchange = () => { st.strategy = sSel.value; reset(true); };
+    const ctl = h("div", { class: "controls" }, h("label", {}, "Split next"), sSel);
+    const bSplit = h("button", { class: "btn primary", onclick: () => { st.steps = Math.min(T.steps.length, st.steps + 1); draw(); } }, "Split again");
+    const bUndo = h("button", { class: "btn", onclick: () => { st.steps = Math.max(0, st.steps - 1); draw(); } }, "Undo a split");
+    const bReset = h("button", { class: "btn", onclick: () => { st.steps = 0; draw(); } }, "Back to one group");
+    const readout = h("div", { class: "readout" }), sepBox = h("div", { class: "readout" });
+    function reset(keep) { D = dataset(st.spec); T = L9.bisectingTree(D.X, Math.min(10, D.n), { strategy: st.strategy, seed: 0 }); if (!keep) st.steps = 1; st.steps = Math.min(st.steps, T.steps.length); draw(); }
+    function leavesAt(s2) { const out = []; (function w(nd) { if (nd.children && nd.step < s2) nd.children.forEach(w); else out.push(nd); })(T.root); return out; }
+    const sepOf = (L, R) => {
+      const feats = D.pca ? L9.DIMS.map((d) => [L9.DIM_LABEL[d], L9.PANEL.map((p) => p[d])]) : D.featureNames.map((f, j) => [f, D.raw.map((r) => r[j])]);
+      const yy = new Array(D.n).fill(-1); L.idx.forEach((i) => { yy[i] = 1; }); R.idx.forEach((i) => { yy[i] = 0; });
+      const keep = [...Array(D.n).keys()].filter((i) => yy[i] >= 0);
+      return feats.map(([f, v]) => { const a = L9.auc(keep.map((i) => v[i]), keep.map((i) => yy[i])); return [f, Math.max(a, 1 - a)]; }).sort((a, b) => b[1] - a[1]);
+    };
+    function draw() {
+      const leaves = leavesAt(st.steps), lab = new Array(D.n);
+      leaves.forEach((l, k) => l.idx.forEach((i) => { lab[i] = k; }));
+      const c = canon(lab, D.key), leafColourIdx = leaves.map((l) => c[l.idx[0]]);
+      sc.setDomain(D.disp, { equal: D.equal, xLabel: D.xLabel, yLabel: D.yLabel });
+      sc.clearLayer("Geo"); sc.clearLayer("Top");
+      const latest = st.steps > 0 ? T.steps[st.steps - 1] : null;
+      if (latest && !D.pca) {                        // perpendicular bisector of the two child centroids
+        const [cA, cB] = latest.node.centroids, mx = (cA[0] + cB[0]) / 2, my = (cA[1] + cB[1]) / 2, dx = cB[0] - cA[0], dy = cB[1] - cA[1];
+        const [x0, x1, y0, y1] = sc.dom, big = 4 * Math.max(x1 - x0, y1 - y0), len = Math.hypot(dx, dy) || 1;
+        const ux = -dy / len, uy = dx / len;
+        const p1 = [mx - ux * big, my - uy * big], p2 = [mx + ux * big, my + uy * big];
+        const clip = sc.svg.ownerDocument.createElementNS(NS, "clipPath"); clip.setAttribute("id", "clipDiv");
+        s("rect", { x: sc.pad.l, y: sc.pad.t, width: sc.w - sc.pad.l - sc.pad.r, height: sc.h - sc.pad.t - sc.pad.b }, clip); sc.gGeo.append(clip);
+        sc.line(p1, p2, { stroke: "var(--flag)", "stroke-width": 2, "stroke-dasharray": "7 4", "clip-path": "url(#clipDiv)" });
+        [cA, cB].forEach((cc) => sc.centroid(cc, -1));
+      }
+      const hov = st.hover ? new Set(st.hover) : null;
+      sc.points(D.disp, { colour: (i) => colourOf(c[i]), shape: (i) => D.shape(i, st.spec.show), ring: (i) => hov && hov.has(i), opacity: (i) => (hov && !hov.has(i) ? 0.3 : 1), title: (i) => D.names[i] });
+      cap.textContent = latest ? (D.pca ? "Colours show the current groups. The split happens in all six categories, so no dividing line can be drawn on this map." : "The dashed red line is where the latest split divides its group: every point is closer to the centroid on its own side.") : "One group: nothing has been split yet.";
+      divTree(tBox, { root: T.root, steps: st.steps, leafColour: (li) => colourOf(leafColourIdx[li]), unit: D.unit, onHover: (idx) => { st.hover = idx; draw(); }, h: 210 });
+      bSplit.disabled = st.steps >= T.steps.length; bUndo.disabled = st.steps === 0;
+      const ward = L9.cutTree(L9.linkage(D.X, "ward"), D.n, leaves.length);
+      clear(readout).append(h("div", { class: "kv" },
+        h("span", {}, "Splits made"), h("span", {}, st.steps), h("span", {}, "Groups"), h("span", {}, leaves.length),
+        h("span", {}, "Agreement with Ward at the same number of groups (ARI)"), h("span", {}, leaves.length > 1 ? fmt(L9.ari(ward, lab), 3) : "\u2013")),
+        h("div", { class: "note" }, latest ? `Split ${st.steps}: ${latest.node.idx.length} ${D.unit} became ${latest.left.idx.length} + ${latest.right.idx.length}.` : "Press Split again to make the first cut."));
+      clear(sepBox);
+      if (latest) {
+        const sep = sepOf(latest.left, latest.right);
+        sepBox.append(h("div", {}, h("strong", {}, "What separates the two halves of split " + st.steps + "?")),
+          h("table", { class: "ct" }, h("tr", {}, h("th", { class: "l" }, D.pca ? "category" : "feature"), h("th", {}, "separation (AUC)")),
+            ...sep.map(([f, v], r) => h("tr", {}, h("td", { class: "l", style: r === 0 ? "font-weight:600" : "" }, f), h("td", {}, fmt(v, 3))))),
+          h("div", { class: "note" }, "1 means the feature alone puts every point on the correct side; 0.5 means it is no guide."));
+      }
+    }
+    sh.work.append(
+      h("p", { class: "lede" }, "Divisive clustering reads the tree from the top. Start with everything in one group, split it in two, then keep splitting. Here each split is made by 2-means, which is what scikit-learn's bisecting k-means does."),
+      h("p", { class: "predict" }, "Before you split the real panel: which category will divide the whole market first?"),
+      picker.el, ctl, h("div", { class: "row" }, bSplit, bUndo, bReset), readout, sepBox,
+      tryList([
+        { q: "Choose the real panel, all six categories. What divides the market first, and what does the second split do?",
+          a: () => { const D2 = dataset({ source: "real", view: "pca", scaling: "standard" }), T2 = L9.bisectingTree(D2.X, 3, { seed: 0 }); const s1 = T2.steps[0], s2 = T2.steps[1]; const f1 = (() => { const yy = new Array(31).fill(0); s1.left.idx.forEach((i) => { yy[i] = 1; }); return L9.DIMS.map((d) => { const a = L9.auc(L9.PANEL.map((p) => p[d]), yy); return [L9.DIM_LABEL[d], Math.max(a, 1 - a)]; }).sort((a, b) => b[1] - a[1])[0]; })(); const small = [s2.left, s2.right].sort((a, b) => a.idx.length - b.idx.length)[0]; return `<p>The first split is ${s1.left.idx.length} against ${s1.right.idx.length}, best separated by <strong>${f1[0]}</strong> (${fmt(f1[1], 3)}). The second split isolates ${nameList(small.idx.map((i) => L9.PANEL[i].short))}on its own: the highest human-rights and animal-cruelty exposures in the panel, and the same product that density clustering leaves without peers.</p><p class='muted'>Each split is the best of 20 random starts. From a single unlucky start, the second split can stop in a worse local optimum that pairs Mercer with MLC.</p>`; } },
+        { q: "<em>Families within families</em>: does the first split separate the two pairs of families?",
+          a: () => { const D2 = dataset({ source: "sim", preset: "nested" }), T2 = L9.bisectingTree(D2.X, 2, { seed: 0 }), sup = D2.truth.map((g) => (g < 2 ? 0 : 1)); return `<p>Scored against the two pairs, the first split has an ARI of ${fmt(L9.ari(sup, T2.labels), 2)}. The top-down reading finds the coarse structure first and the fine structure later, which is exactly what you want when the question is <em>what divides this market?</em></p>`; } },
+        { q: "Switch <em>Split next</em> to the group with the most points. Does the tree change?",
+          a: () => { const a = L9.bisectingTree(D.X, 4, { strategy: "biggest_inertia", seed: 0 }).labels, b = L9.bisectingTree(D.X, 4, { strategy: "largest_cluster", seed: 0 }).labels; return `<p>For the data on screen now, after three splits the two rules agree with an ARI of ${fmt(L9.ari(a, b), 2)}. The rule for choosing <em>which</em> group to split is a modelling choice too: splitting the most spread-out group favours compact clusters; splitting the biggest favours balanced sizes.</p>`; } },
+        { q: "Compare the readout with Ward at the same number of groups. Do top-down and bottom-up agree?",
+          a: () => "<p>Look at the agreement line: they often agree closely on clean data and part company on messy data. Agglomerative and divisive methods answer different questions and can produce different trees from the same points. The lecture's deck makes the same point with the two tree diagrams.</p>" },
+      ]),
+      mathsBox("<p>At each step choose one group, then split it with 2-means: find two centroids that minimise the within-group sum of squares, and send each point to its nearer centroid. In two dimensions the boundary between two centroids is the perpendicular bisector of the segment joining them, which is the dashed line.</p><p>Choosing the group with the <strong>largest spread</strong> (largest sum of squares) is scikit-learn's default. The partitions here match scikit-learn's <code>BisectingKMeans</code> on the real panel.</p>"),
+      sh.nav());
+    reset();
+  },
+});
+
+// =========================================================== 6. AUC
+registerModule({
+  id: "auc", short: "AUC", title: "AUC: how often does the ethical option win a head-to-head?",
+  build(sh) {
+    const st = { src: "social_harm", delta: 1.5, seed: 3, t: null, hover: null, sim: null };
+    const stripBox = h("div", { class: "sheet" }), gridBox = h("div", { class: "sheet" }), rocBox = h("div", { class: "sheet" });
+    const gridCap = h("div", { class: "cap" });
+    sh.sheet.append(stripBox, h("div", { class: "pair" }, h("div", {}, gridBox, gridCap), rocBox));
+    const srcSel = h("select");
+    L9.DIMS.concat(["total"]).forEach((d) => srcSel.append(h("option", { value: d }, L9.DIM_LABEL[d] + " (real panel)")));
+    srcSel.append(h("option", { value: "sim" }, "Simulated: two groups you control"));
+    srcSel.value = st.src; srcSel.onchange = () => { st.src = srcSel.value; st.t = null; st.sim = null; draw(); };
+    const dIn = h("input", { type: "range", min: -2, max: 4, step: 0.1, value: st.delta }), dOut = h("span", {}, st.delta);
+    dIn.oninput = () => { st.delta = +dIn.value; dOut.textContent = st.delta; st.sim = null; draw(); };
+    const tIn = h("input", { type: "range", min: 0, max: 1000, value: 500 });
+    tIn.oninput = () => { const [lo, hi] = range(); st.t = lo + (+tIn.value / 1000) * (hi - lo); draw(); };
+    const simRows = [h("label", {}, "Separation"), h("div", { class: "row" }, dIn, dOut, h("span", { class: "muted" }, "standard deviations"))];
+    const ctl = h("div", { class: "controls" }, h("label", {}, "Values"), srcSel, ...simRows, h("label", {}, "Threshold"), tIn);
+    const bBest = h("button", { class: "btn", onclick: () => { const v = vals(); st.t = L9.bestThreshold(v.x, v.y).t; draw(); } }, "Jump to the best threshold");
+    const bSweep = h("button", { class: "btn", onclick: () => sweep() }, "Sweep the threshold");
+    const readout = h("div", { class: "readout" });
+    function vals() {
+      if (st.src === "sim") {
+        if (!st.sim) st.sim = L9.twoGroups(st.delta, st.seed);
+        return { x: st.sim.map((o) => o.v), y: st.sim.map((o) => o.y), names: st.sim.map((o, i) => (o.y ? "ethical-like " : "default-like ") + (i + 1)), unit: "value" };
+      }
+      return { x: L9.PANEL.map((p) => p[st.src]), y: L9.LABEL.slice(), names: L9.PANEL.map((p) => p.short), unit: "% of portfolio" };
+    }
+    function range() { const v = vals().x, lo = Math.min(...v), hi = Math.max(...v), p = (hi - lo || 1) * 0.06; return [lo - p, hi + p]; }
+    let sweepTimer = null;
+    function sweep() {
+      if (sweepTimer) { clearInterval(sweepTimer); sweepTimer = null; bSweep.textContent = "Sweep the threshold"; return; }
+      const [lo, hi] = range(); st.t = lo; let f = 0;
+      if (REDUCED) { st.t = hi; draw(); return; }
+      bSweep.textContent = "Stop";
+      sweepTimer = setInterval(() => { f += 0.02; st.t = lo + f * (hi - lo); draw(); if (f >= 1) { clearInterval(sweepTimer); sweepTimer = null; bSweep.textContent = "Sweep the threshold"; } }, 60);
+    }
+    function draw() {
+      simRows.forEach((e) => { e.style.display = st.src === "sim" ? "" : "none"; });
+      const v = vals(), [lo, hi] = range();
+      if (st.t == null) st.t = L9.bestThreshold(v.x, v.y).t;
+      tIn.value = Math.round(((st.t - lo) / (hi - lo)) * 1000);
+      // ---- strip plot
+      const w = 660, hh = 230, L = 168, R = w - 16, X = (x) => L + ((x - lo) / (hi - lo)) * (R - L);
+      const svg = s("svg", { viewBox: `0 0 ${w} ${hh}`, role: "img", "aria-label": "values by label" }, clear(stripBox));
+      s("rect", { x: L, y: 8, width: R - L, height: hh - 44, class: "bgpaper" }, svg);
+      s("rect", { x: L, y: 8, width: Math.max(0, X(st.t) - L), height: hh - 44, fill: "var(--ethical)", opacity: 0.08 }, svg);
+      niceTicks(lo, hi, 7).ticks.forEach((t) => { s("line", { x1: X(t), x2: X(t), y1: 8, y2: hh - 36, class: "gmajor" }, svg); s("text", { x: X(t), y: hh - 22, "text-anchor": "middle" }, svg).textContent = +t.toFixed(2); });
+      const lane = (yy) => (yy ? 58 : 150);
+      const off = new Array(v.x.length).fill(0);           // stack tied values so none hide
+      [1, 0].forEach((ln) => {
+        const idx = v.x.map((x, i) => [x, i]).filter((q) => v.y[q[1]] === ln).sort((a, b) => a[0] - b[0]);
+        let g0 = 0;
+        idx.forEach((q, t2) => { if (t2 > 0 && X(q[0]) - X(idx[g0][0]) > 6) g0 = t2; const r2 = t2 - g0; off[q[1]] = (r2 % 2 ? 1 : -1) * Math.ceil(r2 / 2) * 5.5; });
+      });
+      s("text", { x: L - 8, y: lane(1) + 4, "text-anchor": "end", style: "fill:var(--ethical);font-weight:600" }, svg).textContent = st.src === "sim" ? "ethical-like (16)" : "ethical option (16)";
+      s("text", { x: L - 8, y: lane(0) + 4, "text-anchor": "end", style: "fill:var(--default);font-weight:600" }, svg).textContent = st.src === "sim" ? "default-like (15)" : "MySuper default (15)";
+      s("text", { x: (L + R) / 2, y: hh - 5, "text-anchor": "middle", class: "axlabel" }, svg).textContent = (st.src === "sim" ? "simulated value" : L9.DIM_LABEL[st.src] + ", " + v.unit) + ": lower counts as more ethical";
+      const hovSet = st.hover ? new Set(st.hover) : null;
+      v.x.forEach((x, i) => {
+        const g = s("g", { transform: `translate(${X(x)},${lane(v.y[i]) + off[i]})`, class: "pt" }, svg);
+        const col = v.y[i] ? "var(--ethical)" : "var(--default)", d = shapePath(v.y[i] ? "circle" : "cross", 5.4);
+        if (hovSet && hovSet.has(i)) s("circle", { r: 10, fill: "none", stroke: "var(--ink)", "stroke-width": 2 }, g);
+        if (v.y[i]) s("path", { d, fill: col, stroke: "var(--sheet)", "stroke-width": 1.2, opacity: hovSet && !hovSet.has(i) ? 0.35 : 1 }, g);
+        else s("path", { d, stroke: col, "stroke-width": 2.6, "stroke-linecap": "round", opacity: hovSet && !hovSet.has(i) ? 0.35 : 1 }, g);
+        g.addEventListener("mousemove", (e) => showTip(`${v.names[i]}: ${fmt(x, 2)}`, e)); g.addEventListener("mouseleave", hideTip);
+        if (st.src === "sim") g.addEventListener("pointerdown", (e) => {
+          e.preventDefault();
+          const mv = (ev) => { const m = svg.getScreenCTM && svg.getScreenCTM(); if (!m) return; const pt = svg.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY; const q = pt.matrixTransform(m.inverse()); st.sim[i].v = Math.round((lo + ((q.x - L) / (R - L)) * (hi - lo)) * 100) / 100; draw(); };
+          const up = () => { window.removeEventListener("pointermove", mv); window.removeEventListener("pointerup", up); };
+          window.addEventListener("pointermove", mv); window.addEventListener("pointerup", up);
+        });
+      });
+      s("line", { x1: X(st.t), x2: X(st.t), y1: 4, y2: hh - 36, stroke: "var(--flag)", "stroke-width": 2.4 }, svg);
+      s("text", { x: X(st.t) + 5, y: 18, style: "fill:var(--flag);font-weight:600" }, svg).textContent = "threshold " + fmt(st.t, 2);
+      // ---- tournament grid
+      const E = v.x.map((x, i) => [x, i]).filter((q) => v.y[q[1]] === 1).sort((a, b) => a[0] - b[0]);
+      const M = v.x.map((x, i) => [x, i]).filter((q) => v.y[q[1]] === 0).sort((a, b) => a[0] - b[0]);
+      const gw = 330, gh = 300, cw = (gw - 40) / M.length, ch = (gh - 40) / E.length;
+      const gs = s("svg", { viewBox: `0 0 ${gw} ${gh}`, role: "img", "aria-label": "every ethical-versus-default pair" }, clear(gridBox));
+      let wins = 0, ties = 0;
+      E.forEach(([xe, ie], r) => M.forEach(([xm, im], c2) => {
+        const res = xe < xm ? 1 : xe === xm ? 0.5 : 0; if (res === 1) wins++; else if (res === 0.5) ties++;
+        const cell = s("rect", { x: 34 + c2 * cw, y: 6 + r * ch, width: cw - 0.8, height: ch - 0.8, fill: res === 1 ? "var(--win)" : res === 0.5 ? "var(--rule)" : "var(--loss)" }, gs);
+        cell.addEventListener("mousemove", (e) => { showTip(`${v.names[ie]} (${fmt(xe, 2)}) vs ${v.names[im]} (${fmt(xm, 2)}): ${res === 1 ? "ethical is cleaner" : res === 0.5 ? "a tie, half a win" : "default is cleaner"}`, e); if (!st.hover || st.hover[0] !== ie || st.hover[1] !== im) { st.hover = [ie, im]; draw(); } });
+        cell.addEventListener("mouseleave", () => { hideTip(); });
+      }));
+      gs.addEventListener("mouseleave", () => { if (st.hover) { st.hover = null; draw(); } });
+      s("text", { x: 34, y: gh - 18, style: "font-size:11px" }, gs).textContent = "defaults, cleanest to dirtiest";
+      const yl = s("text", { x: 14, y: 6 + (E.length * ch) / 2, "text-anchor": "middle", style: "font-size:11px", transform: `rotate(-90 14 ${6 + (E.length * ch) / 2})` }, gs); yl.textContent = "ethical options";
+      const A = L9.auc(v.x, v.y);
+      gridCap.textContent = `Every one of the ${E.length * M.length} ethical-versus-default pairs. Green: the ethical option is cleaner. ${wins} wins and ${ties} ties make an AUC of ${fmt(A, 3)}.`;
+      // ---- ROC
+      const rc = L9.roc(v.x, v.y), cur = rc.reduce((a, b) => (Math.abs(b.t - st.t) < Math.abs(a.t - st.t) ? b : a));
+      const at = { tp: v.x.filter((x, i) => x < st.t && v.y[i]).length, fp: v.x.filter((x, i) => x < st.t && !v.y[i]).length };
+      at.fn = 16 - at.tp; at.tn = 15 - at.fp;
+      const xs = rc.map((p) => p.fpr), ys = rc.map((p) => p.tpr);
+      lineChart(rocBox, { w: 330, h: 300, series: [{ xs: [0, 1], ys: [0, 1], colour: "var(--muted)", dash: "4 4", width: 1 }, { xs, ys, colour: "var(--ink)", width: 2.4 }],
+        areas: [{ xs, ys, colour: "var(--ink)", opacity: 0.12 }], marks: [{ x: at.fp / 15, y: at.tp / 16, colour: "var(--flag)" }],
+        xDomain: [0, 1], yDomain: [0, 1], xLabel: "false positive rate: defaults called ethical", yLabel: "true positive rate", xTicks: [0, 0.25, 0.5, 0.75, 1] });
+      const best = L9.bestThreshold(v.x, v.y), missed = v.x.map((x, i) => [x, i]).filter(([x, i]) => (x < best.t) !== (v.y[i] === 1)).map((q) => v.names[q[1]]);
+      clear(readout).append(h("div", { class: "big" }, "AUC " + fmt(A, 3)),
+        h("div", { class: "kv" },
+          h("span", {}, "Ethical options below the threshold (true positives)"), h("span", {}, `${at.tp} of 16`),
+          h("span", {}, "Defaults below the threshold (false positives)"), h("span", {}, `${at.fp} of 15`),
+          h("span", {}, "Errors at this threshold"), h("span", {}, at.fn + at.fp),
+          h("span", {}, "Fewest errors any threshold can achieve"), h("span", {}, best.errors)),
+        h("div", { class: "note" }, `The red ring on the ROC curve is your threshold. ${missed.length && missed.length <= 3 ? "At the best threshold the misclassified option" + (missed.length > 1 ? "s are " : " is ") + missed.join(", ") + "." : ""}`));
+    }
+    sh.work.append(
+      h("p", { class: "lede" }, "Take one category. Pair every ethical option with every default and ask which of the two holds less. The share of pairs the ethical option wins is the AUC. The ROC curve gives the same number as an area."),
+      h("p", { class: "predict" }, "Before you look at the grid: will the label win more head-to-heads on social harm or on human rights?"),
+      ctl, h("div", { class: "row" }, bBest, bSweep), readout,
+      tryList([
+        { q: "Social harm: jump to the best threshold. How many errors, and who?",
+          a: () => { const x = L9.PANEL.map((p) => p.social_harm), b = L9.bestThreshold(x, L9.LABEL), m = L9.PANEL.filter((p, i) => (x[i] < b.t) !== (p.ethical === 1)).map((p) => p.short); return `<p>${b.errors} error${b.errors === 1 ? "" : "s"} in 31: ${m.join(", ")}. One line on tobacco, gambling and alcohol exposure nearly reproduces the label. The miss is a default from a provider that sells only ethical products.</p>`; } },
+        { q: "Which category comes closest to a coin flip, and which does the label separate best?",
+          a: () => { const r = L9.DIMS.map((d) => [L9.DIM_LABEL[d], L9.auc(L9.PANEL.map((p) => p[d]), L9.LABEL), L9.DIM_KIND[d]]).sort((a, b) => b[1] - a[1]); return "<table class='ct'><tr><th class='l'>category</th><th class='l'>kind</th><th>AUC</th></tr>" + r.map((q) => `<tr><td class='l'>${q[0]}</td><td class='l'>${q[2]}</td><td>${fmt(q[1], 3)}</td></tr>`).join("") + "</table><p>The sector categories, which are simple revenue tests, separate well. Human rights, a judgement about conduct, barely separates at all.</p>"; } },
+        { q: "Simulated: drag the right-most ethical-like point much further right. Does the AUC change? Now drag an ethical-like point past a default-like one.",
+          a: "<p>Moving a point further out changes nothing until it overtakes another point, because the AUC depends only on the <strong>order</strong> of the values, never on how far apart they are. One extreme product cannot distort it. Overtaking a point flips one head-to-head, and the AUC moves by exactly 1/240.</p>" },
+        { q: "Simulated: set the separation below zero. What does an AUC below 0.5 mean?",
+          a: "<p>That the label points the wrong way: on this measure, the ethical-like group tends to hold <em>more</em> than the default-like group. An AUC of 0.3 is as informative as 0.7, just reversed. On the real panel, animal cruelty sits just above 0.5, with the ethical options on average slightly worse.</p>" },
+      ]),
+      mathsBox("<p>With 16 ethical options <i>E</i> and 15 defaults <i>D</i>:</p><p class='formula'>AUC = (1 / 240) &Sigma;<sub><i>i</i> &isin; <i>E</i></sub> &Sigma;<sub><i>j</i> &isin; <i>D</i></sub> [ 1(<i>x<sub>i</sub></i> &lt; <i>x<sub>j</sub></i>) + &frac12; 1(<i>x<sub>i</sub></i> = <i>x<sub>j</sub></i>) ]</p><p>This is the Mann&ndash;Whitney statistic divided by the number of pairs. The ROC curve plots, for every threshold, the share of ethical options below it (true positive rate) against the share of defaults below it (false positive rate). Each default the threshold passes moves the curve one column right; each ethical option moves it one row up. The area under that staircase counts exactly the pairs the ethical option wins, which is why the grid and the curve give the same number.</p>"),
+      sh.nav());
+    draw();
+  },
+});
+
+/* Modules 7-8 and boot */
+"use strict";
+
+// =========================================================== 7. ARI
+registerModule({
+  id: "ari", short: "ARI", title: "ARI: do two groupings agree about which points belong together?",
+  build(sh) {
+    const st = { spec: { source: "sim", preset: "families", show: true }, k: 3, labels: null, base: null };
+    let D = null;
+    const plotBox = h("div", { class: "sheet" }), cap = h("div", { class: "cap" });
+    const sc = new Scatter(plotBox, { h: 370, label: "partition against the label" });
+    plotBox.append(cap);
+    const pairBox = h("div", { class: "sheet" }), histBox = h("div", { class: "sheet" });
+    sh.sheet.append(plotBox, h("div", { class: "pair" }, pairBox, histBox));
+    const picker = dataPicker({ initial: st.spec }, (spec, why) => { st.spec = spec; if (why === "data") reset(); else draw(); });
+    const kIn = h("input", { type: "range", min: 2, max: 6, value: st.k }), kOut = h("span", {}, st.k);
+    kIn.oninput = () => { st.k = +kIn.value; kOut.textContent = st.k; fromKmeans(); };
+    const ctl = h("div", { class: "controls" }, h("label", {}, "Clusters"), h("div", { class: "row" }, kIn, kOut));
+    const tableBox = h("div"), readout = h("div", { class: "readout" });
+    const r = L9.rng(2718);
+    function reset() { D = dataset(st.spec); st.base = null; fromKmeans(); }
+    function fromKmeans() { st.labels = canon(L9.kmeans(D.X, st.k, { nInit: D.sim ? 25 : 100, seed: 42 }).labels, D.key); st.base = null; draw(); }
+    function fromTruth() { st.labels = D.truth.slice(); st.base = null; draw(); }
+    function renumber() {
+      const ks = [...new Set(st.labels)], perm = L9.shuffled(ks, r);
+      if (ks.length > 1 && perm.every((v, i) => v === ks[i])) perm.push(perm.shift());
+      const map = new Map(ks.map((k, i) => [k, perm[i]]));
+      st.labels = st.labels.map((l) => map.get(l)); draw();
+    }
+    function shuffleAll() { st.labels = L9.shuffled(st.labels, r); st.base = null; draw(); }
+    function baseline() {
+      const a = [], ri = [];
+      for (let t = 0; t < 200; t++) { const l = L9.shuffled(st.labels, r); a.push(L9.ari(D.truth, l)); ri.push(L9.randIndex(D.truth, l)); }
+      st.base = { a, ri }; draw();
+    }
+    function draw() {
+      const k = Math.max(...st.labels) + 1;
+      sc.setDomain(D.disp, { equal: D.equal, xLabel: D.xLabel, yLabel: D.yLabel });
+      sc.clearLayer("Geo"); sc.clearLayer("Top");
+      sc.points(D.disp, { colour: (i) => colourOf(st.labels[i]), shape: (i) => D.shape(i, st.spec.show), title: (i) => `${D.names[i]}: ${D.truthName(D.truth[i])}, cluster ${st.labels[i] + 1}` });
+      sc.onClick = (i) => { st.labels = st.labels.slice(); st.labels[i] = (st.labels[i] + 1) % Math.max(k, st.k); st.base = null; draw(); };
+      cap.textContent = "Colour is the partition; shape is " + (D.sim ? "the group that generated each point" : "the label") + ". Click a point to move it to the next cluster.";
+      const p = L9.pairCounts(D.truth, st.labels), A = L9.ari(D.truth, st.labels), RI = (p.a + p.b) / p.total;
+      const expected = (p.inU * p.inV) / p.total, maxIdx = (p.inU + p.inV) / 2;
+      const acc = D.truth.filter((g, i) => g === st.labels[i]).length / D.n;
+      clear(tableBox).append(contingencyTable(D.truth, st.labels, { corner: D.sim ? "group" : "", rowName: (g) => D.truthName(g) }));
+      clear(readout).append(h("div", { class: "big" }, "ARI " + fmt(A, 3)),
+        h("div", { class: "kv" },
+          h("span", {}, "Rand index: share of pairs the two agree on"), h("span", {}, fmt(RI, 3)),
+          h("span", {}, "Pairs together in both, expected by chance"), h("span", {}, fmt(expected, 1)),
+          h("span", {}, "Pairs together in both, actually"), h("span", {}, p.a),
+          h("span", {}, "Normalised mutual information"), h("span", {}, fmt(L9.nmi(D.truth, st.labels), 3)),
+          h("span", {}, "Naive accuracy, if cluster j means group j"), h("span", {}, pct(acc, 0))),
+        h("div", { class: "note", html: `ARI = (${p.a} &minus; ${fmt(expected, 1)}) / (${fmt(maxIdx, 1)} &minus; ${fmt(expected, 1)}): how far the actual agreement is above chance, as a share of the most it could be.` }));
+      // ---- pair bar
+      const w = 330, hh = 200, svg = s("svg", { viewBox: `0 0 ${w} ${hh}`, role: "img", "aria-label": "pairs of points" }, clear(pairBox));
+      const parts = [["together in both", p.a, OKABE[2]], ["apart in both", p.b, OKABE[4]], [D.sim ? "together in the group only" : "together in the label only", p.c, OKABE[5]], ["together in the partition only", p.d, OKABE[1]]];
+      let x = 12;
+      parts.forEach(([t, v, c]) => { const wd = ((w - 24) * v) / p.total; s("rect", { x, y: 18, width: Math.max(0, wd), height: 30, fill: c }, svg); x += wd; });
+      parts.forEach(([t, v, c], i) => {
+        s("rect", { x: 12, y: 66 + i * 24, width: 12, height: 12, fill: c }, svg);
+        s("text", { x: 30, y: 76 + i * 24, style: "fill:var(--text)" }, svg).textContent = `${t}: ${v} pairs`;
+      });
+      s("text", { x: 12, y: 12, style: "font-size:11px" }, svg).textContent = `all ${p.total} pairs of ${D.unit}`;
+      s("text", { x: 12, y: hh - 8, style: "font-size:11px" }, svg).textContent = "Green and blue agree; red and orange disagree.";
+      // ---- chance baseline
+      if (st.base) histogram(histBox, { values: st.base.a, domain: [-0.3, 1], bins: 26, marks: [{ x: A, label: "yours " + fmt(A, 2) }], xLabel: `ARI of 200 shuffles (Rand index averaged ${fmt(L9.mean(st.base.ri), 2)})`, colour: "var(--default)", h: 200, w: 330 });
+      else clear(histBox).append(h("div", { class: "cap" }, "Press 'Build the chance baseline' to shuffle this partition 200 times, keeping the cluster sizes, and see what agreement looks like by pure chance."));
+    }
+    sh.work.append(
+      h("p", { class: "lede" }, "Cluster numbers are arbitrary, so you cannot score a partition by asking whether cluster 1 equals group 1. The adjusted Rand index looks at pairs instead: for every pair of points, do the two groupings agree on whether they belong together?"),
+      h("p", { class: "predict" }, "Before you press anything: if you renumber the clusters, which of the numbers on the right will change?"),
+      picker.el, ctl,
+      h("div", { class: "row" }, h("button", { class: "btn", onclick: fromKmeans }, "Start from k-means"), h("button", { class: "btn", onclick: fromTruth }, "Start from the truth"), h("button", { class: "btn", onclick: renumber }, "Renumber the clusters"), h("button", { class: "btn", onclick: shuffleAll }, "Shuffle the assignments"), h("button", { class: "btn primary", onclick: baseline }, "Build the chance baseline")),
+      tableBox, readout,
+      tryList([
+        { q: "Make the ARI exactly 1 without pressing <em>Start from the truth</em>.",
+          a: "<p>Click points until every cluster contains exactly one group and every group sits in exactly one cluster. The colours do not have to match the shapes in any particular way: any one-to-one pairing of clusters with groups scores 1, because the same pairs are together.</p>" },
+        { q: "Press <em>Renumber the clusters</em> a few times. Which number moves: the naive accuracy or the ARI?",
+          a: "<p>Only the naive accuracy. Renumbering changes which cluster is called 1, but not which points are together, so every pair count, the Rand index, the ARI and the NMI stay exactly where they were. That is why clustering is scored with pair-based measures and never with accuracy.</p>" },
+        { q: "Press <em>Shuffle the assignments</em>, then <em>Build the chance baseline</em>. Why is the Rand index still well above zero?",
+          a: () => { const l = L9.shuffled(st.labels, L9.rng(11)), ri = [], a = []; for (let t = 0; t < 200; t++) { const q = L9.shuffled(l, L9.rng(100 + t)); ri.push(L9.randIndex(D.truth, q)); a.push(L9.ari(D.truth, q)); } return `<p>For random partitions of the data on screen, the Rand index averages ${fmt(L9.mean(ri), 2)} and the ARI averages ${fmt(L9.mean(a), 3)}. Most pairs are apart in both groupings simply because most pairs are in different groups, so the raw Rand index gets a large score for free. The adjustment subtracts what chance alone would deliver.</p>`; } },
+        { q: "Can you make the ARI negative?",
+          a: () => { const g = D.truth, seen = {}, l = g.map((gi) => { seen[gi] = (seen[gi] || 0) + 1; return (seen[gi] - 1) % st.k; }); return `<p>Yes. Spread every group evenly across all the clusters, so that points which belong together are systematically kept apart. For the data on screen with ${st.k} clusters, that gives an ARI of ${fmt(L9.ari(g, l), 3)}: below zero means less agreement than chance.</p>`; } },
+        { q: "Choose the real panel, all six categories, 2 clusters, and start from k-means. Read the table.",
+          a: () => { const D2 = dataset({ source: "real", view: "pca", scaling: "standard" }), l = canon(L9.kmeans(D2.X, 2, { nInit: 100, seed: 42 }).labels, D2.key); const { table } = L9.contingency(L9.LABEL, l); return `<p>MySuper defaults: ${table[0][0]} in the low-exposure cluster, ${table[0][1]} in the high. Ethical options: ${table[1][0]} low, ${table[1][1]} high. ARI ${fmt(L9.ari(L9.LABEL, l), 3)}, the lecture's number. The four off-diagonal options are the whole story: three ethical options that look like defaults, and one default from an ethical provider.</p>`; } },
+      ]),
+      mathsBox("<p>For every pair of points, the label and the partition each say <em>together</em> or <em>apart</em>. With <i>a</i> pairs together in both and <i>b</i> apart in both, out of <i>N</i> pairs, the <strong>Rand index</strong> is (<i>a</i> + <i>b</i>) / <i>N</i>.</p><p>The <strong>adjusted</strong> version compares <i>a</i> with its expected value if the partition were shuffled at random, keeping the cluster sizes (Hubert and Arabie, 1985):</p><p class='formula'>ARI = (<i>a</i> &minus; E[<i>a</i>]) / (&frac12;(<i>P<sub>L</sub></i> + <i>P<sub>C</sub></i>) &minus; E[<i>a</i>]), &nbsp; E[<i>a</i>] = <i>P<sub>L</sub></i> <i>P<sub>C</sub></i> / <i>N</i></p><p>where <i>P<sub>L</sub></i> and <i>P<sub>C</sub></i> count the pairs together under the label and under the partition. ARI is 1 for identical groupings, about 0 for chance, and can be negative. It works when the numbers of clusters and groups differ.</p>"),
+      sh.nav());
+    reset();
+  },
+});
+
+// =========================================================== 8. The audit
+registerModule({
+  id: "audit", short: "The audit", title: "Run the audit: cluster without the label, then look",
+  build(sh) {
+    const st = { feats: new Set(L9.DIMS), scaling: "standard", method: "kmeans", k: 2, revealed: false, grid: null };
+    const plotBox = h("div", { class: "sheet" }), cap = h("div", { class: "cap" });
+    const sc = new Scatter(plotBox, { h: 380, label: "the super panel" });
+    plotBox.append(cap);
+    const gridBox = h("div", { class: "sheet" }), freqBox = h("div", { class: "sheet" });
+    sh.sheet.append(plotBox, h("div", { class: "pair" }, gridBox, freqBox));
+    const P = pcaFixed(), disp = P.scores, key = L9.PANEL.map((p) => p.total);
+    const featBox = h("div", { class: "row" });
+    L9.DIMS.forEach((d) => {
+      const cb = h("input", { type: "checkbox" }); cb.checked = true;
+      cb.onchange = () => { if (cb.checked) st.feats.add(d); else st.feats.delete(d); if (!st.feats.size) { st.feats.add(d); cb.checked = true; } st.grid = null; draw(); };
+      featBox.append(h("label", { class: "check" }, cb, L9.DIM_LABEL[d]));
+    });
+    const scSel = h("select"); ["standard", "minmax", "robust", "none"].forEach((k) => scSel.append(h("option", { value: k }, SCALE_NAME[k])));
+    scSel.onchange = () => { st.scaling = scSel.value; draw(); };
+    const mSel = h("select"); [["kmeans", "k-means"], ["ward", "Ward"], ["complete", "complete linkage"], ["average", "average linkage"]].forEach(([v, t]) => mSel.append(h("option", { value: v }, t)));
+    mSel.onchange = () => { st.method = mSel.value; draw(); };
+    const kIn = h("input", { type: "range", min: 2, max: 5, value: 2 }), kOut = h("span", {}, 2);
+    kIn.oninput = () => { st.k = +kIn.value; kOut.textContent = st.k; draw(); };
+    const ctl = h("div", { class: "controls" }, h("label", {}, "Features"), featBox, h("label", {}, "Scaling"), scSel, h("label", {}, "Method"), mSel, h("label", {}, "Clusters"), h("div", { class: "row" }, kIn, kOut));
+    const bReveal = h("button", { class: "btn primary", onclick: () => { st.revealed = !st.revealed; draw(); } }, "Reveal the label");
+    const bGrid = h("button", { class: "btn", onclick: () => { st.grid = runGrid(); draw(); } }, "Run all sixteen pipelines");
+    const result = h("div", { class: "readout" });
+    const feats = () => L9.DIMS.filter((d) => st.feats.has(d));
+    function partitionFor(method, scaling, k) {
+      const X = L9.scale(L9.panelMatrix(feats()), scaling);
+      const lab = method === "kmeans" ? L9.kmeans(X, k, { nInit: 100, seed: 42 }).labels : L9.cutTree(L9.linkage(X, method), 31, k);
+      return canon(lab, key);
+    }
+    function runGrid() {
+      const methods = ["kmeans", "ward", "complete", "average"], scalings = ["standard", "minmax", "robust", "none"];
+      const vals = methods.map(() => scalings.map(() => 0)), freq = new Map(L9.PANEL.filter((p) => p.ethical).map((p) => [p.id, 0]));
+      methods.forEach((m, i) => scalings.forEach((sg, j) => {
+        const lab = partitionFor(m, sg, 2);
+        vals[i][j] = L9.ari(L9.LABEL, lab);
+        const cnt = [0, 0]; lab.forEach((l, t) => { if (!L9.LABEL[t]) cnt[l]++; });
+        const dc = cnt[1] >= cnt[0] ? 1 : 0;
+        lab.forEach((l, t) => { if (L9.LABEL[t] && l === dc) freq.set(t, freq.get(t) + 1); });
+      }));
+      return { vals, methods, scalings, freq };
+    }
+    function draw() {
+      const lab = partitionFor(st.method, st.scaling, st.k);
+      sc.setDomain(disp, { equal: true, xLabel: `PC1: general harm exposure (${Math.round(100 * P.ratio[0])}%)`, yLabel: `PC2: human rights and animal welfare (${Math.round(100 * P.ratio[1])}%)` });
+      sc.clearLayer("Geo"); sc.clearLayer("Top");
+      sc.points(disp, { colour: (i) => colourOf(lab[i]), shape: (i) => (st.revealed ? (L9.LABEL[i] ? "circle" : "cross") : "circle"), title: (i) => L9.PANEL[i].short + (st.revealed ? (L9.LABEL[i] ? ", ethical option" : ", MySuper default") : "") + `, cluster ${lab[i] + 1}` });
+      cap.textContent = "The map never moves: it is the first two principal components of all six categories. Clusters are numbered from the lowest mean exposure upwards." + (st.revealed ? " Circles are ethical options, crosses are defaults." : " The label is hidden.");
+      bReveal.textContent = st.revealed ? "Hide the label" : "Reveal the label";
+      clear(result);
+      const f = feats();
+      result.append(h("div", { class: "note" }, `Pipeline: ${f.length === 6 ? "all six categories" : f.map((d) => L9.DIM_LABEL[d]).join(", ")}; ${SCALE_NAME[st.scaling]}; ${st.method === "kmeans" ? "k-means" : st.method + " linkage"}; ${st.k} clusters.`));
+      if (!st.revealed) result.append(h("div", { class: "note" }, "The algorithm has not seen the label. Decide what you expect, then reveal it."));
+      else {
+        const sizes = {}; lab.forEach((l) => { sizes[l] = (sizes[l] || 0) + 1; });
+        const cnt = {}; lab.forEach((l, t) => { if (!L9.LABEL[t]) cnt[l] = (cnt[l] || 0) + 1; });
+        const dc = +Object.keys(cnt).sort((a, b) => cnt[b] - cnt[a])[0];
+        const ethWithDefaults = L9.PANEL.filter((p, t) => p.ethical && lab[t] === dc).map((p) => p.short);
+        const defaultsElsewhere = L9.PANEL.filter((p, t) => !p.ethical && lab[t] !== dc).map((p) => p.short);
+        result.append(h("div", { class: "big" }, "ARI " + fmt(L9.ari(L9.LABEL, lab), 3)),
+          contingencyTable(L9.LABEL, lab, { rowName: (g) => (g ? "ethical option" : "MySuper default") }),
+          h("div", { class: "note", html: `<strong>Ethical options in the cluster holding most defaults:</strong>${nameList(ethWithDefaults)}<strong>Defaults outside it:</strong>${nameList(defaultsElsewhere)}` }));
+      }
+      if (st.grid) {
+        const g = st.grid;
+        clear(gridBox).append(h("div", { class: "cap" }, "Adjusted Rand index against the label, two clusters, your features"),
+          heatTable(g.vals, ["k-means", "Ward", "complete", "average"], ["standard", "min\u2013max", "robust", "raw"]),
+          h("div", { class: "cap" }, `Range ${fmt(Math.min(...g.vals.flat()), 2)} to ${fmt(Math.max(...g.vals.flat()), 2)}.`));
+        const rows = [...g.freq.entries()].sort((a, b) => b[1] - a[1]), w = 330, hh = 26 + rows.length * 15;
+        const svg = s("svg", { viewBox: `0 0 ${w} ${hh}`, role: "img", "aria-label": "how often each ethical option sits with the defaults" }, clear(freqBox));
+        s("text", { x: 6, y: 13, style: "font-size:11px" }, svg).textContent = "Times each ethical option sits with the defaults, of 16";
+        rows.forEach(([id, v], r2) => {
+          const y = 22 + r2 * 15, bw = (v / 16) * 120;
+          s("text", { x: 190, y: y + 9, "text-anchor": "end", style: "font-size:9.5px;fill:var(--text)" }, svg).textContent = L9.PANEL[id].short.length > 34 ? L9.PANEL[id].short.slice(0, 33) + "\u2026" : L9.PANEL[id].short;
+          s("rect", { x: 196, y, width: Math.max(1, bw), height: 11, fill: v === 16 ? "var(--flag)" : "var(--default)" }, svg);
+          s("text", { x: 200 + bw, y: y + 9, style: "font-size:9.5px" }, svg).textContent = v;
+        });
+      } else {
+        clear(gridBox).append(h("div", { class: "cap" }, "Press 'Run all sixteen pipelines' to score every combination of four methods and four scalings against the label, using the features you have ticked."));
+        clear(freqBox).append(h("div", { class: "cap" }, "The same run counts how often each ethical option lands with the defaults. A verdict that survives sixteen pipelines is a finding."));
+      }
+    }
+    sh.work.append(
+      h("p", { class: "lede" }, "Everything together, on the real panel. Choose what the algorithm may look at and how, cluster the 31 options, and only then reveal the label and score the result."),
+      h("p", { class: "predict" }, "Pre-register: before you reveal anything, write down your pipeline and the ARI you expect."),
+      ctl, h("div", { class: "row" }, bReveal, bGrid), result,
+      tryList([
+        { q: "Untick everything except fossil fuels and social harm, then reveal. What happens to the ARI, and why?",
+          a: () => { const X = L9.scale(L9.panelMatrix(["fossil", "social_harm"]), "standard"), l = L9.kmeans(X, 2, { nInit: 100, seed: 42 }).labels; return `<p>With k-means on those two standardised categories the ARI is ${fmt(L9.ari(L9.LABEL, l), 3)}, against 0.535 with all six. These are two of the sector screens the label is built on, so an algorithm that looks only at them recovers the label more closely.</p>`; } },
+        { q: "Now keep only human rights and animal cruelty.",
+          a: () => { const X = L9.scale(L9.panelMatrix(["human_rights", "animal"]), "standard"), l = L9.kmeans(X, 2, { nInit: 100, seed: 42 }).labels; return `<p>The ARI falls to ${fmt(L9.ari(L9.LABEL, l), 3)}. On the conduct and welfare categories, the ones members say they care about most, the ethical label leaves almost no trace in the holdings.</p>`; } },
+        { q: "Tick all six categories and run all sixteen pipelines. Which ethical option sits with the defaults every time?",
+          a: () => { const saved = new Set(st.feats); st.feats = new Set(L9.DIMS); const g = runGrid(); st.feats = saved; const top = [...g.freq.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3).map(([id, v]) => `${L9.PANEL[id].short}: ${v} of 16`); return `<p>ARI ranges from ${fmt(Math.min(...g.vals.flat()), 2)} to ${fmt(Math.max(...g.vals.flat()), 2)} across the sixteen pipelines, but the most robust outlier does not move:</p>${nameList(top)}<p>The identity of the outlier is far more stable than the ARI. That is the finding worth reporting, and the reason to publish the whole grid rather than its best cell.</p>`; } },
+      ]),
+      h("p", { class: "muted" }, "k-means uses k-means++ starts and keeps the best of 100, with a fixed seed, so the numbers match the lecture and Lab 9a."),
+      sh.nav());
+    draw();
+  },
+});
+
+boot();
+
+</script>
+</body>
+</html>
